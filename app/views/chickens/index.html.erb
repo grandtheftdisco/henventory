@@ -6,10 +6,10 @@
 
 <div id="chickens">
   <% @chickens.each do |chicken| %>
-    <%= render chicken %>
+    <p><strong><%= chicken.name %></strong></p>
     <p>
-      <%= link_to "Show this chicken", chicken %>
-    </p>
+      <%= link_to "Details", chicken %>
+    </p><br/>
   <% end %>
 </div>
 
