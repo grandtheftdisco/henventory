@@ -1,0 +1,32 @@
+<%= form_with(model: collection_entry) do |form| %>
+  <% if collection_entry.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(collection_entry.errors.count, "error") %> prohibited this collection_entry from being saved:</h2>
+
+      <ul>
+        <% collection_entry.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :count, style: "display: block" %>
+    <%= form.number_field :count %>
+  </div>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.number_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :chicken_id, style: "display: block" %>
+    <%= form.number_field :chicken_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

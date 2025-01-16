@@ -1,0 +1,12 @@
+<% content_for :title, "Editing collection entry" %>
+
+<h1>Editing collection entry</h1>
+
+<%= render "form", collection_entry: @collection_entry %>
+
+<br>
+
+<div>
+  <%= link_to "Show this collection entry", @collection_entry %> |
+  <%= link_to "Back to collection entries", collection_entries_path %>
+</div>
