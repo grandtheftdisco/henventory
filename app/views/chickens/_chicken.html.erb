@@ -1,9 +1,8 @@
 <div id="<%= dom_id chicken %>">
-  <p>
-    <strong>Name:</strong>
-    <%= chicken.name %>
-  </p>
+  <h1><%= chicken.name %></h1>
 
+  <%= image_tag("#{chicken.image_url}", width: 200 ) %>
+  <br/>
   <p>
     <strong>Breed:</strong>
     <%= chicken.breed %>
