@@ -34,7 +34,7 @@
           <li>Edit Today's Count</li>
           <li>View Past Logs</li>
           <li>Settings</li>
-          <li>Logout</li>
+          <li><%= button_to "Log out", session_path, method: :delete if authenticated? %></li>
 
         </ul>
       </nav>
