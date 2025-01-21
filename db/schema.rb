@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_20_154908) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_21_165006) do
   create_table "chickens", force: :cascade do |t|
     t.string "name"
     t.string "breed"
     t.string "tell"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "dob"
+    t.datetime "dob"
     t.integer "user_id"
     t.string "image_url"
   end
