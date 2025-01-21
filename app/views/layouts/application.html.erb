@@ -23,6 +23,25 @@
   </head>
 
   <body>
+    <header>
+      <h1> Henventory </h1> <%# <%= @page_title %> 
+    </header>
+
+    <section>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li>Edit Today's Count</li>
+          <li>View Past Logs</li>
+          <li>Settings</li>
+          <li>Logout</li>
+
+        </ul>
+      </nav>
+    </section>
+
+    <main>
     <%= yield %>
+    </main>
   </body>
 </html>
