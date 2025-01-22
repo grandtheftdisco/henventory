@@ -1,5 +1,10 @@
 <div id="<%= dom_id collection_entry %>">
   <p>
+    <strong>Date:</strong>
+    <%= collection_entry.created_at.strftime("%m/%d/%Y") %>
+  </p>
+  
+  <p>
     <strong>Count:</strong>
     <%= collection_entry.count %>
   </p>
@@ -10,8 +15,13 @@
   </p>
 
   <p>
-    <strong>Chicken:</strong>
+    <i>Chicken ID:</i>
     <%= collection_entry.chicken_id %>
+  </p>
+
+  <p>
+    <strong>Chicken Name:</strong><br/>
+    [replace id field with user-friendly name readout]
   </p>
 
 </div>
