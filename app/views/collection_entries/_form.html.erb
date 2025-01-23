@@ -11,22 +11,25 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :count, style: "display: block" %>
-    <%= form.number_field :count %>
-  </div>
+  <p>
+      This is just here to have a field to save stuff to create an entry.
+  </p><br/>
 
   <div>
     <%= form.label :user_id, style: "display: block" %>
-    <%= form.number_field :user_id %>
-  </div>
+    <%= form.text_field :user_id%>
+  </div><br/>
 
   <div>
-    <%= form.label :chicken_id, style: "display: block" %>
-    <%= form.number_field :chicken_id %>
-  </div>
+    [render an egg entry partial]
+  </div><br/>
+
+  <div>
+    [button to generate a new egg entry]
+  </div><br/>
 
   <div>
     <%= form.submit %>
   </div>
+
 <% end %>
