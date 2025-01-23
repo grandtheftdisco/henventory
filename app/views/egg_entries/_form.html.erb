@@ -1,0 +1,43 @@
+<%= form_with(model: egg_entry) do |form| %>
+  <% if egg_entry.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(egg_entry.errors.count, "error") %> prohibited this egg_entry from being saved:</h2>
+
+      <ul>
+        <% egg_entry.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h4>How do I automatically populate this with all the names of my chickens?</h4>
+  <div>
+    <%= form.label :chicken_name, style: "display: block" %>
+    <%= form.select :chicken_name, [['Hattie','hattie'],['George','george']] %>
+  </div><br/><br/>
+
+  <h5>How to limit this to 1 egg? checkbox? automatically +1 just by creating an egg entry? </h5> 
+  <div>
+    <%= form.label :egg_count, style: "display: block" %>
+    <%= form.number_field :egg_count %>
+  </div><br/>
+
+  <h5> I don't need this field but saving for reference bc i'll probably need to factor chicken_id in somehow</h5>
+  <div>
+    <%= form.label :chicken_id, style: "display: block" %>
+    <%= form.number_field :chicken_id %>
+  </div><br/><br/>
+
+  <h5>How to link this to the collection entry it's housed under? </h5>
+  <div>
+    <%= form.label :collection_entry_id, style: "display: block" %>
+    <%= form.number_field :collection_entry_id %>
+  </div><br/>
+
+  
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

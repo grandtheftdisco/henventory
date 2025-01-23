@@ -1,0 +1,11 @@
+<% content_for :title, "New egg entry" %>
+
+<h1>New egg entry</h1>
+
+<%= render "form", egg_entry: @egg_entry %>
+
+<br>
+
+<div>
+  <%= link_to "Back to egg entries", egg_entries_path %>
+</div>

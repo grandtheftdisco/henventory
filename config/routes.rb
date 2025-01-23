@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :egg_entries
   resource :session
   resources :passwords, param: :token
   resources :chickens
