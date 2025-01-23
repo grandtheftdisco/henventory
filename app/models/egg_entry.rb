@@ -1,0 +1,2 @@
+class EggEntry < ApplicationRecord
+end
