@@ -11,13 +11,27 @@
     </div>
   <% end %>
 
-  <div>
-    <i>//render an egg entry partial//</i>
-  </div><br/>
 
   <div>
     <b>[+] button to generate a new egg entry</b>
   </div><br/>
+
+  <input name="collection_entry[user_id]"/>
+
+  <!-- rewatch stimulus video -->
+  <div>
+    <select name="collection_entry[egg_entries_attributes][][chicken_id]">
+      <!-- TODO - extract SQL related code to controller-->
+      <!-- form.collection_select :chicken_id, Chicken.all, :id, :name, prompt: true -->
+      <% Chicken.all.each do |chicken| %>
+        <option value="<%= chicken.id %>"><%= chicken.name %></option>
+      <% end %>
+    </select>
+    <input name="collection_entry[egg_entries_attributes][][egg_count]">
+  </div>
+
+  <!--# egg_entries_attributes: [{chicken_id: 2, egg_count: 1,
+ id: 1}]-->
 
   <div>
     <%= form.submit %>

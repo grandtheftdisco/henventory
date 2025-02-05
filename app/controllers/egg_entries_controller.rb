@@ -21,6 +21,7 @@ class EggEntriesController < ApplicationController
 
   # POST /egg_entries or /egg_entries.json
   def create
+    raise params.permit!.to_h.inspect
     @egg_entry = EggEntry.new(egg_entry_params)
 
     respond_to do |format|

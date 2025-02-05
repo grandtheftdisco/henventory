@@ -1,4 +1,15 @@
 <%= form_with(model: egg_entry) do |form| %>
+  <p>Egg Entry 1</p>
+  <input name="egg_entries_attributes[][chicken_id]"/>
+  <input name="egg_entries_attributes[][egg_count]"/>
+
+  <p>Egg Entry 2</p>
+  <input name="egg_entries_attributes[][chicken_id]"/>
+  <input name="egg_entries_attributes[][egg_count]"/>
+
+<!--# egg_entries_attributes: [{chicken_id: 2, egg_count: 1,
+ id: 1}]-->
+
   <% if egg_entry.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(egg_entry.errors.count, "error") %> prohibited this egg_entry from being saved:</h2>
@@ -28,14 +39,6 @@
     <%= form.label :chicken_id, style: "display: block" %>
     <%= form.number_field :chicken_id %>
   </div><br/><br/>
-
-  <h5>How to link this to the collection entry it's housed under? </h5>
-  <div>
-    <%= form.label :collection_entry_id, style: "display: block" %>
-    <%= form.number_field :collection_entry_id %>
-  </div><br/>
-
-  
 
   <div>
     <%= form.submit %>

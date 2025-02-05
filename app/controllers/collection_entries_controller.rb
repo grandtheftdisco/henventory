@@ -65,6 +65,8 @@ class CollectionEntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def collection_entry_params
-      params.expect(collection_entry: [ :count, :user_id, :chicken_id ])
+      # params.expect(collection_entry: [ :count, :user_id, :chicken_id ])
+      # TODO - update expected params to match nested forms in collection_entry/_form
+      params.permit![:collection_entry]
     end
 end
