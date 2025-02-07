@@ -1,5 +1,6 @@
+<br/>
 <div id="<%= dom_id collection_entry %>">
-  <h3><u>Collection Entry #<%= collection_entry.id %></u></h3>
+  <h3><u> > Collection Entry #<%= collection_entry.id %></u></h3>
 
   <p><b>Date: <%= collection_entry.created_at.strftime("%m/%d/%Y") %></b></p><br/>
 
@@ -10,11 +11,16 @@
   <% ee_array.each do |ee| %>
     <fieldset>
       <legend>Egg Entry #<%= ee.id %></legend>
-      <p>EE created at: <%= ee.created_at.strftime("%m/%d/%Y")%></p>
-      <p>EE id #: <%= ee.id %></p>
-      <p>EE collection entry id #: <%= ee.collection_entry_id %></p>
-      <p>EE chicken: <%= ee.chicken_id %></p><br/>
+      <p>date: <%= ee.created_at.strftime("%m/%d/%Y")%></p>
+      <p>entry id #: <%= ee.id %></p>
+      <p>chicken id #: <%= ee.chicken_id %></p><br/>
     </fieldset>
   <% end %>
+  <br/>
+
+  <p><b>Eggs Collected:</b></p>
+
+  <%= ee_array.length %>
+
   <br/><br/>
 </div>
