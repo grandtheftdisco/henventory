@@ -10,6 +10,7 @@
     <fieldset>
       <legend>Egg Entry #<%= ee.id %></legend>
       <p>date: <%= ee.created_at.strftime("%m/%d/%Y")%></p>
+      <p>time: <%= ee.created_at.strftime("%l:%M%P UTC") %></p>
       <p>chicken: <%= ee.chicken.name %></p><br/>
       <br/>
     </fieldset>
