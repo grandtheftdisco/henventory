@@ -10,7 +10,7 @@
     <fieldset>
       <legend>Egg Entry #<%= ee.id %></legend>
       <p>date: <%= ee.created_at.strftime("%m/%d/%Y")%></p>
-      <p>time: <%= ee.created_at.strftime("%l:%M%P UTC") %></p>
+      <p>time: <span data-display-timestamp="<%= ee.created_at %>"></span></p>
       <p>chicken: <%= ee.chicken.name %></p><br/>
       <br/>
     </fieldset>
@@ -23,3 +23,17 @@
 
   <br/><br/>
 </div>
+
+<script>
+  addEventListener("pageshow", function (x) {
+    console.log("Hello test");
+    document.querySelectorAll('[data-display-timestamp]').forEach(function (y) {
+      let timestamp = y.dataset.displayTimestamp
+      const time = new Date(timestamp)
+      y.innerText = `${time.toLocaleTimeString(undefined, {
+        hour: '2-digit',
+        minute: '2-digit',
+      })}` ;
+    });
+  });
+</script>
