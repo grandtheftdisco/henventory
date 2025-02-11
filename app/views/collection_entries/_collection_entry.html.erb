@@ -28,7 +28,7 @@
   addEventListener("pageshow", function (_event) {
     console.log("Hello test");
     document.querySelectorAll('[data-display-timestamp]').forEach(function (element) {
-      let timestamp = element.dataset.displayTimestamp
+      const timestamp = element.dataset.displayTimestamp
       const time = new Date(timestamp)
       element.innerText = `${time.toLocaleTimeString(undefined, {
         hour: '2-digit',
@@ -37,7 +37,7 @@
     });
 
     document.querySelectorAll('[data-display-date]').forEach(function (element) {
-      let datestamp = element.dataset.displayDate
+      const datestamp = element.dataset.displayDate
       const date = new Date(datestamp)
       element.innerText = `${date.toLocaleDateString()}` ;
     });
