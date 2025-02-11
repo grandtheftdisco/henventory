@@ -11,8 +11,13 @@
     </div>
   <% end %>
 
-  <h5>User ID: </h5>
-  <input name="collection_entry[user_id]"/><br/><br/>
+  <h5>Who collected?</h5>
+  <select name="collection_entry[user_id][][display_name]">
+    <% User.all.each do |user| %>
+      <option value="<%= user.id %>"><%= user.display_name %></option>
+    <% end %>
+  </select>
+  <br/><br/>
 
   <div>
     <fieldset>
