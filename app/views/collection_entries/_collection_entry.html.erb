@@ -9,7 +9,7 @@
   <% collection_entry.egg_entries.each do |ee| %>
     <fieldset>
       <legend>Egg Entry #<%= ee.id %></legend>
-      <p>date: <%= ee.created_at.strftime("%m/%d/%Y")%></p>
+      <p>date: <span data-display-date="<%= ee.created_at %> "></p>
       <p>time: <span data-display-timestamp="<%= ee.created_at %>"></span></p>
       <p>chicken: <%= ee.chicken.name %></p><br/>
       <br/>
@@ -25,15 +25,22 @@
 </div>
 
 <script>
-  addEventListener("pageshow", function (x) {
+  addEventListener("pageshow", function (_event) {
     console.log("Hello test");
-    document.querySelectorAll('[data-display-timestamp]').forEach(function (y) {
-      let timestamp = y.dataset.displayTimestamp
+    document.querySelectorAll('[data-display-timestamp]').forEach(function (element) {
+      let timestamp = element.dataset.displayTimestamp
       const time = new Date(timestamp)
-      y.innerText = `${time.toLocaleTimeString(undefined, {
+      element.innerText = `${time.toLocaleTimeString(undefined, {
         hour: '2-digit',
         minute: '2-digit',
       })}` ;
     });
+
+    document.querySelectorAll('[data-display-date]').forEach(function (element) {
+      let datestamp = element.dataset.displayDate
+      const date = new Date(datestamp)
+      element.innerText = `${date.toLocaleDateString()}` ;
+    });
+
   });
 </script>
