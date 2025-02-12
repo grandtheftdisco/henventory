@@ -13,7 +13,7 @@
 
   <h5>Who collected?</h5>
   <select name="collection_entry[user_id][][display_name]">
-    <% User.all.each do |user| %>
+    <% @users.each do |user| %>
       <option value="<%= user.id %>"><%= user.display_name %></option>
     <% end %>
   </select>
@@ -27,7 +27,7 @@
       <select name="collection_entry[egg_entries_attributes][][chicken_id]">
 
         <!-- form.collection_select :chicken_id, Chicken.all, :id, :name, prompt: true -->
-        <% Chicken.all.each do |chicken| %>
+        <% @chickens.each do |chicken| %>
           <option value="<%= chicken.id %>"><%= chicken.name %></option>
         <% end %>
       </select><br/><br/>
