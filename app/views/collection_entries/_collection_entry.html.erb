@@ -1,8 +1,8 @@
 <br/>
 <div id="<%= dom_id collection_entry %>" class="">
-  <h3 class="font-bold text-lg text-green-700">Collection Entry #<%= collection_entry.id %></h3>
+  <h3 class="font-extrabold text-lg text-green-800">COLLECTION ENTRY #<%= collection_entry.id %></h3>
 
-  <p class="text-sm">Date: <%= collection_entry.created_at.strftime("%m/%d/%Y") %></p><br/>
+  <p class="text-sm"><%= collection_entry.created_at.strftime("%m/%d/%Y") %></p><br/>
 
   <!-- only display the egg entries whose `c_e_id` matches the `id` of the current collection_entry -->
 
@@ -16,7 +16,7 @@
   <% end %>
   <br/>
 
-  <p class="font-bold text-green-500">Eggs Collected:</p>
+  <p class="font-bold text-green-600">Eggs Collected:</p>
 
   <%= collection_entry.egg_entries.length %>
 

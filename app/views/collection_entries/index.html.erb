@@ -2,17 +2,17 @@
 
 <% content_for :title, "Collection entries" %>
 
-<h2 class="font-extrabold text-green-700 text-2xl pb-7">COLLECTION ENTRIES</h2>
+<h2 class="font-extrabold text-green-800 text-2xl pb-7">COLLECTION ENTRIES</h2>
 
-<div id="collection_entries" >
+<button class="p-5 mb-10 bg-green-600 text-white font-extrabold rounded-2xl"><%= link_to "New collection entry", new_collection_entry_path %></button>
+
+<div id="collection_entries" class="block w-1/2 items-center justify-self-center">
   <% @collection_entries.each do |collection_entry| %>
-    <div class="py-6 border border-amber-500">
+    <div class="py-6 border border-green-700 rounded-2xl bg-green-100">
       <%= render collection_entry %>
       <p class="text-blue-400 hover:text-blue-600">
         <%= link_to "Show this collection entry", collection_entry %>
       </p>
-    </div>
+    </div><br/>
   <% end %>
 </div>
-
-<%= link_to "New collection entry", new_collection_entry_path %>
