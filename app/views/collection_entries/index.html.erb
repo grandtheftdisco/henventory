@@ -2,14 +2,16 @@
 
 <% content_for :title, "Collection entries" %>
 
-<h2>Collection entries</h2>
+<h2 class="font-extrabold text-green-700 text-2xl pb-7">COLLECTION ENTRIES</h2>
 
-<div id="collection_entries">
+<div id="collection_entries" >
   <% @collection_entries.each do |collection_entry| %>
-    <%= render collection_entry %>
-    <p>
-      <%= link_to "Show this collection entry", collection_entry %>
-    </p>
+    <div class="py-6 border border-amber-500">
+      <%= render collection_entry %>
+      <p class="text-blue-400 hover:text-blue-600">
+        <%= link_to "Show this collection entry", collection_entry %>
+      </p>
+    </div>
   <% end %>
 </div>
 
