@@ -23,26 +23,26 @@
   </head>
 
   <body>
-    <header class="text-4xl font-extrabold underline text-blue-400">
-      <h1 class="underline"> Henventory </h1><br/>
+    <header class="p-6 sm:flex-row sm:items-center">
+      <h1 class="text-4xl font-extrabold underline text-blue-400"> Henventory </h1><br/>
     </header> 
 
     <section>
-      <nav>
+      <nav class="inline-flex p-6 ">
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href= "/collection_entries">Collection Entries</a></li>
-          <li><i>Edit Today's Count</i></li>
-          <li><i>View Past Logs</i></li>
-          <li><a href="/chickens">My Flock</a></li>
-          <li><i>Settings</i></li>
-          <li><%= button_to "Log out", session_path, method: :delete if authenticated? %></li>
+          <li class="font-semibold hover:text-sky-700"><a href="/collection_entries"><a href="/">Home</a></li>
+          <li class="font-semibold hover:text-sky-700"><a href="/collection_entries">Collection Entries</a></li>
+          <li>Edit Today's Count</li>
+          <li>View Past Logs</li>
+          <li class="font-semibold hover:text-sky-700"><a href="/collection_entries"><a href="/chickens">My Flock</a></li>
+          <li>Settings</li>
+          <li class="font-semibold hover:text-red-700"><a href="/collection_entries"><%= button_to "Log out", session_path, method: :delete if authenticated? %></a></li>
 
         </ul>
       </nav>
     </section>
 
-    <main>
+    <main class="p-6">
     <%= yield %>
     </main>
   </body>
