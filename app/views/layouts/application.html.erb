@@ -23,26 +23,26 @@
   </head>
 
   <body>
-    <header class="p-6 sm:flex-row sm:items-center">
-      <h1 class="text-4xl font-extrabold underline text-blue-400"> Henventory </h1><br/>
+    <header class="p-4 -mb-6 text-center">
+      <h1 class="text-4xl font-extrabold text-blue-400 hover:text-blue-600"><a href="/">Henventory</a></h1><br/>
     </header> 
 
     <section>
-      <nav class="inline-flex p-6 ">
-        <ul>
-          <li class="font-semibold hover:text-sky-700"><a href="/collection_entries"><a href="/">Home</a></li>
-          <li class="font-semibold hover:text-sky-700"><a href="/collection_entries">Collection Entries</a></li>
-          <li>Edit Today's Count</li>
-          <li>View Past Logs</li>
-          <li class="font-semibold hover:text-sky-700"><a href="/collection_entries"><a href="/chickens">My Flock</a></li>
+      <nav class="flex justify-center">
+        <ul class="flex w:full items-center justify-center">
+          <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries"><a href="/">Home</a></li>
+          <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries">Collection Entries</a></li>
+          <li class="p-4">Edit Today's Count</li>
+          <li class="p-4">View Past Logs</li>
+          <li class="p-4 font-semibold hover:text-blue-400"><a href="/chickens">My Flock</a></li>
           <li>Settings</li>
-          <li class="font-semibold hover:text-red-700"><a href="/collection_entries"><%= button_to "Log out", session_path, method: :delete if authenticated? %></a></li>
+          <li class="p-2 font-semibold hover:text-red-700"><a href="/collection_entries"><%= button_to "Log out", session_path, method: :delete if authenticated? %></a></li>
 
         </ul>
       </nav>
     </section>
 
-    <main class="p-6">
+    <main class="p-6 text-center">
     <%= yield %>
     </main>
   </body>
