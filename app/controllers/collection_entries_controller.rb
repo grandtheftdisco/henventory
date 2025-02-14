@@ -1,22 +1,27 @@
 class CollectionEntriesController < ApplicationController
-  before_action :set_collection_entry, only: %i[ show edit update destroy ]
+  before_action :set_collection_entry, only: %i[ edit update destroy ]
 
   # GET /collection_entries or /collection_entries.json
   def index
-    @collection_entries = CollectionEntry.all
+    @collection_entries = CollectionEntry.includes(egg_entries: :chicken)
   end
 
   # GET /collection_entries/1 or /collection_entries/1.json
   def show
+    @collection_entry = CollectionEntry.includes(egg_entries: :chicken).find(params.expect(:id))
   end
 
   # GET /collection_entries/new
   def new
     @collection_entry = CollectionEntry.new
+    @users = User.all
+    @chickens = Chicken.all
   end
 
   # GET /collection_entries/1/edit
   def edit
+    @users = User.all
+    @chickens = Chicken.all
   end
 
   # POST /collection_entries or /collection_entries.json
