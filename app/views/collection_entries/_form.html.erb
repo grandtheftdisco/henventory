@@ -1,52 +1,45 @@
-<%= form_with(model: collection_entry) do |form| %>
-  <% if collection_entry.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(collection_entry.errors.count, "error") %> prohibited this collection_entry from being saved:</h2>
+<div class="border-1 rounded 2xl">
+  <%= form_with(model: collection_entry) do |form| %>
+    <% if collection_entry.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(collection_entry.errors.count, "error") %> prohibited this collection_entry from being saved:</h2>
 
-      <ul>
-        <% collection_entry.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <h5>Who collected?</h5>
-  <select name="collection_entry[user_id][][display_name]">
-    <% @users.each do |user| %>
-      <option value="<%= user.id %>"><%= user.display_name %></option>
+        <ul>
+          <% collection_entry.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
-  </select>
+
   <br/><br/>
+    <h5>Who collected?</h5>
+    <select name="collection_entry[user_id][][display_name]" class="border-1 rounded 2xl">
+      <% @users.each do |user| %>
+        <option value="<%= user.id %>"><%= user.display_name %></option>
+      <% end %>
+    </select>
+    <br/><br/>
 
-  <div>
-    <fieldset>
-      <legend><h4>EGG ENTRY</h4></legend>
+    <%
+      @collection_entry.egg_entries.build
+    %>
 
-      <h5>Chicken: </h5>
-      <select name="collection_entry[egg_entries_attributes][][chicken_id]">
+    <div class="border-1 rounded 2xl"> 
+      <%= form.fields_for(:egg_entries) do |egg_entry_form| %>
+      <%= render partial: 'egg_entry_form', locals: { egg_entry_form: } %> 
+      <% end %>
+    </div><br/><br/>
 
-        <!-- form.collection_select :chicken_id, Chicken.all, :id, :name, prompt: true -->
-        <% @chickens.each do |chicken| %>
-          <option value="<%= chicken.id %>"><%= chicken.name %></option>
-        <% end %>
-      </select><br/><br/>
-
-      <h5>Egg Count</h5>
-      <input name="collection_entry[egg_entries_attributes][][egg_count]"/><br/><br/>
-
-      <input type="radio" name="test" value="tEsT"/>
-
-      <label for="pineapple">Pineapple</label>
-
-    </fieldset>
-  </div>
-
+    <div>
+      <p class="font-bold">+ add egg entry</p>
+    </div><br/><br/>
+</div><br/><br/>
 
   <!--# egg_entries_attributes: [{chicken_id: 2, egg_count: 1,
  id: 1}]-->
 
-  <div>
+  <div class="border-1 rounded 2xl">
     <%= form.submit %>
   </div>
 
