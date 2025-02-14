@@ -109,6 +109,7 @@ GEM
     erubi (1.13.1)
     et-orbi (1.2.11)
       tzinfo
+    fiddle (1.1.2)
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -350,6 +351,7 @@ DEPENDENCIES
   brakeman
   capybara
   debug
+  fiddle
   importmap-rails
   jbuilder
   kamal
@@ -371,4 +373,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   2.6.2
+   2.6.3
