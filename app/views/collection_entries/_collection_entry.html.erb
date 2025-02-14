@@ -9,7 +9,8 @@
   <% collection_entry.egg_entries.each do |ee| %>
     <div class="text-sm">
       <h4 class="font-semibold">Egg Entry #<%= ee.id %></h4>
-      <p>time: <%= ee.created_at.strftime("%l:%M%P UTC") %></p>
+      <p>date: <span data-display-date="<%= format_date(ee.created_at) %>"></p>
+      <p>time: <span data-display-date="<%= format_time(ee.created_at) %>"></p>
       <p>chicken: <%= ee.chicken.name %></p><br/>
       <br/>
     </div>
@@ -22,3 +23,24 @@
 
   <br/><br/>
 </div>
+
+<script>
+  addEventListener("pageshow", function (_event) {
+    // time
+    document.querySelectorAll('[data-display-timestamp]').forEach(function (element) {
+      const timestamp = element.dataset.displayTimestamp;
+      const time = new Date(timestamp);
+      element.innerText = `${time.toLocaleTimeString(undefined, {
+        hour: '2-digit',
+        minute: '2-digit',
+      })}` ;
+    });
+
+    // date
+    document.querySelectorAll('[data-display-date]').forEach(function (element) {
+      const datestamp = element.dataset.displayDate;
+      const date = new Date(datestamp);
+      element.innerText = `${date.toLocaleDateString()}` ;
+    });
+  });
+</script>
