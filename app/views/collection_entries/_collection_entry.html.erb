@@ -1,23 +1,22 @@
 <br/>
-<div id="<%= dom_id collection_entry %>">
-  <h3><u> > Collection Entry #<%= collection_entry.id %></u></h3>
+<div id="<%= dom_id collection_entry %>" class="">
+  <h3 class="font-extrabold text-lg text-green-800">COLLECTION ENTRY #<%= collection_entry.id %></h3>
 
-  <p><b>Date: <%= collection_entry.created_at.strftime("%m/%d/%Y") %></b></p><br/>
+  <p class="text-sm"><%= collection_entry.created_at.strftime("%m/%d/%Y") %></p><br/>
 
   <!-- only display the egg entries whose `c_e_id` matches the `id` of the current collection_entry -->
 
   <% collection_entry.egg_entries.each do |ee| %>
-    <fieldset>
-      <legend>Egg Entry #<%= ee.id %></legend>
-      <p>date: <%= ee.created_at.strftime("%m/%d/%Y")%></p>
+    <div class="text-sm">
+      <h4 class="font-semibold">Egg Entry #<%= ee.id %></h4>
       <p>time: <%= ee.created_at.strftime("%l:%M%P UTC") %></p>
       <p>chicken: <%= ee.chicken.name %></p><br/>
       <br/>
-    </fieldset>
+    </div>
   <% end %>
   <br/>
 
-  <p><b>Eggs Collected:</b></p>
+  <p class="font-bold text-green-600">Eggs Collected:</p>
 
   <%= collection_entry.egg_entries.length %>
 

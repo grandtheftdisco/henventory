@@ -1,10 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @collection_entry %>
+<div class="block w-1/2 items-center justify-self-center">
+  <div class="py-6 border border-green-700 rounded-2xl bg-green-100">
+    <%= render @collection_entry %>
+  </div><br/>
 
-<div>
-  <%= link_to "Edit this collection entry", edit_collection_entry_path(@collection_entry) %> |
-  <%= link_to "Back to collection entries", collection_entries_path %>
+  <div class="py-6 border border-green-700 rounded-2xl bg-green-100">
+    <%= link_to "Edit this collection entry", edit_collection_entry_path(@collection_entry) %> |
+    <%= link_to "Back to collection entries", collection_entries_path %>
 
-  <%= button_to "Destroy this collection entry", @collection_entry, method: :delete %>
+    <%= button_to "Destroy this collection entry", @collection_entry, method: :delete %>
+  </div>
 </div>

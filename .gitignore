@@ -34,3 +34,5 @@
 /config/master.key
 /notes.txt
 /emojicheats.txt
+/app/assets/builds/*
+!/app/assets/builds/.keep
