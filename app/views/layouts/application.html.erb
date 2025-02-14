@@ -23,26 +23,26 @@
   </head>
 
   <body>
-    <header>
-      <h1> Henventory </h1> <%# <%= @page_title %> 
-    </header>
+    <header class="p-4 -mb-6 text-center">
+      <h1 class="text-4xl font-extrabold text-blue-400 hover:text-blue-600"><a href="/">Henventory</a></h1><br/>
+    </header> 
 
     <section>
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href= "/collection_entries">Collection Entries</a></li>
-          <li><i>Edit Today's Count</i></li>
-          <li><i>View Past Logs</i></li>
-          <li><a href="/chickens">My Flock</a></li>
-          <li><i>Settings</i></li>
-          <li><%= button_to "Log out", session_path, method: :delete if authenticated? %></li>
+      <nav class="flex justify-center">
+        <ul class="flex w:full items-center justify-center text-center">
+          <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries"><a href="/">Home</a></li>
+          <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries">Collection Entries</a></li>
+          <li class="p-4">Edit Today's Count</li>
+          <li class="p-4">View Past Logs</li>
+          <li class="p-4 font-semibold hover:text-blue-400"><a href="/chickens">My Flock</a></li>
+          <li>Settings</li>
+          <li class="p-2 font-semibold hover:text-red-700"><a href="/collection_entries"><%= button_to "Log out", session_path, method: :delete if authenticated? %></a></li>
 
         </ul>
       </nav>
     </section>
 
-    <main>
+    <main class="p-6 text-center">
     <%= yield %>
     </main>
   </body>
