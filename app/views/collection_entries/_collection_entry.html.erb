@@ -9,7 +9,6 @@
   <% collection_entry.egg_entries.each do |ee| %>
     <div class="text-sm">
       <h4 class="font-semibold">Egg Entry #<%= ee.id %></h4>
-      <p>date: <span data-display-date="<%= ee.created_at %>"></p>
       <p>time: <span data-display-timestamp="<%= ee.created_at %>"></p>
       <p>chicken: <%= ee.chicken.name %></p><br/>
       <br/>
