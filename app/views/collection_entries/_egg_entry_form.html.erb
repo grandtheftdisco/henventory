@@ -1,36 +1,4 @@
 <div class="my-5 bg-slate-100 rounded-md p-4 flex items-center justify-center">
 
-  <% if egg_entry_form.object.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(egg_entry.errors.count, "error") %> prohibited this egg entry from being saved:</h2>
-
-        <ul>
-          <% egg_entry.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-  <% end %>
-
-  <div class="block justify-self-center items-center">
-    <h4>EGG ENTRY</h4>
-
-    <h5>Chicken: </h5>
-    <select name="collection_entry[egg_entries_attributes][][chicken_id]" class="border-1 rounded-lg">
-      <% @chickens.each do |chicken| %>
-        <option value="<%= chicken.id %>"><%= chicken.name %></option>
-      <% end %>
-    </select><br/><br/>
-
-    <h5>Egg Count</h5>
-    <input name="collection_entry[egg_entries_attributes][][egg_count]" class="border-1 rounded-lg"/><br/><br/>
-
-    <% if egg_entry_form.object.persisted? %>
-      <label class="flex gap-2 text-sm text-red-500">
-      <%= egg_entry_form.check_box :_destroy %>
-      <span>remove</span>
-      </label>
-    <% end %>
-
-  </div>
+  <p>test egg_entry_form partial </p>
 </div>
