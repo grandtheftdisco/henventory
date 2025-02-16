@@ -1,4 +1,4 @@
-<div class="border-1 rounded 2xl">
+<div class="border-1 rounded-2xl">
   <%= form_with(model: collection_entry) do |form| %>
     <% if collection_entry.errors.any? %>
       <div style="color: red">
@@ -13,8 +13,9 @@
     <% end %>
 
   <br/><br/>
+  <div>
     <h5>Who collected?</h5>
-    <select name="collection_entry[user_id][][display_name]" class="border-1 rounded 2xl">
+    <select name="collection_entry[user_id][][display_name]" class="border-1 rounded-lg">
       <% @users.each do |user| %>
         <option value="<%= user.id %>"><%= user.display_name %></option>
       <% end %>
@@ -25,7 +26,7 @@
       @collection_entry.egg_entries.build
     %>
 
-    <div class="border-1 rounded 2xl"> 
+    <div class="border-1 rounded-2xl items-center"> 
       <%= form.fields_for(:egg_entries) do |egg_entry_form| %>
       <%= render partial: 'egg_entry_form', locals: { egg_entry_form: } %> 
       <% end %>

@@ -1,23 +1,28 @@
+<div class="my-5 bg-slate-100 rounded-md p-4 flex items-center justify-center">
 
-<!--# egg_entries_attributes: [{chicken_id: 2, egg_count: 1,
- id: 1}]-->
+  <% if egg_entry_form.object.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(egg_entry.errors.count, "error") %> prohibited this egg entry from being saved:</h2>
 
+        <ul>
+          <% egg_entry.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
 
-
-
-<!-- code that was in the CE form -->
-<div>
-  <h4>EGG ENTRY</h4>
+  <div class="block justify-self-center items-center">
+    <h4>EGG ENTRY</h4>
 
     <h5>Chicken: </h5>
-    <select name="collection_entry[egg_entries_attributes][][chicken_id]" class="border-1 rounded 2xl">
-
-      <!-- form.collection_select :chicken_id, Chicken.all, :id, :name, prompt: true -->
+    <select name="collection_entry[egg_entries_attributes][][chicken_id]" class="border-1 rounded-lg">
       <% @chickens.each do |chicken| %>
         <option value="<%= chicken.id %>"><%= chicken.name %></option>
       <% end %>
     </select><br/><br/>
 
     <h5>Egg Count</h5>
-    <input name="collection_entry[egg_entries_attributes][][egg_count]" class="border-1 rounded 2xl"/><br/><br/>
+    <input name="collection_entry[egg_entries_attributes][][egg_count]" class="border-1 rounded-lg"/><br/><br/>
+  </div>
 </div>

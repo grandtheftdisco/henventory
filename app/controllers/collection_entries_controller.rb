@@ -73,8 +73,8 @@ class CollectionEntriesController < ApplicationController
       # params.expect(collection_entry: [ :count, :user_id, :chicken_id ])
       # TODO - update expected params to match nested forms in collection_entry/_form
       # params.permit![:collection_entry]
-      params.require(:collection_entry).permit(egg_entries_attributes: [
-        :id, :egg_count, :chicken_id, :collection_entry_id
+      params.require(:collection_entry).permit(:id, egg_entries_attributes: [
+        :id, :egg_count, :chicken_id, :collection_entry_id, :_destroy,
       ])
     end
 end
