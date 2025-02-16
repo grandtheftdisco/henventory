@@ -4,10 +4,10 @@
 
 <h2>My Flock</h2>
 
-<div id="chickens">
+<div id="chickens" class="block columns-1 items-center justify-center">
   <% @chickens.each do |chicken| %>
     <p><strong><%= chicken.name %></strong></p>
-    <%= image_tag("#{chicken.image_url}", width: 200 ) %>
+    <%= image_tag("#{chicken.image_url}", width: 200, class: "justify-self-center" ) %>
     <p>
       <%= link_to "Details", chicken %>
     </p><br/>

@@ -1,12 +1,13 @@
-<%= link_to "Back to chickens", chickens_path %>
-<br/>
+<%= link_to "Back to chickens", chickens_path, class: "hover:text-blue-500" %>
+<br/><br/>
 <p style="color: green"><%= notice %></p>
 
 <%= render @chicken %>
 
+<br/><br/>
 <div>
-  <%= link_to "Edit this chicken", edit_chicken_path(@chicken) %> 
+  <%= link_to "Edit this chicken", edit_chicken_path(@chicken) , class: "hover:text-blue-500" %> 
   <br/>
   <br/>
-  <%= button_to "Destroy this chicken", @chicken, method: :delete %>
+  <%= button_to "Destroy this chicken", @chicken, method: :delete , class: "hover:text-blue-500" %>
 </div>

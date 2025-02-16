@@ -1,21 +1,25 @@
-<div id="<%= dom_id chicken %>">
-  <h3><%= chicken.name %></h3>
+<div id="<%= dom_id chicken %>" class="w-1/2 justify-items-center justify-self-center">
+  <h3 class="text-blue-400 font-extrabold text-5xl"><%= chicken.name %></h3><br/>
 
-  <%= image_tag("#{chicken.image_url}", width: 400 ) %>
+  <%= image_tag("#{chicken.image_url}", width: 400, class: "justify-self-center") %>
   <br/>
-  <p>
-    <strong>Breed:</strong>
-    <%= chicken.breed %>
-  </p>
+  <div class="text-left">
+    <p>
+      <strong>Breed:</strong>
+      <%= chicken.breed %>
+    </p>
 
-  <p>
-    <strong>DOB:</strong>
-    <%= chicken.dob.strftime("%m/%d/%Y") %>
-  </p>
+    <p>
+      <strong>DOB:</strong>
+      <%= chicken.dob.strftime("%m/%d/%Y") %>
+    </p>
 
-  <p>
-    <strong>Tell:</strong>
-    <%= chicken.tell %>
-  </p>
+    <p>
+      <strong>Tell:</strong>
+      <%= chicken.tell %>
+    </p>
+
+    <p><strong>egg avg placeholder:</strong></p>
+  </div>
 
 </div>
