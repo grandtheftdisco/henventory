@@ -16,7 +16,7 @@
 
     <div id="user-id-form-field">
       <%= collection_entry_form.label :user_ID, "COLLECTOR", class:'text-blue-700 font-bold' %>
-      <!-- REFACTOR - use action view form helper (see Chicken select below for details -->
+      <!-- REFACTOR - use action view form helper (see ticket on Trello board for details) -->
       <br/><select name="collection_entry[user_id][][display_name]" class="border-1 rounded-2xl bg-slate-200">
         <% @users.each do |user| %>
           <option value="<%= user.id %>"><%= user.display_name %></option>
@@ -28,12 +28,10 @@
       <div class="border-1 rounded-2xl bg-blue-100">
         <br/>
         <%= fields_for :egg_entry, @collection_entry.egg_entries do |egg_entry_form| %>
-
+                <!-- REFACTOR - use action view form helper (see ticket on Trello board for details) -->
           <h5>Chicken: </h5>
-          <!-- written in straight html, REFACTOR by writing w/ action form syntax ie bracketpercentequals egg_entry_form.text_field :]chicken_id percentequals --- when I had tried that before I got an error that "chicken id" was a method that didn't exist for the given model -->
           <select name="collection_entry[egg_entries_attributes][][chicken_id]" class="border-1 rounded-2xl bg-white">
 
-            <!-- form.collection_select :chicken_id, Chicken.all, :id, :name, prompt: true -->
             <% @chickens.each do |chicken| %>
               <option value="<%= chicken.id %>"><%= chicken.name %></option>
             <% end %>
@@ -42,7 +40,7 @@
           <h5>Egg Count</h5>
           <input name="collection_entry[egg_entries_attributes][][egg_count]" class="border-1 rounded-2xl bg-white"/><br/><br/>
 
-          <!--12:25pm sun - allows submission and displays 'ce successfully updated' on `ce#show` view after click, but doesn't actually delete it. then again i don't think the destroy button worked properly on the last iteration of nesting that I had tried a5861a2dd47f57363ccc70a5e597aef379eda882 -->
+          <!--FIXME (for upcoming branch to keep PRs small in scope) - this delete checkbox does not work-->
           <input type="checkbox" name="collection_entry[egg_entries_attributes][][_destroy]" id="ce-ee-destroy">
           <label for="ce-ee-destroy">delete this ee</label>
         </div><br/>
