@@ -39,5 +39,3 @@
 
 /looptest.rb
 
-# saving for future reference but not using in codebase going forward
-/app/views/egg_entries/_egg_entry_form.html.erb
