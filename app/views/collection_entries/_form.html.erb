@@ -61,19 +61,9 @@
 </div>
     
 <script>
-  // // event listener for page load
-  // addEventListener("load", () => initialEEForm());
-      // NOT WORKING, may need to try a different event
-        // tried load, pageshow, and DOMContentLoaded
-      // this error appears on pageload in the console:
-      // VM7130:1 Uncaught SyntaxError: Failed to execute 'replaceWith' on 'Element': Identifier 'addEEButton' has already been declared
-      // if I refresh the page, initialEEForm DOES run ^^, it just doesn't necessarily load upon initial page load
-
   // event listener for button click 
   const addEEButton = document.querySelector("#add-ee-button");
   addEEButton.addEventListener("click", () => addEEForm());
-  // this works BUT the button is causing the form to submit.
-    // changed it to a p tag and this stopped it from submitting the form
   
   // function for adding new ee div
   function addEEForm() {
@@ -82,11 +72,5 @@
     formDiv.classList.add("bg-blue-100", "border-1", "rounded-2xl");
     formDiv.innerHTML='<br/><%= fields_for :egg_entry, @collection_entry.egg_entries do |egg_entry_form| %><h5>Chicken: </h5><select name="collection_entry[egg_entries_attributes][][chicken_id]" class="border-1 rounded-2xl bg-white"><% @chickens.each do |chicken| %><option value="<%= chicken.id %>"><%= chicken.name %></option><% end %></select><br/><br/><h5>Egg Count</h5><input name="collection_entry[egg_entries_attributes][][egg_count]" class="border-1 rounded-2xl bg-white"/><br/><br/><input type="checkbox" name="collection_entry[egg_entries_attributes][][_destroy]" id="ce-ee-destroy"><label for="ce-ee-destroy">delete this ee</label><% end %><br/>';
     document.querySelector("#ee-container").appendChild(formDiv);
-  }
-
-  // tried writing a specific func for pageload bc of the error I kept getting in console; thought maybe it wasn't allowed to be used twice (seems silly but who knows)
-  function initialEEForm() {
-
-    console.log("Initial EE Form.");
   }
 </script>
