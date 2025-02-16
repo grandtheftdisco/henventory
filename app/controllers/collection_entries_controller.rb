@@ -73,8 +73,13 @@ class CollectionEntriesController < ApplicationController
       # params.expect(collection_entry: [ :count, :user_id, :chicken_id ])
       # TODO - update expected params to match nested forms in collection_entry/_form
       # params.permit![:collection_entry]
-      params.require(:collection_entry).permit(:id, egg_entries_attributes: [
-        :id, :egg_count, :chicken_id, :collection_entry_id, :_destroy,
+
+      # i am not sure this is the right set of params
+      # getting this error when I try to update an egg entry:
+      #  Unpermitted parameter: :user_id. Context: { controller: CollectionEntriesController, action: update, request: #<ActionDispatch::Request:0x000001d6e22d0518>, params: {"_method"=>"patch", "authenticity_token"=>"[FILTERED]", "collection_entry"=>{"user_id"=>[{"display_name"=>"1"}]}, "commit"=>"Update Collection entry", "controller"=>"collection_entries", "action"=>"update", "id"=>"42"} }
+
+      params.require(:collection_entry).permit(:user_id, egg_entries_attributes: [
+        :egg_count, :chicken_id, :collection_entry_id, :_destroy,
       ])
     end
 end

@@ -24,5 +24,13 @@
 
     <h5>Egg Count</h5>
     <input name="collection_entry[egg_entries_attributes][][egg_count]" class="border-1 rounded-lg"/><br/><br/>
+
+    <% if egg_entry_form.object.persisted? %>
+      <label class="flex gap-2 text-sm text-red-500">
+      <%= egg_entry_form.check_box :_destroy %>
+      <span>remove</span>
+      </label>
+    <% end %>
+
   </div>
 </div>

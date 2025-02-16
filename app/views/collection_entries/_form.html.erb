@@ -12,8 +12,12 @@
       </div>
     <% end %>
 
+  <!-- builds empty EE - may remove once I get pageload event listener working -->
+  <% @collection_entry.egg_entries.build %>
+
   <br/><br/>
-  <div>
+    <h3 class="font-extrabold text-lg text-green-800">COLLECTION ENTRY #<%= collection_entry.id %></h3>
+  
     <h5>Who collected?</h5>
     <select name="collection_entry[user_id][][display_name]" class="border-1 rounded-lg">
       <% @users.each do |user| %>
@@ -22,26 +26,75 @@
     </select>
     <br/><br/>
 
-    <%
-      @collection_entry.egg_entries.build
-    %>
+    <div class="" id="ee-container">
+      <!-- placeholder for newly rendered EEs -->
+    
 
-    <div class="border-1 rounded-2xl items-center"> 
-      <%= form.fields_for(:egg_entries) do |egg_entry_form| %>
-      <%= render partial: 'egg_entry_form', locals: { egg_entry_form: } %> 
-      <% end %>
-    </div><br/><br/>
+    <!-- It's starting to feel like my strategies are mixed... this automatic render with the script tag but also this render block below that seems to be relying on an existing array... the only way to understand this strategy is to work through the full example with Stimulus and I'm just not ready to make that leap. Maybe I'll have to bite the bullet and just add Stimulus to this project to get it to do what I want it to do, but I'd really rather not open up that can of worms.-->
 
+      <div class="border-1 rounded-2xl items-center"> 
+        <%= form.fields_for(:egg_entries) do |egg_entry_form| %>
+        <%= render partial: 'egg_entry_form', locals: { egg_entry_form: } %> 
+        <% end %>
+      </div><br/><br/>
+    </div>
+
+
+    <!-- FIXME - both of these buttons are doing the same thing... i don't even know why or how the first one knows to do ANYTHING. it was submitting 'new' forms before I even added the script tag-->
+
+    <!-- DOCS that might help test this issue - https://guides.rubyonrails.org/testing.html#tests-for-show-update-and-delete-actions -->
     <div>
-      <p class="font-bold">+ add egg entry</p>
+      <p class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" id="add-ee-button">+ add egg entry</p>
     </div><br/><br/>
-</div><br/><br/>
 
-  <!--# egg_entries_attributes: [{chicken_id: 2, egg_count: 1,
- id: 1}]-->
-
-  <div class="border-1 rounded 2xl">
-    <%= form.submit %>
-  </div>
+    <!--https://stackoverflow.com/questions/50882477/rails-fields-for-nested-in-form-changes-put-to-post-->
+    <!--https://guides.rubyonrails.org/form_helpers.html#forms-with-patch-put-or-delete-methods-->
+    <!--https://vinioyama.com/blog/rails-nested-attributes-creating-multi-nested-models-at-once-using-one-form/-->
+    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-400 hover:bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
 
 <% end %>
+
+<script>
+  // event listener for page load
+  addEventListener("load", () => initialEEForm());
+  
+  // NOT WORKING, may need to try a different event
+    // tried load, pageshow, and DOMContentLoaded
+  // this error appears on pageload in the console:
+  // VM7130:1 Uncaught SyntaxError: Failed to execute 'replaceWith' on 'Element': Identifier 'addEEButton' has already been declared
+
+  // if I refresh the page, initialEEForm DOES run ^^
+
+ 
+  // event listener for button click 
+  const addEEButton = document.querySelector("#add-ee-button");
+  addEEButton.addEventListener("click", () => addEEForm());
+  // this works BUT the button is causing the form to submit.
+  
+  
+
+
+
+  // function for adding new ee div
+  function addEEForm() {
+    console.log("Hello");
+    // create div that includes form partial
+    const formDiv = document.createElement("div");
+    formDiv.classList.add("bg-green-300");
+    formDiv.innerHTML= '<div><%= @collection_entry.egg_entries.build %></div>'
+    console.log(formDiv.innerHTML);
+
+    //const currentDiv = document.getElementById("add-ee-button");
+    //console.log(currentDiv.innerText);
+    document.querySelector("#ee-container").appendChild(formDiv);
+    //document.querySelector("#ee-container").appendChild(formDiv);
+    // place div in DOM
+
+  }
+
+  // tried writing a specific func for pageload bc of the error I kept getting in console; thought maybe it wasn't allowed to be used twice (seems silly but who knows)
+  function initialEEForm() {
+
+    console.log("Initial EE Form.");
+  }
+</script>
