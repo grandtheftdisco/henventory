@@ -12,6 +12,8 @@
       </div>
     <% end %>
 
+    <h3 class="font-extrabold text-lg text-green-800">COLLECTION ENTRY #<%= collection_entry.id %></h3><br/><br/>
+
     <div id="user-id-form-field">
       <p>ERB: <%= collection_entry_form.label :user_ID %></p>
       <h5>HTML - Who collected?</h5>
@@ -22,7 +24,7 @@
       </select>
     </div> 
 
-    <div id ="nesting-ee-form-sun-test">
+    <div id ="ee-container">
       <%= fields_for :egg_entry, @collection_entry.egg_entries do |egg_entry_form| %>
         <p>/////test for egg_entry fields/////</p><br/>
 
@@ -39,14 +41,21 @@
         <h5>Egg Count</h5>
         <input name="collection_entry[egg_entries_attributes][][egg_count]"/><br/><br/>
 
-        <!--12:25pm sun - allows submission and displays 'ce successfully updated' on `ce#show` view after click, but doesn't actually delete it. then again i don't think the destroy button worked properly on the last iteration of nesting that I had tried -->
+        <!--12:25pm sun - allows submission and displays 'ce successfully updated' on `ce#show` view after click, but doesn't actually delete it. then again i don't think the destroy button worked properly on the last iteration of nesting that I had tried a5861a2dd47f57363ccc70a5e597aef379eda882 -->
         <h5>delete test</h5>
         <input type="checkbox" name="collection_entry[egg_entries_attributes][][_destroy]" id="ce-ee-destroy">
         <label for="ce-ee-destroy">delete this ee</label>
-  </div>
+      </div>
 
       <% end %>
+
+     <div>
+       <p class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" id="add-ee-button">+ add egg entry</p>
+     </div><br/><br/>
+
     </div>
+
+
     
     <%= collection_entry_form.submit class: 'bg-yellow-300' %>
 
@@ -64,7 +73,7 @@
   <% @collection_entry.egg_entries.build %>
 
   <br/><br/>
-    <h3 class="font-extrabold text-lg text-green-800">COLLECTION ENTRY #<%= collection_entry.id %></h3>
+    
   
     <h5>Who collected?</h5>
     <select name="collection_entry[user_id][][display_name]" class="border-1 rounded-lg">
@@ -93,13 +102,12 @@
   
   // function for adding new ee div
   function addEEForm() {
+    console.log("addEEForm Test 1");
     const formDiv = document.createElement("div");
     formDiv.classList.add("bg-green-300");
     formDiv.classList.add("border-1");
     // FIXME - drops object id, need it to render an ee form partial
-    formDiv.innerHTML= '<div><%= 
-      @collection_entry.egg_entries.build 
-      %><br/></div>'
+    formDiv.innerHTML='<div><p>test - new egg entry form added</p></div>';
     document.querySelector("#ee-container").appendChild(formDiv);
   }
 
