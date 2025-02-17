@@ -15,9 +15,9 @@
     <br/>
 
     <div id="user-id-form-field">
-      <%= collection_entry_form.label :user_ID, "COLLECTOR", class:'text-blue-700 font-bold' %>
+      <%= collection_entry_form.label :user_id, "COLLECTOR", class:'text-blue-700 font-bold' %>
       <!-- REFACTOR - use action view form helper (see ticket on Trello board for details) -->
-      <br/><select name="collection_entry[user_id][][display_name]" class="border-1 rounded-2xl bg-slate-200">
+      <br/><select name="collection_entry[user_id]" class="border-1 rounded-2xl bg-slate-200">
         <% @users.each do |user| %>
           <option value="<%= user.id %>"><%= user.display_name %></option>
         <% end %>
