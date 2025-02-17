@@ -7,7 +7,7 @@
   <!-- only display the egg entries whose `c_e_id` matches the `id` of the current collection_entry -->
 
   <% collection_entry.egg_entries.each do |ee| %>
-    <div class="text-sm">
+    <div id="<%= dom_id ee %>" class="text-sm">
       <h4 class="font-semibold">Egg Entry #<%= ee.id %></h4>
       <p>time: <span data-display-timestamp="<%= ee.created_at %>"></p>
       <p>chicken: <%= ee.chicken.name %></p>

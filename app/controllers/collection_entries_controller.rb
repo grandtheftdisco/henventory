@@ -22,6 +22,9 @@ class CollectionEntriesController < ApplicationController
   def edit
     @users = User.all
     @chickens = Chicken.all
+    # testing these assignments to see if I can allow user to see saved data in #edit
+    @collection_entry = CollectionEntry.find(params[:id])
+    @collection_entry.egg_entries = EggEntry.where(collection_entry_id: @collection_entry.id)
   end
 
   # POST /collection_entries or /collection_entries.json
