@@ -25,7 +25,7 @@
     </div> 
 
     <div id ="ee-container" class="block">
-      <div class="border-1 rounded-2xl bg-blue-100">
+      <div class="border-1 rounded-2xl bg-blue-100" id="egg-entry-div">
         <br/>
         <%= fields_for :egg_entry, @collection_entry.egg_entries do |egg_entry_form| %>
                 <!-- REFACTOR - use action view form helper (see ticket on Trello board for details) -->
@@ -65,10 +65,9 @@
   
   // function for adding new ee div
   function addEEForm() {
-    console.log("addEEForm Test 1");
-    const formDiv = document.createElement("div");
-    formDiv.classList.add("bg-blue-100", "border-1", "rounded-2xl");
-    formDiv.innerHTML='<br/><%= fields_for :egg_entry, @collection_entry.egg_entries do |egg_entry_form| %><h5>Chicken: </h5><select name="collection_entry[egg_entries_attributes][][chicken_id]" class="border-1 rounded-2xl bg-white"><% @chickens.each do |chicken| %><option value="<%= chicken.id %>"><%= chicken.name %></option><% end %></select><br/><br/><h5>Egg Count</h5><input name="collection_entry[egg_entries_attributes][][egg_count]" class="border-1 rounded-2xl bg-white"/><br/><br/><input type="checkbox" name="collection_entry[egg_entries_attributes][][_destroy]" id="ce-ee-destroy"><label for="ce-ee-destroy">delete this ee</label><% end %><br/>';
-    document.querySelector("#ee-container").appendChild(formDiv);
+    const originalEggEntryDiv = document.getElementById('egg-entry-div');
+    const clonedEggEntryDiv = originalEggEntryDiv.cloneNode(true);
+
+    document.querySelector("#ee-container").appendChild(clonedEggEntryDiv);
   }
 </script>
