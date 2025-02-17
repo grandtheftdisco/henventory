@@ -19,11 +19,7 @@
   <br/>
 
   <p class="font-bold text-green-600">Eggs Collected: </p>
-  <% i = 0 %>
-  <% collection_entry.egg_entries.each do |ee| %>
-    <% i += (ee.egg_count).to_i %>
-  <% end %>
-  <%= i %>
+  <%= collection_entry.egg_entries.sum(:egg_count) %>
 
   <br/><br/>
 </div>
