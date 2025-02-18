@@ -1,5 +1,5 @@
 <div class="border-1 rounded-2xl bg-blue-200 justify-items-center">
-  <%= form_with(model: collection_entry) do |collection_entry_form| %>
+  <%= form_with model: collection_entry do |collection_entry_form| %>
     <% if collection_entry.errors.any? %>
       <div style="color: red">
         <h2><%= pluralize(collection_entry.errors.count, "error") %> prohibited this collection_entry from being saved:</h2>
@@ -23,13 +23,7 @@
       <%= collection_entry_form.select :user_id, User.all.collect { |person| [ person.display_name, person.id ] }, include_blank: true %>
       <br/><br/><br/>
 
-      <!-- FIXME - this is expecting a collection... is it better to just render a partial ee form here? -->
       <div id='egg-entry-div'>
-        <!--<%= collection_entry.egg_entries.each do |egg_entry| %>-->
-          <!--<p>egg entry rendered</p>-->
-          <!--<%= egg_entry.text_field :egg_count %>-->
-        <!--<% end %>-->
-        <!--<p>after egg entry each</p>-->
         <%= render 'egg_entry_form' %>
       </div>
     </div>
