@@ -16,6 +16,7 @@ class CollectionEntriesController < ApplicationController
     @collection_entry = CollectionEntry.new
     @users = User.all
     @chickens = Chicken.all
+    @egg_entry = EggEntry.new
   end
 
   # GET /collection_entries/1/edit
