@@ -1,4 +1,13 @@
-<div class="my-5 bg-slate-100 rounded-md p-4 flex items-center justify-center">
+<div class="my-5 bg-slate-100 rounded-md p-4 flex items-center justify-center" >
 
-  <p>test egg_entry_form partial </p>
+  <%= fields_for :egg_entries do |ee_fields| %>
+
+    <%= ee_fields.label :chicken_id, "Chicken: " %>
+    <%= ee_fields.collection_select :chicken_id, @chickens, :id, :name %>
+
+    <%= ee_fields.label :egg_count, "Egg Count: " %>
+    <%= ee_fields.text_field :egg_count %>
+
+  <% end %>
+
 </div>

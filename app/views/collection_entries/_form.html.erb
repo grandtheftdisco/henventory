@@ -14,46 +14,32 @@
 
     <br/>
 
-    <div id="user-id-form-field">
-      <%= collection_entry_form.label :user_id, "COLLECTOR", class:'text-blue-700 font-bold' %>
-      <!-- REFACTOR - use action view form helper (see ticket on Trello board for details) -->
-      <br/><select name="collection_entry[user_id]" class="border-1 rounded-2xl bg-slate-200">
-        <% @users.each do |user| %>
-          <option value="<%= user.id %>"><%= user.display_name %></option>
-        <% end %>
-      </select><br/><br/><br/>
-    </div> 
+    <%= collection_entry_form.label :user_id, "COLLECTOR", class:'text-blue-700 font-bold' %>
+    <br/>
+    
+    <div id='ee-container'>
+      <!--REFACTOR DONE~!-->
+      <!--[?] how to add classes here to style-->
+      <%= collection_entry_form.select :user_id, User.all.collect { |person| [ person.display_name, person.id ] }, include_blank: true %>
+      <br/><br/><br/>
 
-    <div id ="ee-container" class="block">
-      <div class="border-1 rounded-2xl bg-blue-100" id="egg-entry-div">
-        <br/>
-        <%= fields_for :egg_entry, @collection_entry.egg_entries do |egg_entry_form| %>
-                <!-- REFACTOR - use action view form helper (see ticket on Trello board for details) -->
-          <h5>Chicken: </h5>
-          <select name="collection_entry[egg_entries_attributes][][chicken_id]" class="border-1 rounded-2xl bg-white">
-
-            <% @chickens.each do |chicken| %>
-              <option value="<%= chicken.id %>"><%= chicken.name %></option>
-            <% end %>
-          </select><br/><br/>
-
-          <h5>Egg Count</h5>
-          <input name="collection_entry[egg_entries_attributes][][egg_count]" class="border-1 rounded-2xl bg-white"/><br/><br/>
-
-          <!--FIXME (for upcoming branch to keep PRs small in scope) - this delete checkbox does not work-->
-          <input type="checkbox" name="collection_entry[egg_entries_attributes][][_destroy]" id="ce-ee-destroy">
-          <label for="ce-ee-destroy">delete this ee</label>
-        </div><br/>
-      </div><br/>
-      <% end %>
-
-     <div>
-       <p class="w-50 bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border-1 rounded-2xl" id="add-ee-button">+ add egg entry</p>
-     </div><br/><br/>
+      <!-- FIXME - this is expecting a collection... is it better to just render a partial ee form here? -->
+      <div id='egg-entry-div'>
+        <!--<%= collection_entry.egg_entries.each do |egg_entry| %>-->
+          <!--<p>egg entry rendered</p>-->
+          <!--<%= egg_entry.text_field :egg_count %>-->
+        <!--<% end %>-->
+        <!--<p>after egg entry each</p>-->
+        <%= render 'egg_entry_form' %>
+      </div>
     </div>
+
+    <div>
+      <p class="w-50 bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border-1 rounded-2xl" id="add-ee-button">+ add egg entry</p>
+    </div><br/><br/>
     
     <%= collection_entry_form.submit class: 'bg-yellow-300' %>
-   <% end %>
+  <% end %>
 
   <br/><br/>
 </div>
