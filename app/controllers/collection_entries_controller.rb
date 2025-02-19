@@ -14,9 +14,10 @@ class CollectionEntriesController < ApplicationController
   # GET /collection_entries/new
   def new
     @collection_entry = CollectionEntry.new
+    1.times { @collection_entry.egg_entries.build }
     @users = User.all
     @chickens = Chicken.all
-    @egg_entry = EggEntry.new
+    # @egg_entry = EggEntry.new
   end
 
   # GET /collection_entries/1/edit
