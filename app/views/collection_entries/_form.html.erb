@@ -1,5 +1,5 @@
 <div class="border-1 rounded-2xl bg-blue-200 justify-items-center">
-  <%= form_with model: collection_entry do |collection_entry_form| %>
+  <%= form_with model: @collection_entry do |collection_entry_form| %>
     <% if collection_entry.errors.any? %>
       <div style="color: red">
         <h2><%= pluralize(collection_entry.errors.count, "error") %> prohibited this collection_entry from being saved:</h2>
@@ -18,13 +18,22 @@
     <br/>
     
     <div id='ee-container'>
-      <!--REFACTOR DONE~!-->
-      <!--[?] how to add classes here to style-->
       <%= collection_entry_form.select :user_id, User.all.collect { |person| [ person.display_name, person.id ] }, include_blank: true %>
       <br/><br/><br/>
 
-      <div id='egg-entry-div'>
-        <%= render 'egg_entry_form' %>
+      <div class="my-5 bg-slate-100 rounded-md p-4 flex items-center justify-center" id="egg-entry-div">
+
+        <%= collection_entry_form.fields_for :egg_entries do |ee_form| %>
+
+          <%= ee_form.label :chicken_id, "Chicken: " %>
+          <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
+
+          <%= ee_form.label :egg_count, "Egg Count: " %>
+          <%= ee_form.text_field :egg_count %>
+
+        <% end %>
+
+      <!--BUG - 2/19 11:22a - when multiple EE forms are rendered in a new CE form, only the most recently added EE form gets saved BUT if we edit that CE and add an EE, it does add that new EE to the CE, so that's a longwinded way to add multiple EEs to the CE. obviously not desirable for full functionality, but noting what DOES work for now to aid in debugging later -->
       </div>
     </div>
 
@@ -44,9 +53,13 @@
   addEEButton.addEventListener("click", () => addEEForm());
   
   // function for adding new ee div
+  // BUG 2/19 11:22a - have to refresh page for the button to work
   function addEEForm() {
     const originalEggEntryDiv = document.getElementById('egg-entry-div');
     const clonedEggEntryDiv = originalEggEntryDiv.cloneNode(true);
+
+    // how to increment the index in here - because this test works
+    clonedEggEntryDiv.querySelectorAll('[id="collection_entry_egg_entries_attributes_0_chicken_id"]')[0].id = "test";
 
     document.querySelector("#ee-container").appendChild(clonedEggEntryDiv);
   }
