@@ -1,17 +1,4 @@
 <div class="my-5 bg-slate-100 rounded-md p-4 flex items-center justify-center" >
-
-  <%= fields_for :egg_entries do |ee_fields| %>
-
-    <%= ee_fields.label :chicken_id, "Chicken: " %>
-    <%= ee_fields.collection_select :chicken_id, @chickens, :id, :name %>
-
-    <%= ee_fields.label :egg_count, "Egg Count: " %>
-    <%= ee_fields.text_field :egg_count %>
-
-    <!--not sure if this is actually saving the collection entry id to the egg entry... but on an old entry (CE#8), inspecting the div with id of egg-entry-div does show that the value of this hidden field is "8" so it's at least picking this up from an existing entry. the problem is that I can't seem to get it to recognize the collection entry id for a new entry because it technically doesn't have an id yet, i think -->
-    <%= ee_fields.hidden_field :collection_entry_id, value: @collection_entry.id %>
-
-  <% end %>
-
-<!--BUG - 2/18 4.23p - egg entries aren't being saved & associated to the collection entry they're technically a part of -->
+  <p>no longer in use; holding onto file just in case<p>
+  <p>egg entry form partial inside collection entries dir</p>
 </div>
