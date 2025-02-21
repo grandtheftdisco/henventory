@@ -9,7 +9,7 @@
   <% collection_entry.egg_entries.each do |ee| %>
     <div id="<%= dom_id ee %>" class="text-sm">
       <h4 class="font-semibold">Egg Entry #<%= ee.id %></h4>
-      <p>time: <span data-display-timestamp="<%= ee.created_at %>"></p>
+      <p>time: <%= format_time(collection_entry.created_at) %></p>
       <p>chicken: <%= ee.chicken.name %></p>
       <p>egg count: <%= ee.egg_count %><br/>
       
@@ -24,24 +24,3 @@
   <br/><br/>
 </div>
 
-<script>
-  addEventListener("load", function (_event) {
-    console.log("event listener added.")
-    // time
-    document.querySelectorAll('[data-display-timestamp]').forEach(function (element) {
-      const timestamp = element.dataset.displayTimestamp;
-      const time = new Date(timestamp);
-      element.innerText = `${time.toLocaleTimeString(undefined, {
-        hour: '2-digit',
-        minute: '2-digit',
-      })}` ;
-    });
-
-    // date
-    document.querySelectorAll('[data-display-date]').forEach(function (element) {
-      const datestamp = element.dataset.displayDate;
-      const date = new Date(datestamp);
-      element.innerText = `${date.toLocaleDateString()}` ;
-    });
-  });
-</script>
