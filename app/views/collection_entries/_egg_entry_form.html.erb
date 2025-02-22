@@ -1,4 +1,19 @@
-<div class="my-5 bg-slate-100 rounded-md p-4 flex items-center justify-center" >
-  <p>no longer in use; holding onto file just in case<p>
-  <p>egg entry form partial inside collection entries dir</p>
+<div class="my-5 bg-slate-100 rounded-md p-4 flex flex-col">
+
+  <div class="flex gap-2 items-center">
+
+    <%= ee_form.label :chicken_id, "Chicken: " %>
+    <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
+
+    <%= ee_form.label :egg_count, "Egg Count: " %>
+    <%= ee_form.text_field :egg_count %>
+    <br/>
+
+    <% if ee_form.object.persisted? %>
+      <br/><label class="flex gap-2 text-sm text-red-500">
+      <%= ee_form.check_box :_destroy %>
+      <span>remove</span>
+      </label>
+    <% end %>
+  </div>
 </div>
