@@ -30,6 +30,14 @@
 
           <%= ee_form.label :egg_count, "Egg Count: " %>
           <%= ee_form.text_field :egg_count %>
+          <br/>
+
+              <% if ee_form.object.persisted? %>
+                <br/><label class="flex gap-2 text-sm text-red-500">
+                  <%= ee_form.check_box :_destroy %>
+                  <span>remove</span>
+                </label>
+              <% end %>
 
         <% end %>
 
