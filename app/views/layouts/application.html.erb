@@ -47,7 +47,7 @@
     </main>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function (_event) {
+      addEventListener("load", function (_event) {
         console.log("event listener added.");
         // time
         document.querySelectorAll('[data-display-timestamp]').forEach(function (element) {
@@ -66,7 +66,6 @@
           element.innerText = `${date.toLocaleDateString()}` ;
         });
       });
-      console.log("outside event.");
     </script>
   </body>
 </html>

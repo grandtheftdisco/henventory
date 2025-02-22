@@ -9,7 +9,8 @@
   <% collection_entry.egg_entries.each do |ee| %>
     <div id="<%= dom_id ee %>" class="text-sm">
       <h4 class="font-semibold">Egg Entry #<%= ee.id %></h4>
-      <p>time: <%= format_time(collection_entry.created_at) %></p>
+      <p>UTC time: <%= format_time(collection_entry.created_at) %></p>
+      <p>time: <span data-display-timestamp="<%= ee.created_at %>"></p>
       <p>chicken: <%= ee.chicken.name %></p>
       <p>egg count: <%= ee.egg_count %><br/>
       
@@ -23,4 +24,3 @@
 
   <br/><br/>
 </div>
-
