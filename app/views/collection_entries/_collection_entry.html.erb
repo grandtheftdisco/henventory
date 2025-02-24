@@ -2,19 +2,14 @@
 <div id="<%= dom_id collection_entry %>" class="">
   <h3 class="font-extrabold text-lg text-green-800">COLLECTION ENTRY #<%= collection_entry.id %></h3>
 
-  <p class="text-sm"><%= format_date(collection_entry.created_at) %></p><br/>
+  <p class="text-sm"><%= local_date(collection_entry.created_at) %></p>
+  <p class="text-sm"><%= local_time(collection_entry.created_at, '%l:%M%P') %></p><br/>
 
   <!-- only display the egg entries whose `c_e_id` matches the `id` of the current collection_entry -->
 
   <% collection_entry.egg_entries.each do |ee| %>
     <div id="<%= dom_id ee %>" class="text-sm">
-      <h4 class="font-semibold">Egg Entry #<%= ee.id %></h4>
-      <p>UTC time: <%= format_time(collection_entry.created_at) %></p>
-      <p>time: <span data-display-timestamp="<%= ee.created_at %>"></p>
-      <p>chicken: <%= ee.chicken.name %></p>
-      <p>egg count: <%= ee.egg_count %><br/>
-      
-      <br/>
+      <p class="text-base font-semibold"><%= ee.chicken.name %></p>
     </div>
   <% end %>
   <br/>
