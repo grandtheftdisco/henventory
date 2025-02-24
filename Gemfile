@@ -45,6 +45,8 @@ gem "thruster", require: false
 # # removing fiddle bc having issue with install of 1.1.6. first issue with lack of ffi, then issue with lack of adequate c compiler
 # gem "fiddle"
 
+gem "local_time"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
