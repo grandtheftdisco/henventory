@@ -26,46 +26,14 @@
     >
       <template data-nested-form-target="formTemplate">
 
-          <%= collection_entry_form.fields_for :egg_entries, EggEntry.new, child_index: "EGG_ENTRY_INDEX" do |ee_form| %>
-            <div class='bg-blue-100 rounded-xl'>
-              <%= ee_form.label :chicken_id, "Chicken: " %>
-              <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
-              <br/><br/>
-              <%= ee_form.label :egg_count, "Egg Count: " %>
-              <%= ee_form.text_field :egg_count, :size=>"10" %>
-              
-
-                  <% if ee_form.object.persisted? %>
-                    <br/><label class="flex gap-2 text-sm text-red-500">
-                      <%= ee_form.check_box :_destroy %>
-                      <span>remove</span>
-                    </label>
-                  <% end %>
-            </div><br/><br/>
-
-          <% end %>
-        </template>
+        <%= collection_entry_form.fields_for :egg_entries, EggEntry.new, child_index: "EGG_ENTRY_INDEX" do |ee_form| %>
+          <%= render partial: 'egg_entry_form', locals: { ee_form: } %>
+        <% end %> 
+      </template>
         
         <div data-nested-form-target="itemsList">
           <%= collection_entry_form.fields_for(:egg_entries) do |ee_form| %>
-          <!--REWORK - abstract this into a form partial-->
-            <div class='bg-blue-100 rounded-xl'>
-              <%= ee_form.label :chicken_id, "Chicken: " %>
-              <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
-              <br/><br/>
-              <%= ee_form.label :egg_count, "Egg Count: " %>
-              <%= ee_form.text_field :egg_count, :size=>"10" %>
-              <br/>
-              
-
-                  <% if ee_form.object.persisted? %>
-                    <br/><label class="flex gap-2 text-sm text-red-500">
-                      <%= ee_form.check_box :_destroy %>
-                      <span>remove</span>
-                    </label>
-                  <% end %>
-            </div>
-            <br/><br/>
+            <%= render partial: 'egg_entry_form', locals: { ee_form: } %>
           <% end %>
           
         </div>
