@@ -14,8 +14,8 @@
 
     <br/>
     <div>
-      <%= collection_entry_form.label :user_id, "COLLECTOR", class:'text-blue-700 font-bold' %>
-      <%= collection_entry_form.select :user_id, User.all.collect { |person| [ person.display_name, person.id ] }, include_blank: true %>
+      <%= collection_entry_form.label :user_id, "COLLECTOR", class:'text-blue-700 font-bold' %><br/>
+      <%= collection_entry_form.select :user_id, User.all.collect { |person| [ person.display_name, person.id ] }, prompt: 'select your name' %>
 
     </div>
     <br/>
@@ -27,47 +27,52 @@
       <template data-nested-form-target="formTemplate">
 
           <%= collection_entry_form.fields_for :egg_entries, EggEntry.new, child_index: "EGG_ENTRY_INDEX" do |ee_form| %>
-            <%= ee_form.label :chicken_id, "Chicken: " %>
-            <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
+            <div class='bg-blue-100 rounded-xl'>
+              <%= ee_form.label :chicken_id, "Chicken: " %>
+              <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
 
-            <%= ee_form.label :egg_count, "Egg Count: " %>
-            <%= ee_form.text_field :egg_count %>
-            <br/>
+              <%= ee_form.label :egg_count, "Egg Count: " %>
+              <%= ee_form.text_field :egg_count %>
+              <br/>
 
-                <% if ee_form.object.persisted? %>
-                  <br/><label class="flex gap-2 text-sm text-red-500">
-                    <%= ee_form.check_box :_destroy %>
-                    <span>remove</span>
-                  </label>
-                <% end %>
+                  <% if ee_form.object.persisted? %>
+                    <br/><label class="flex gap-2 text-sm text-red-500">
+                      <%= ee_form.check_box :_destroy %>
+                      <span>remove</span>
+                    </label>
+                  <% end %>
+            </div>
+
           <% end %>
         </template>
         <div class="text-right">
-          <span class="btn-primary cursor-pointer btn-sm" data-action="click->nested-form#addItem">Add egg entry</span>
-        </div>
+          <span class="btn-primary cursor-pointer btn-sm bg-yellow-100 rounded-2xl p-3" data-action="click->nested-form#addItem">Add egg entry</span>
+        </div><br/>
         <div data-nested-form-target="itemsList">
           <%= collection_entry_form.fields_for(:egg_entries) do |ee_form| %>
           <!--REWORK - abstract this into a form partial-->
-            <%= ee_form.label :chicken_id, "Chicken: " %>
-            <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
+            <div class='bg-blue-100 rounded-xl'>
+              <%= ee_form.label :chicken_id, "Chicken: " %>
+              <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
 
-            <%= ee_form.label :egg_count, "Egg Count: " %>
-            <%= ee_form.text_field :egg_count %>
-            <br/>
+              <%= ee_form.label :egg_count, "Egg Count: " %>
+              <%= ee_form.text_field :egg_count %>
+              <br/>
 
-                <% if ee_form.object.persisted? %>
-                  <br/><label class="flex gap-2 text-sm text-red-500">
-                    <%= ee_form.check_box :_destroy %>
-                    <span>remove</span>
-                  </label>
-                <% end %>
+                  <% if ee_form.object.persisted? %>
+                    <br/><label class="flex gap-2 text-sm text-red-500">
+                      <%= ee_form.check_box :_destroy %>
+                      <span>remove</span>
+                    </label>
+                  <% end %>
+            </div>
           <% end %>
+          
         </div>
-    </div>
-
+    </div><br/>
     
     <div class="inline">
-      <%= collection_entry_form.submit class: 'bg-yellow-300' %>
+      <%= collection_entry_form.submit class: 'bg-yellow-300 p-3 rounded-2xl'%>
     </div>
   <% end %>
 

@@ -6,9 +6,8 @@
   </div><br/>
 
   <div class="py-6 border border-green-700 rounded-2xl bg-green-100">
-    <%= link_to "Edit this collection entry", edit_collection_entry_path(@collection_entry) %> |
-    <%= link_to "Back to collection entries", collection_entries_path %>
-
-    <%= button_to "Destroy this collection entry", @collection_entry, method: :delete %>
+    <%= link_to "Edit this entry", edit_collection_entry_path(@collection_entry), class:'hover:underline' %><br/>
+    <%= link_to "Back to all", collection_entries_path, class:'hover:underline' %>
+    <%= button_to "Delete this entry", @collection_entry, method: :delete, class: 'text-red-600 hover:underline' %>
   </div>
 </div>
