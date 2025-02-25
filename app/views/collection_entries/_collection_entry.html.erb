@@ -1,8 +1,7 @@
 <div id="<%= dom_id collection_entry %>" class="">
 
   <p class="text-xl font-bold"><%= local_relative_time(collection_entry.created_at, 'weekday-or-date') %></p>
-  <p class="text-sm"><%= local_time(collection_entry.created_at, '%l:%M%P') %></p>
-  <p class="text-sm">Collected by User #<%= collection_entry.user_id %></p><br/>
+  <p class="text-sm"><%= local_time(collection_entry.created_at, '%l:%M%P') %></p><br/>
 
   <!-- only display the egg entries whose `c_e_id` matches the `id` of the current collection_entry -->
 
