@@ -1,7 +1,7 @@
-<div id="<%= dom_id collection_entry %>" class="">
+<div id="<%= dom_id collection_entry %>" class="text-blue-950">
 
-  <p class="text-xl font-bold"><%= local_relative_time(collection_entry.created_at, 'weekday-or-date') %></p>
-  <p class="text-sm"><%= local_time(collection_entry.created_at, '%l:%M%P') %></p><br/>
+  <a href="/collection_entries/<%= collection_entry.id %>"><p class="text-xl font-bold hover:font-extrabold"><%= local_relative_time(collection_entry.created_at, 'weekday-or-date') %></p>
+  <p class="text-sm"><%= local_time(collection_entry.created_at, '%l:%M%P') %></p></a><br/>
 
   <!-- only display the egg entries whose `c_e_id` matches the `id` of the current collection_entry -->
 
@@ -14,8 +14,8 @@
   <% end %>
   <br/>
 
-  <p class="font-bold text-lime-700">Eggs Collected: </p>
-  <%= collection_entry.egg_entries.sum(:egg_count) %>
+  <p class="font-bold text-lime-700">🥚 Eggs Collected: <%= collection_entry.egg_entries.sum(:egg_count) %></p>
+  
 
   <br/><br/>
 </div>
