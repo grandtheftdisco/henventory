@@ -6,9 +6,6 @@ class CollectionEntriesController < ApplicationController
     @collection_entries = CollectionEntry.includes(egg_entries: :chicken)
   end
 
-  def today
-  end
-
   # GET /collection_entries/1 or /collection_entries/1.json
   def show
     @collection_entry = CollectionEntry.includes(egg_entries: :chicken).find(params.expect(:id))
