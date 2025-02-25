@@ -7,24 +7,26 @@
   <!-- only display the egg entries whose `c_e_id` matches the `id` of the current collection_entry -->
 
   <% collection_entry.egg_entries.each do |ee| %>
-    <div class="text-sm">
+    <div id="<%= dom_id ee %>" class="text-sm">
       <h4 class="font-semibold">Egg Entry #<%= ee.id %></h4>
       <p>time: <span data-display-timestamp="<%= ee.created_at %>"></p>
-      <p>chicken: <%= ee.chicken.name %></p><br/>
+      <p>chicken: <%= ee.chicken.name %></p>
+      <p>egg count: <%= ee.egg_count %><br/>
+      
       <br/>
     </div>
   <% end %>
   <br/>
 
-  <p class="font-bold text-green-600">Eggs Collected:</p>
-
-  <%= collection_entry.egg_entries.length %>
+  <p class="font-bold text-green-600">Eggs Collected: </p>
+  <%= collection_entry.egg_entries.sum(:egg_count) %>
 
   <br/><br/>
 </div>
 
 <script>
-  addEventListener("pageshow", function (_event) {
+  addEventListener("load", function (_event) {
+    console.log("event listener added.")
     // time
     document.querySelectorAll('[data-display-timestamp]').forEach(function (element) {
       const timestamp = element.dataset.displayTimestamp;

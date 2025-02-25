@@ -22,6 +22,9 @@ class CollectionEntriesController < ApplicationController
   def edit
     @users = User.all
     @chickens = Chicken.all
+    # testing these assignments to see if I can allow user to see saved data in #edit
+    @collection_entry = CollectionEntry.find(params[:id])
+    @collection_entry.egg_entries = EggEntry.where(collection_entry_id: @collection_entry.id)
   end
 
   # POST /collection_entries or /collection_entries.json
@@ -72,6 +75,10 @@ class CollectionEntriesController < ApplicationController
     def collection_entry_params
       # params.expect(collection_entry: [ :count, :user_id, :chicken_id ])
       # TODO - update expected params to match nested forms in collection_entry/_form
-      params.permit![:collection_entry]
+      # params.permit![:collection_entry]
+
+      params.require(:collection_entry).permit(:user_id, egg_entries_attributes: [
+        :egg_count, :chicken_id, :collection_entry_id, :_destroy,
+      ])
     end
 end
