@@ -1,4 +1,4 @@
-<div class="border-1 rounded-2xl bg-blue-200 justify-items-center">
+<div class="border-1 rounded-2xl bg-blue-200 justify-items-center text-xl w-200 justify-self-center">
   <%= form_with model: @collection_entry do |collection_entry_form| %>
     <% if collection_entry.errors.any? %>
       <div style="color: red">
@@ -13,8 +13,8 @@
     <% end %>
 
     <br/>
-    <div>
-      <%= collection_entry_form.label :user_id, "COLLECTOR", class:'text-blue-700 font-bold' %><br/>
+    <div class="bg-blue-50 rounded-2xl">
+      <%= collection_entry_form.label :user_id, "Who collected?", class:'text-blue-800 font-bold text-2xl' %><br/>
       <%= collection_entry_form.select :user_id, User.all.collect { |person| [ person.display_name, person.id ] }, prompt: 'select your name' %>
 
     </div>
@@ -30,10 +30,10 @@
             <div class='bg-blue-100 rounded-xl'>
               <%= ee_form.label :chicken_id, "Chicken: " %>
               <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
-
+              <br/><br/>
               <%= ee_form.label :egg_count, "Egg Count: " %>
-              <%= ee_form.text_field :egg_count %>
-              <br/>
+              <%= ee_form.text_field :egg_count, :size=>"10" %>
+              
 
                   <% if ee_form.object.persisted? %>
                     <br/><label class="flex gap-2 text-sm text-red-500">
@@ -41,23 +41,22 @@
                       <span>remove</span>
                     </label>
                   <% end %>
-            </div>
+            </div><br/><br/>
 
           <% end %>
         </template>
-        <div class="text-right">
-          <span class="btn-primary cursor-pointer btn-sm bg-yellow-100 rounded-2xl p-3" data-action="click->nested-form#addItem">Add egg entry</span>
-        </div><br/>
+        
         <div data-nested-form-target="itemsList">
           <%= collection_entry_form.fields_for(:egg_entries) do |ee_form| %>
           <!--REWORK - abstract this into a form partial-->
             <div class='bg-blue-100 rounded-xl'>
               <%= ee_form.label :chicken_id, "Chicken: " %>
               <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
-
+              <br/><br/>
               <%= ee_form.label :egg_count, "Egg Count: " %>
-              <%= ee_form.text_field :egg_count %>
+              <%= ee_form.text_field :egg_count, :size=>"10" %>
               <br/>
+              
 
                   <% if ee_form.object.persisted? %>
                     <br/><label class="flex gap-2 text-sm text-red-500">
@@ -66,12 +65,16 @@
                     </label>
                   <% end %>
             </div>
+            <br/><br/>
           <% end %>
           
         </div>
+        <div class="">
+          <span class="btn-primary cursor-pointer btn-sm bg-yellow-100 rounded-2xl p-3" data-action="click->nested-form#addItem">Got another egg?</span>
+        </div><br/>
     </div><br/>
     
-    <div class="inline">
+    <div class="inline cursor-pointer">
       <%= collection_entry_form.submit class: 'bg-yellow-300 p-3 rounded-2xl'%>
     </div>
   <% end %>
