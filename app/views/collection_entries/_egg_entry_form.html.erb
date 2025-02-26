@@ -1,4 +1,15 @@
-<div class="my-5 bg-slate-100 rounded-md p-4 flex items-center justify-center">
+<div class='bg-blue-100 rounded-xl'>
+  <%= ee_form.label :chicken_id, "Chicken: " %>
+  <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
+  <br/><br/>
+  <%= ee_form.label :egg_count, "Egg Count: " %>
+  <%= ee_form.text_field :egg_count, :size=>"10" %>
+  
 
-  <p>test egg_entry_form partial </p>
-</div>
+      <% if ee_form.object.persisted? %>
+        <br/><label class="flex gap-2 text-sm text-red-500">
+          <%= ee_form.check_box :_destroy %>
+          <span>remove</span>
+        </label>
+      <% end %>
+</div><br/><br/>

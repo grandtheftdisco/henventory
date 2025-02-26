@@ -1,5 +1,5 @@
-<div class="border-1 rounded-2xl bg-blue-200 justify-items-center">
-  <%= form_with(model: collection_entry) do |collection_entry_form| %>
+<div class="border-1 rounded-2xl bg-blue-200 justify-items-center text-xl text-blue-950 justify-self-center md:shrink-0 w-100 md:w-150 items-center">
+  <%= form_with model: @collection_entry do |collection_entry_form| %>
     <% if collection_entry.errors.any? %>
       <div style="color: red">
         <h2><%= pluralize(collection_entry.errors.count, "error") %> prohibited this collection_entry from being saved:</h2>
@@ -13,61 +13,38 @@
     <% end %>
 
     <br/>
-
-    <div id="user-id-form-field">
-      <%= collection_entry_form.label :user_id, "COLLECTOR", class:'text-blue-700 font-bold' %>
-      <!-- REFACTOR - use action view form helper (see ticket on Trello board for details) -->
-      <br/><select name="collection_entry[user_id]" class="border-1 rounded-2xl bg-slate-200">
-        <% @users.each do |user| %>
-          <option value="<%= user.id %>"><%= user.display_name %></option>
-        <% end %>
-      </select><br/><br/><br/>
-    </div> 
-
-    <div id ="ee-container" class="block">
-      <div class="border-1 rounded-2xl bg-blue-100" id="egg-entry-div">
-        <br/>
-        <%= fields_for :egg_entry, @collection_entry.egg_entries do |egg_entry_form| %>
-                <!-- REFACTOR - use action view form helper (see ticket on Trello board for details) -->
-          <h5>Chicken: </h5>
-          <select name="collection_entry[egg_entries_attributes][][chicken_id]" class="border-1 rounded-2xl bg-white">
-
-            <% @chickens.each do |chicken| %>
-              <option value="<%= chicken.id %>"><%= chicken.name %></option>
-            <% end %>
-          </select><br/><br/>
-
-          <h5>Egg Count</h5>
-          <input name="collection_entry[egg_entries_attributes][][egg_count]" class="border-1 rounded-2xl bg-white"/><br/><br/>
-
-          <!--FIXME (for upcoming branch to keep PRs small in scope) - this delete checkbox does not work-->
-          <input type="checkbox" name="collection_entry[egg_entries_attributes][][_destroy]" id="ce-ee-destroy">
-          <label for="ce-ee-destroy">delete this ee</label>
-        </div><br/>
-      </div><br/>
-      <% end %>
-
-     <div>
-       <p class="w-50 bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border-1 rounded-2xl" id="add-ee-button">+ add egg entry</p>
-     </div><br/><br/>
+    <div class="bg-blue-50 rounded-2xl">
+      <%= collection_entry_form.label :user_id, "Who collected?", class:'text-blue-800 font-bold text-2xl' %><br/>
+      <%= collection_entry_form.select :user_id, User.all.collect { |person| [ person.display_name, person.id ] }, prompt: 'select your name' %>
     </div>
+    <br/>
     
-    <%= collection_entry_form.submit class: 'bg-yellow-300' %>
-   <% end %>
+    <div class='my-4 flex flex-col'
+        data-controller='nested-form'
+        data-nested-form-pattern-to-replace-with-index-value='EGG_ENTRY_INDEX'
+    >
+      <template data-nested-form-target="formTemplate">
+
+        <%= collection_entry_form.fields_for :egg_entries, EggEntry.new, child_index: "EGG_ENTRY_INDEX" do |ee_form| %>
+          <%= render partial: 'egg_entry_form', locals: { ee_form: } %>
+        <% end %> 
+      </template>
+        
+      <div data-nested-form-target="itemsList">
+        <%= collection_entry_form.fields_for(:egg_entries) do |ee_form| %>
+          <%= render partial: 'egg_entry_form', locals: { ee_form: } %>
+        <% end %>
+      </div>
+
+      <div>
+        <span class="btn-primary cursor-pointer btn-sm bg-yellow-100 hover:bg-yellow-300 rounded-2xl p-3" data-action="click->nested-form#addItem">Got another egg?</span>
+      </div><br/>
+    </div><br/>
+    
+    <div class="inline cursor-pointer">
+      <%= collection_entry_form.submit class: 'bg-yellow-300 hover:bg-yellow-500 p-3 rounded-2xl'%>
+    </div>
+  <% end %>
 
   <br/><br/>
 </div>
-    
-<script>
-  // event listener for button click 
-  const addEEButton = document.querySelector("#add-ee-button");
-  addEEButton.addEventListener("click", () => addEEForm());
-  
-  // function for adding new ee div
-  function addEEForm() {
-    const originalEggEntryDiv = document.getElementById('egg-entry-div');
-    const clonedEggEntryDiv = originalEggEntryDiv.cloneNode(true);
-
-    document.querySelector("#ee-container").appendChild(clonedEggEntryDiv);
-  }
-</script>
