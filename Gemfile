@@ -42,7 +42,10 @@ gem "thruster", require: false
 
 # added to silence this warning upon starting Rails console:
 # "fiddle.rb was loaded from the standard library, but will no longer be part of the default gems starting from Ruby 3.5.0."
-gem "fiddle"
+# # removing fiddle bc having issue with install of 1.1.6. first issue with lack of ffi, then issue with lack of adequate c compiler
+# gem "fiddle"
+
+gem "local_time"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

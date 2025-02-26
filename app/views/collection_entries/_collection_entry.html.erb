@@ -1,45 +1,21 @@
-<br/>
-<div id="<%= dom_id collection_entry %>" class="">
-  <h3 class="font-extrabold text-lg text-green-800">COLLECTION ENTRY #<%= collection_entry.id %></h3>
+<div id="<%= dom_id collection_entry %>" class="text-blue-950">
 
-  <p class="text-sm"><%= format_date(collection_entry.created_at) %></p><br/>
+  <a href="/collection_entries/<%= collection_entry.id %>"><p class="text-xl font-bold hover:font-extrabold"><%= local_relative_time(collection_entry.created_at, 'weekday-or-date') %></p>
+  <p class="text-sm"><%= local_time(collection_entry.created_at, '%l:%M%P') %></p></a><br/>
 
   <!-- only display the egg entries whose `c_e_id` matches the `id` of the current collection_entry -->
 
   <% collection_entry.egg_entries.each do |ee| %>
-    <div class="text-sm">
-      <h4 class="font-semibold">Egg Entry #<%= ee.id %></h4>
-      <p>time: <span data-display-timestamp="<%= ee.created_at %>"></p>
-      <p>chicken: <%= ee.chicken.name %></p><br/>
+    <div id="<%= dom_id ee %>" class="text-sm justify-items-center">
+      <p class="text-xl font-semibold"><%= ee.chicken.name %></p>
+      <%= image_tag("#{ee.chicken.image_url}", width: 200 ) %>
       <br/>
     </div>
   <% end %>
   <br/>
 
-  <p class="font-bold text-green-600">Eggs Collected:</p>
-
-  <%= collection_entry.egg_entries.length %>
+  <p class="font-bold text-lime-700">🥚 Eggs Collected: <%= collection_entry.egg_entries.sum(:egg_count) %></p>
+  
 
   <br/><br/>
 </div>
-
-<script>
-  addEventListener("pageshow", function (_event) {
-    // time
-    document.querySelectorAll('[data-display-timestamp]').forEach(function (element) {
-      const timestamp = element.dataset.displayTimestamp;
-      const time = new Date(timestamp);
-      element.innerText = `${time.toLocaleTimeString(undefined, {
-        hour: '2-digit',
-        minute: '2-digit',
-      })}` ;
-    });
-
-    // date
-    document.querySelectorAll('[data-display-date]').forEach(function (element) {
-      const datestamp = element.dataset.displayDate;
-      const date = new Date(datestamp);
-      element.innerText = `${date.toLocaleDateString()}` ;
-    });
-  });
-</script>

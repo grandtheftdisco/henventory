@@ -1,53 +1,50 @@
-<%= form_with(model: collection_entry) do |form| %>
-  <% if collection_entry.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(collection_entry.errors.count, "error") %> prohibited this collection_entry from being saved:</h2>
+<div class="border-1 rounded-2xl bg-blue-200 justify-items-center text-xl text-blue-950 justify-self-center md:shrink-0 w-100 md:w-150 items-center">
+  <%= form_with model: @collection_entry do |collection_entry_form| %>
+    <% if collection_entry.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(collection_entry.errors.count, "error") %> prohibited this collection_entry from being saved:</h2>
 
-      <ul>
-        <% collection_entry.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <ul>
+          <% collection_entry.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <br/>
+    <div class="bg-blue-50 rounded-2xl">
+      <%= collection_entry_form.label :user_id, "Who collected?", class:'text-blue-800 font-bold text-2xl' %><br/>
+      <%= collection_entry_form.select :user_id, User.all.collect { |person| [ person.display_name, person.id ] }, prompt: 'select your name' %>
+    </div>
+    <br/>
+    
+    <div class='my-4 flex flex-col'
+        data-controller='nested-form'
+        data-nested-form-pattern-to-replace-with-index-value='EGG_ENTRY_INDEX'
+    >
+      <template data-nested-form-target="formTemplate">
+
+        <%= collection_entry_form.fields_for :egg_entries, EggEntry.new, child_index: "EGG_ENTRY_INDEX" do |ee_form| %>
+          <%= render partial: 'egg_entry_form', locals: { ee_form: } %>
+        <% end %> 
+      </template>
+        
+      <div data-nested-form-target="itemsList">
+        <%= collection_entry_form.fields_for(:egg_entries) do |ee_form| %>
+          <%= render partial: 'egg_entry_form', locals: { ee_form: } %>
         <% end %>
-      </ul>
+      </div>
+
+      <div>
+        <span class="btn-primary cursor-pointer btn-sm bg-yellow-100 hover:bg-yellow-300 rounded-2xl p-3" data-action="click->nested-form#addItem">Got another egg?</span>
+      </div><br/>
+    </div><br/>
+    
+    <div class="inline cursor-pointer">
+      <%= collection_entry_form.submit class: 'bg-yellow-300 hover:bg-yellow-500 p-3 rounded-2xl'%>
     </div>
   <% end %>
 
-  <h5>Who collected?</h5>
-  <select name="collection_entry[user_id][][display_name]">
-    <% @users.each do |user| %>
-      <option value="<%= user.id %>"><%= user.display_name %></option>
-    <% end %>
-  </select>
   <br/><br/>
-
-  <div>
-    <fieldset>
-      <legend><h4>EGG ENTRY</h4></legend>
-
-      <h5>Chicken: </h5>
-      <select name="collection_entry[egg_entries_attributes][][chicken_id]">
-
-        <!-- form.collection_select :chicken_id, Chicken.all, :id, :name, prompt: true -->
-        <% @chickens.each do |chicken| %>
-          <option value="<%= chicken.id %>"><%= chicken.name %></option>
-        <% end %>
-      </select><br/><br/>
-
-      <h5>Egg Count</h5>
-      <input name="collection_entry[egg_entries_attributes][][egg_count]"/><br/><br/>
-
-      <input type="radio" name="test" value="tEsT"/>
-
-      <label for="pineapple">Pineapple</label>
-
-    </fieldset>
-  </div>
-
-
-  <!--# egg_entries_attributes: [{chicken_id: 2, egg_count: 1,
- id: 1}]-->
-
-  <div>
-    <%= form.submit %>
-  </div>
-
-<% end %>
+</div>

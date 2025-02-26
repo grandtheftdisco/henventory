@@ -22,21 +22,21 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <header class="p-4 -mb-6">
-      <h1 class="text-4xl font-extrabold text-blue-400 hover:text-blue-600 text-center"><a href="/">Henventory</a></h1><br/>
+  <body class="bg-blue-50">
+    <header class="p-4 -mb-6 text-center bg-blue-100">
+      <h1 class="text-5xl font-extrabold text-blue-400 hover:text-amber-600"><a href="/">🐔 Henventory 🥚</a></h1><br/>
     </header> 
 
     <section>
-      <nav class="flex justify-center">
-        <ul class="flex w:full items-center justify-center text-center">
-          <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries"><a href="/">Home</a></li>
+      <nav class="flex justify-center bg-blue-200 ">
+        <ul class="flex w:full items-center justify-center text-center text-blue-950">
+          <li class="p-4 font-semibold hover:text-blue-400"><a href="/">Home</a></li>
           <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries">Collection Entries</a></li>
-          <li class="p-4">Edit Today's Count</li>
+          <li class="p-4 font-semibold hover:text-blue-400"><a href="/todays_count">Today's Count</a></li>
           <li class="p-4">View Past Logs</li>
           <li class="p-4 font-semibold hover:text-blue-400"><a href="/chickens">My Flock</a></li>
           <li>Settings</li>
-          <li class="p-2 font-semibold hover:text-red-700"><a href="/collection_entries"><%= button_to "Log out", session_path, method: :delete if authenticated? %></a></li>
+          <li class="p-2 font-semibold hover:text-red-700"><%= button_to "Log out", session_path, method: :delete if authenticated? %></a></li>
 
         </ul>
       </nav>
@@ -45,5 +45,6 @@
     <main class="p-6 text-center">
     <%= yield %>
     </main>
+
   </body>
 </html>

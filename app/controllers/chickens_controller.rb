@@ -4,6 +4,7 @@ class ChickensController < ApplicationController
   # GET /chickens or /chickens.json
   def index
     @chickens = Chicken.all
+    # FUTURE CONSIDERATION - how to filter out the Test chickens/data here for display to user without deleting the Test chickens in Active Record
   end
 
   # GET /chickens/1 or /chickens/1.json
