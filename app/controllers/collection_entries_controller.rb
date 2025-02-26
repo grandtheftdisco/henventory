@@ -3,17 +3,19 @@ class CollectionEntriesController < ApplicationController
 
   # GET /collection_entries or /collection_entries.json
   def index
-    @collection_entries = Current.user.collection_entries.includes(egg_entries: :chicken)
+    # remember - Current.user.collection_entries.includes(...) scopes it to only entries made by that user
+    @collection_entries = Current.household.collection_entries.includes(egg_entries: :chicken)
   end
 
   # GET /collection_entries/1 or /collection_entries/1.json
   def show
-    @collection_entry = Current.user.collection_entries.includes(egg_entries: :chicken).find(params.expect(:id))
+    @collection_entry = Current.household.collection_entries.includes(egg_entries: :chicken).find(params.expect(:id))
+    @user = Current.user
   end
 
   # GET /collection_entries/new
   def new
-    @collection_entry = Current.user.collection_entries.build
+    @collection_entry = Current.household.collection_entries.build
     @collection_entry.egg_entries.build
     @users = Current.household.users.all
     @chickens = Current.household.chickens
@@ -24,13 +26,14 @@ class CollectionEntriesController < ApplicationController
     @users = Current.household.users
     @chickens = Current.household.chickens
     # testing these assignments to see if I can allow user to see saved data in #edit
-    @collection_entry = Current.user.collection_entries.find(params[:id])
+    @collection_entry = Current.household.collection_entries.find(params[:id])
     @collection_entry.egg_entries = EggEntry.where(collection_entry_id: @collection_entry.id)
   end
 
   # POST /collection_entries or /collection_entries.json
   def create
-    @collection_entry = Current.user.collection_entries.build(collection_entry_params)
+    # in progress
+    @collection_entry = Current.household.collection_entries.build(collection_entry_params)
 
     respond_to do |format|
       if @collection_entry.save
@@ -69,7 +72,7 @@ class CollectionEntriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_collection_entry
-      @collection_entry = Current.user.collection_entries.find(params.expect(:id))
+      @collection_entry = Current.household.collection_entries.find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.
