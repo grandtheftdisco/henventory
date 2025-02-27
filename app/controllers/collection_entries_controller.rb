@@ -10,7 +10,7 @@ class CollectionEntriesController < ApplicationController
   # GET /collection_entries/1 or /collection_entries/1.json
   def show
     @collection_entry = Current.household.collection_entries.includes(egg_entries: :chicken).find(params.expect(:id))
-    @user = Current.user
+    
   end
 
   # GET /collection_entries/new
