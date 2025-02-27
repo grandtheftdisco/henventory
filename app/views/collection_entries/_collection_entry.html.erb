@@ -2,7 +2,6 @@
 
   <a href="/collection_entries/<%= collection_entry.id %>"><p class="text-xl font-bold hover:font-extrabold"><%= local_relative_time(collection_entry.created_at, 'weekday-or-date') %></p>
   <p class="text-sm"><%= local_time(collection_entry.created_at, '%l:%M%P') %></p></a><br/>
-  <p>User ID# <%= collection_entry.user_id %> </p>
   <p>Collected by <%= collection_entry.user.display_name %></p><br/>
 
   <% collection_entry.egg_entries.each do |ee| %>

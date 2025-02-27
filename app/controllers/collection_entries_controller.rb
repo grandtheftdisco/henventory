@@ -17,7 +17,7 @@ class CollectionEntriesController < ApplicationController
   def new
     @collection_entry = Current.household.collection_entries.build
     @collection_entry.egg_entries.build
-    @users = Current.household.users.all
+    @users = Current.household.users
     @chickens = Current.household.chickens
   end
 
@@ -34,6 +34,8 @@ class CollectionEntriesController < ApplicationController
   def create
     # in progress
     @collection_entry = Current.household.collection_entries.build(collection_entry_params)
+    @users = Current.household.users.all
+    @chickens = Current.household.chickens
 
     respond_to do |format|
       if @collection_entry.save
