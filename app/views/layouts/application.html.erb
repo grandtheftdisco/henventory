@@ -30,14 +30,18 @@
     <section>
       <nav class="flex justify-center bg-blue-200 ">
         <ul class="flex w:full items-center justify-center text-center text-blue-950">
-          <li class="p-4 font-semibold hover:text-blue-400"><a href="/">Home</a></li>
-          <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries">Collection Entries</a></li>
-          <li class="p-4 font-semibold hover:text-blue-400"><a href="/todays_count">Today's Count</a></li>
-          <li class="p-4">View Past Logs</li>
-          <li class="p-4 font-semibold hover:text-blue-400"><a href="/chickens">My Flock</a></li>
-          <li>Settings</li>
-          <li class="p-2 font-semibold hover:text-red-700"><%= button_to "Log out", session_path, method: :delete if authenticated? %></a></li>
-
+          <% if Current.user %>
+            <li class="p-4 font-semibold hover:text-blue-400"><a href="/">Home</a></li>
+            <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries">Collection Entries</a></li>
+            <li class="p-4 font-semibold hover:text-blue-400"><a href="/todays_count">Today's Count</a></li>
+            <li class="p-4">View Past Logs</li>
+            <li class="p-4 font-semibold hover:text-blue-400"><a href="/chickens">My Flock</a></li>
+            <li class="p-4">Settings</li>
+            <li class="p-4 font-semibold hover:text-red-700"><%= button_to "👋 Log out", session_path, method: :delete%></a></li>
+          <% else %>
+            <li class="p-4 font-semibold text-lime-800"><%= link_to ' ➡️ Login', '/login' %></li>
+            <li class="p-4 font-bold hover:text-blue-800"><%= link_to '✍️ Sign up', '/signup' %></li>
+          <% end %>
         </ul>
       </nav>
     </section>
