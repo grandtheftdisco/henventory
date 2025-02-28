@@ -1,15 +1,17 @@
 <div class='bg-blue-100 rounded-xl'>
-  <%= ee_form.label :chicken_id, "Chicken: " %>
-  <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
-  <br/><br/>
-  <%= ee_form.label :egg_count, "Egg Count: " %>
-  <%= ee_form.text_field :egg_count, :size=>"10" %>
   
-
-      <% if ee_form.object.persisted? %>
-        <br/><label class="flex gap-2 text-sm text-red-500">
-          <%= ee_form.check_box :_destroy %>
-          <span>remove</span>
-        </label>
-      <% end %>
+  <% if ee_form.object.persisted? %>
+    <%= ee_form.label :chicken_id, "Chicken: " %>
+    <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
+    <label class="text-red-600 px-2">
+      <%= ee_form.check_box :_destroy %>
+      <span>remove</span>
+    </label>
+  <% else %>
+    <%= ee_form.label :chicken_id, "Chicken: " %>
+    <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
+    <br/><br/>
+    <%= ee_form.label :egg_count, "Egg laid " %>
+    <%= ee_form.checkbox :egg_count %>
+  <% end %>
 </div><br/><br/>
