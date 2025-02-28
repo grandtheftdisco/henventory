@@ -4,7 +4,7 @@ class EggEntry < ApplicationRecord
 
   validate :household_owns_chicken!
 
-  def household_owns_chicken!()
+  def household_owns_chicken!
     Current.household.chickens.find(chicken_id)
   rescue ActiveRecord::RecordNotFound
     errors.add(:chicken_id, 'must be owned by household')
