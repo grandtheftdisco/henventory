@@ -2,9 +2,6 @@ class PasswordsController < ApplicationController
   allow_unauthenticated_access
   before_action :set_user_by_token, only: %i[ edit update ]
 
-  def show
-  end
-
   # renders password recovery form
   def new
   end

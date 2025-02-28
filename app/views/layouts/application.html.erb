@@ -37,7 +37,7 @@
             <li class="p-4">View Past Logs</li>
             <li class="p-4 font-semibold hover:text-blue-400"><a href="/chickens">My Flock</a></li>
             <li class="p-4">Settings</li>
-            <li class="p-4 font-semibold hover:text-red-700"><%= button_to "👋 Log out", session_path, method: :delete if authenticated? %></a></li>
+            <li class="p-4 font-semibold hover:text-red-700"><%= button_to "👋 Log out", session_path, method: :delete%></a></li>
           <% else %>
             <li class="p-4 font-semibold text-lime-800"><%= link_to ' ➡️ Login', '/login' %></li>
             <li class="p-4 font-bold hover:text-blue-800"><%= link_to '✍️ Sign up', '/signup' %></li>
