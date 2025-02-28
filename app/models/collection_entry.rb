@@ -6,4 +6,4 @@ class CollectionEntry < ApplicationRecord
   belongs_to :user
 end
 
-# `allow_destroy: true` allows users to delete EEs, and `reject_if` ensures that if the egg count field is left blank, it will be ignored
+# `allow_destroy: true` allows users to delete EEs

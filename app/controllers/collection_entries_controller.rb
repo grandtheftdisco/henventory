@@ -25,14 +25,12 @@ class CollectionEntriesController < ApplicationController
   def edit
     @users = Current.household.users
     @chickens = Current.household.chickens
-    # testing these assignments to see if I can allow user to see saved data in #edit
     @collection_entry = Current.household.collection_entries.find(params[:id])
     @collection_entry.egg_entries = EggEntry.where(collection_entry_id: @collection_entry.id)
   end
 
   # POST /collection_entries or /collection_entries.json
   def create
-    # in progress
     @collection_entry = Current.household.collection_entries.build(collection_entry_params)
     @users = Current.household.users.all
     @chickens = Current.household.chickens
@@ -79,10 +77,6 @@ class CollectionEntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def collection_entry_params
-      # params.expect(collection_entry: [ :count, :user_id, :chicken_id ])
-      # TODO - update expected params to match nested forms in collection_entry/_form
-      # params.permit![:collection_entry]
-
       params.require(:collection_entry).permit(:user_id, egg_entries_attributes: [
         :id, :egg_count, :chicken_id, :collection_entry_id, :_destroy,
       ])
