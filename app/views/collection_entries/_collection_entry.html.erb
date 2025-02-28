@@ -7,13 +7,15 @@
 
   <% collection_entry.egg_entries.each do |ee| %>
     <div id="<%= dom_id ee %>" class="text-sm justify-items-center">
-      <p class="text-2xl font-semibold"><%= ee.chicken.name %></p><br/>
+      <p class="text-xl font-semibold"><%= ee.chicken.name %></p>
       <%= image_tag("#{ee.chicken.image_url}", width: 200 ) %>
       <br/>
     </div>
   <% end %>
   <br/>
 
-  <p class="font-bold text-lime-700 text-lg">🥚 Eggs Collected: <%= collection_entry.egg_entries.sum(:egg_count) %></p>
+  <p class="font-bold text-lime-700">🥚 Eggs Collected: <%= collection_entry.egg_entries.sum(:egg_count) %></p>
+  
+
   <br/><br/>
 </div>
