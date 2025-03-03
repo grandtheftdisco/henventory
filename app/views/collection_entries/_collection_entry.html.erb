@@ -1,22 +1,19 @@
-<div id="<%= dom_id collection_entry %>" class="">
+<div id="<%= dom_id collection_entry %>" class="text-blue-950">
 
-  <p class="text-xl font-bold"><%= local_relative_time(collection_entry.created_at, 'weekday-or-date') %></p>
-  <p class="text-sm"><%= local_time(collection_entry.created_at, '%l:%M%P') %></p>
-  <p class="text-sm">Collected by User #<%= collection_entry.user_id %></p><br/>
+  <a href="/collection_entries/<%= collection_entry.id %>"><p class="text-xl font-bold hover:font-extrabold"><%= local_relative_time(collection_entry.created_at, 'weekday-or-date') %></p>
+  <p class="text-sm"><%= local_time(collection_entry.created_at, '%l:%M%P') %></p></a><br/>
 
   <!-- only display the egg entries whose `c_e_id` matches the `id` of the current collection_entry -->
 
   <% collection_entry.egg_entries.each do |ee| %>
     <div id="<%= dom_id ee %>" class="text-sm justify-items-center">
-      <p class="text-xl font-semibold"><%= ee.chicken.name %></p>
+      <p class="text-2xl font-semibold"><%= ee.chicken.name %></p><br/>
       <%= image_tag("#{ee.chicken.image_url}", width: 200 ) %>
       <br/>
     </div>
   <% end %>
   <br/>
 
-  <p class="font-bold text-lime-700">Eggs Collected: </p>
-  <%= collection_entry.egg_entries.sum(:egg_count) %>
-
+  <p class="font-bold text-lime-700 text-lg">🥚 Eggs Collected: <%= collection_entry.egg_entries.sum(:egg_count) %></p>
   <br/><br/>
 </div>

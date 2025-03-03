@@ -1,4 +1,4 @@
-<div class="border-1 rounded-2xl bg-blue-200 justify-items-center text-xl w-200 justify-self-center">
+<div class="border-1 rounded-2xl bg-blue-200 justify-items-center text-xl text-blue-950 justify-self-center md:shrink-0 w-100 md:w-150 items-center">
   <%= form_with model: @collection_entry do |collection_entry_form| %>
     <% if collection_entry.errors.any? %>
       <div style="color: red">
@@ -16,7 +16,6 @@
     <div class="bg-blue-50 rounded-2xl">
       <%= collection_entry_form.label :user_id, "Who collected?", class:'text-blue-800 font-bold text-2xl' %><br/>
       <%= collection_entry_form.select :user_id, User.all.collect { |person| [ person.display_name, person.id ] }, prompt: 'select your name' %>
-
     </div>
     <br/>
     
@@ -31,19 +30,19 @@
         <% end %> 
       </template>
         
-        <div data-nested-form-target="itemsList">
-          <%= collection_entry_form.fields_for(:egg_entries) do |ee_form| %>
-            <%= render partial: 'egg_entry_form', locals: { ee_form: } %>
-          <% end %>
-          
-        </div>
-        <div class="">
-          <span class="btn-primary cursor-pointer btn-sm bg-yellow-100 rounded-2xl p-3" data-action="click->nested-form#addItem">Got another egg?</span>
-        </div><br/>
+      <div data-nested-form-target="itemsList">
+        <%= collection_entry_form.fields_for(:egg_entries) do |ee_form| %>
+          <%= render partial: 'egg_entry_form', locals: { ee_form: } %>
+        <% end %>
+      </div>
+
+      <div>
+        <span class="btn-primary cursor-pointer btn-sm bg-yellow-100 hover:bg-yellow-300 rounded-2xl p-3" data-action="click->nested-form#addItem">Got another egg?</span>
+      </div><br/>
     </div><br/>
     
     <div class="inline cursor-pointer">
-      <%= collection_entry_form.submit class: 'bg-yellow-300 p-3 rounded-2xl'%>
+      <%= collection_entry_form.submit class: 'bg-yellow-300 hover:bg-yellow-500 p-3 rounded-2xl'%>
     </div>
   <% end %>
 
