@@ -4,7 +4,7 @@
 
 <h2 class="font-extrabold text-amber-700 text-3xl pb-7">COLLECTION ENTRIES</h2>
 
-<button class="p-5 mb-10 bg-amber-600 text-white font-bold rounded-2xl"><%= link_to "➕ new collection entry", new_collection_entry_path %></button>
+<%= render "new_ce_button" %>
 
 <div id="collection_entries" class="md:shrink-0 w-100 md:w-150 items-center justify-self-center">
   <% @collection_entries.each do |collection_entry| %>
