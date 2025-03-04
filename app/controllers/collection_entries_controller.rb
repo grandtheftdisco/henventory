@@ -16,30 +16,28 @@ class CollectionEntriesController < ApplicationController
 
   # GET /collection_entries/1 or /collection_entries/1.json
   def show
-    @collection_entry = CollectionEntry.includes(egg_entries: :chicken).find(params.expect(:id))
+    @collection_entry = Current.household.collection_entries.includes(egg_entries: :chicken).find(params.expect(:id))
+    
   end
 
   # GET /collection_entries/new
   def new
-    @collection_entry = CollectionEntry.new
+    @collection_entry = Current.household.collection_entries.build
     @collection_entry.egg_entries.build
-    @users = User.all
-    @chickens = Chicken.all
-    # @egg_entry = EggEntry.new
+    setup_form_data
   end
 
   # GET /collection_entries/1/edit
   def edit
-    @users = User.all
-    @chickens = Chicken.all
-    # testing these assignments to see if I can allow user to see saved data in #edit
-    @collection_entry = CollectionEntry.find(params[:id])
+    setup_form_data
+    @collection_entry = Current.household.collection_entries.find(params[:id])
     @collection_entry.egg_entries = EggEntry.where(collection_entry_id: @collection_entry.id)
   end
 
   # POST /collection_entries or /collection_entries.json
   def create
-    @collection_entry = CollectionEntry.new(collection_entry_params)
+    @collection_entry = Current.household.collection_entries.build(collection_entry_params)
+    setup_form_data
 
     respond_to do |format|
       if @collection_entry.save
@@ -78,17 +76,18 @@ class CollectionEntriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_collection_entry
-      @collection_entry = CollectionEntry.find(params.expect(:id))
+      @collection_entry = Current.household.collection_entries.find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.
     def collection_entry_params
-      # params.expect(collection_entry: [ :count, :user_id, :chicken_id ])
-      # TODO - update expected params to match nested forms in collection_entry/_form
-      # params.permit![:collection_entry]
-
       params.require(:collection_entry).permit(:user_id, egg_entries_attributes: [
         :id, :egg_count, :chicken_id, :collection_entry_id, :_destroy,
       ])
+    end
+
+    def setup_form_data
+      @users = Current.household.users.all
+      @chickens = Current.household.chickens
     end
 end

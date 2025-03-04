@@ -12,7 +12,8 @@ class EggEntriesController < ApplicationController
 
   # GET /egg_entries/new
   def new
-    @egg_entry = EggEntry.new
+    @egg_entry = EggEntry.new(egg_entry_params)
+    @chickens = Current.user.household.chickens
   end
 
   # GET /egg_entries/1/edit
@@ -23,6 +24,7 @@ class EggEntriesController < ApplicationController
   def create
     raise params.permit!.to_h.inspect
     @egg_entry = EggEntry.new(egg_entry_params)
+    @chickens = Current.user.household.chickens
 
     respond_to do |format|
       if @egg_entry.save
@@ -66,6 +68,6 @@ class EggEntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def egg_entry_params
-      params.expect(egg_entry: [ :egg_count, :chicken_id, :collection_entry_id ])
+      params.expect(egg_entry: [ :egg_count, :collection_entry_id ])
     end
 end
