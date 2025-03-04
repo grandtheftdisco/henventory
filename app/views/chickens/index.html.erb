@@ -8,7 +8,7 @@
   <% @chickens.each do |chicken| %>
     <div class="py-5 bg-blue-200 md:shrink-0 w-90 md:w-120 justify-items-center rounded-2xl">
       <p class="font-bold text-2xl"><%= chicken.name %></p><br/>
-      <%= image_tag(chicken.image_url, width: 300 ) %>
+      <%= image_tag(chicken.image_url, width: 300) %>
       <p class="text-blue-800 font-semibold hover:font-bold text-lg"><br/>
         <%= link_to "🗒️ Details", chicken %>
       </p>

@@ -3,8 +3,15 @@ class CollectionEntriesController < ApplicationController
 
   # GET /collection_entries or /collection_entries.json
   def index
-    # remember - Current.user.collection_entries.includes(...) scopes it to only entries made by that user
-    @collection_entries = Current.household.collection_entries.includes(egg_entries: :chicken)
+    # remember to scope to current household once that PR is approved!
+    @collection_entries = CollectionEntry.includes(egg_entries: :chicken).order("id :desc")
+  end
+
+  def today
+    # remember to scope to current household once that PR is approved!
+    @collection_entries = CollectionEntry.includes(egg_entries: :chicken)
+    .where(created_at: Time.current.localtime.beginning_of_day..Time.current.localtime.end_of_day)
+    .order("id :desc")
   end
 
   # GET /collection_entries/1 or /collection_entries/1.json
