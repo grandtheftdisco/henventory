@@ -2,8 +2,7 @@ class Session < ApplicationRecord
   belongs_to :user
   
   def household
-    return if !user
-    user.household
+    user&.household
   end
 
 end

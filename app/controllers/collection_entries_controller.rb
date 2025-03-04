@@ -17,14 +17,12 @@ class CollectionEntriesController < ApplicationController
   def new
     @collection_entry = Current.household.collection_entries.build
     @collection_entry.egg_entries.build
-    @users = Current.household.users
-    @chickens = Current.household.chickens
+    setup_form_data
   end
 
   # GET /collection_entries/1/edit
   def edit
-    @users = Current.household.users
-    @chickens = Current.household.chickens
+    setup_form_data
     @collection_entry = Current.household.collection_entries.find(params[:id])
     @collection_entry.egg_entries = EggEntry.where(collection_entry_id: @collection_entry.id)
   end
@@ -32,8 +30,7 @@ class CollectionEntriesController < ApplicationController
   # POST /collection_entries or /collection_entries.json
   def create
     @collection_entry = Current.household.collection_entries.build(collection_entry_params)
-    @users = Current.household.users.all
-    @chickens = Current.household.chickens
+    setup_form_data
 
     respond_to do |format|
       if @collection_entry.save
@@ -80,5 +77,10 @@ class CollectionEntriesController < ApplicationController
       params.require(:collection_entry).permit(:user_id, egg_entries_attributes: [
         :id, :egg_count, :chicken_id, :collection_entry_id, :_destroy,
       ])
+    end
+
+    def setup_form_data
+      @users = Current.household.users.all
+      @chickens = Current.household.chickens
     end
 end
