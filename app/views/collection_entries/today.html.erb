@@ -1,16 +1,12 @@
-<p style="color: green"><%= notice %></p>
+<p class="font-bold text-3xl text-lime-700"><%= local_time(Time.current, '%A, %B %e') %></p>
 
-<% content_for :title, "Collection entries" %>
-
-<h2 class="font-extrabold text-amber-700 text-3xl pb-7">COLLECTION ENTRIES</h2>
-
+<h3 class="font-bold text-lime-800 text-2xl pt-7 pb-10">TALLY:<%= render "todays_eggs" %></h2>
 <%= render "new_ce_button" %>
-
 <div id="collection_entries" class="md:shrink-0 w-100 md:w-150 items-center justify-self-center">
   <% @collection_entries.each do |collection_entry| %>
     <div class="flex flex-col py-6 border border-blue-300 rounded-2xl bg-blue-200">
       <%= render collection_entry %>
-      <p class="text-blue-600 hover:font-semibold">
+      <p class="text-blue-800 font-semibold hover:font-bold text-lg">
         <%= link_to "🗒️ Details", collection_entry %>
       </p>
     </div><br/>
