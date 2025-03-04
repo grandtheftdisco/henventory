@@ -3,7 +3,15 @@ class CollectionEntriesController < ApplicationController
 
   # GET /collection_entries or /collection_entries.json
   def index
+    # remember to scope to current household once that PR is approved!
+    @collection_entries = CollectionEntry.includes(egg_entries: :chicken).order("id :desc")
+  end
+
+  def today
+    # remember to scope to current household once that PR is approved!
     @collection_entries = CollectionEntry.includes(egg_entries: :chicken)
+    .where(created_at: Time.current.localtime.beginning_of_day..Time.current.localtime.end_of_day)
+    .order("id :desc")
   end
 
   # GET /collection_entries/1 or /collection_entries/1.json
@@ -17,6 +25,7 @@ class CollectionEntriesController < ApplicationController
     @collection_entry.egg_entries.build
     @users = User.all
     @chickens = Chicken.all
+    # @egg_entry = EggEntry.new
   end
 
   # GET /collection_entries/1/edit

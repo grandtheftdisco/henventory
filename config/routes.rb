@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   resources :chickens
-  resources :collection_entries
+  resources :collection_entries do
+    collection do
+      get :today
+    end
+  end
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
