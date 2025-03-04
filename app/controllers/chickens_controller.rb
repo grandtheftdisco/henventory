@@ -3,8 +3,7 @@ class ChickensController < ApplicationController
 
   # GET /chickens or /chickens.json
   def index
-    @chickens = Chicken.all
-    # FUTURE CONSIDERATION - how to filter out the Test chickens/data here for display to user without deleting the Test chickens in Active Record
+    @chickens = Current.household.chickens
   end
 
   # GET /chickens/1 or /chickens/1.json
@@ -13,7 +12,7 @@ class ChickensController < ApplicationController
 
   # GET /chickens/new
   def new
-    @chicken = Chicken.new
+    @chicken = Current.household.chickens.build
   end
 
   # GET /chickens/1/edit
@@ -22,7 +21,7 @@ class ChickensController < ApplicationController
 
   # POST /chickens or /chickens.json
   def create
-    @chicken = Chicken.new(chicken_params)
+    @chicken = Current.household.chickens.build(chicken_params)
 
     respond_to do |format|
       if @chicken.save
@@ -61,7 +60,7 @@ class ChickensController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_chicken
-      @chicken = Chicken.find(params.expect(:id))
+      @chicken = Current.household.chickens.find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.

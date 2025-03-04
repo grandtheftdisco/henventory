@@ -13,6 +13,12 @@ class EggEntry < ApplicationRecord
     # if total exceeds 2, throw error to prevent submission of form
   end
 
-end
 
-# adding in the `belongs_to` line ensures that the EggEntry class knows about the relationship it has with CollectionEntry, and also adds inverse methods to the EggEntry class, ie `egg_entry.collection_entry`
+  validate :household_owns_chicken!
+
+  def household_owns_chicken!
+    collection_entry.user.household.chickens.find(chicken_id)
+  rescue ActiveRecord::RecordNotFound
+    errors.add(:chicken_id, 'must be owned by household')
+  end
+end

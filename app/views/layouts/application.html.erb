@@ -31,10 +31,8 @@
       <nav class="flex justify-center bg-blue-200 ">
         <ul class="flex w:full items-center justify-center text-center text-blue-950">
           <% if Current.user %>
-            <li class="p-4 font-semibold hover:text-blue-400"><a href="/">Home</a></li>
-            <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries">Collection Entries</a></li>
-            <li class="p-4 font-semibold hover:text-blue-400"><a href="/todays_count">Today's Count</a></li>
-            <li class="p-4">View Past Logs</li>
+            <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries/today">📅 Today's Entries</a></li>
+            <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries">All Entries</a></li>
             <li class="p-4 font-semibold hover:text-blue-400"><a href="/chickens">My Flock</a></li>
             <li class="p-4">Settings</li>
             <li class="p-4 font-semibold hover:text-red-700"><%= button_to "👋 Log out", session_path, method: :delete%></a></li>
