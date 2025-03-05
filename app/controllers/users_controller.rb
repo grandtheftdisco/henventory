@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     user.build_household
     if user.save
       start_new_session_for user 
-      redirect_to chickens_path
+      redirect_to '/'
     else
       raise user.errors.inspect
       render :new
