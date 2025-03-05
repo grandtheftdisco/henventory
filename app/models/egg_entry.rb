@@ -3,6 +3,7 @@ class EggEntry < ApplicationRecord
   belongs_to :chicken
 
   # rejects EEs with an egg_count of 0 (ie, unchecked box)
+  # BUG - this validation is not recognizing when the box is checked....
   validates :egg_count, acceptance: true
 
   # validation for 2 egg max
@@ -12,7 +13,6 @@ class EggEntry < ApplicationRecord
     # sum the total # of eggs logged for this chicken today
     # if total exceeds 2, throw error to prevent submission of form
   end
-
 
   validate :household_owns_chicken!
 
