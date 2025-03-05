@@ -3,15 +3,14 @@ class CollectionEntriesController < ApplicationController
 
   # GET /collection_entries or /collection_entries.json
   def index
-    # remember to scope to current household once that PR is approved!
-    @collection_entries = CollectionEntry.includes(egg_entries: :chicken).order("id :desc")
+    @collection_entries = Current.household.collection_entries.includes(egg_entries: :chicken).order("id DESC")
   end
 
   def today
     # remember to scope to current household once that PR is approved!
-    @collection_entries = CollectionEntry.includes(egg_entries: :chicken)
+    @collection_entries = Current.household.collection_entries.includes(egg_entries: :chicken)
     .where(created_at: Time.current.localtime.beginning_of_day..Time.current.localtime.end_of_day)
-    .order("id :desc")
+    .order("id DESC")
   end
 
   # GET /collection_entries/1 or /collection_entries/1.json
@@ -87,7 +86,7 @@ class CollectionEntriesController < ApplicationController
     end
 
     def setup_form_data
-      @users = Current.household.users.all
+      @users = Current.household.users
       @chickens = Current.household.chickens
     end
 end
