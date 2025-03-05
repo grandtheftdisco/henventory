@@ -10,8 +10,6 @@
   <% else %>
     <%= ee_form.label :chicken_id, "Chicken: " %>
     <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
-    <br/><br/>
-    <%= ee_form.label :egg_count, "Egg laid " %>
-    <%= ee_form.checkbox :egg_count %>
+    <%= ee_form.hidden_field :egg_count, value: 1 %>
   <% end %>
 </div><br/><br/>
