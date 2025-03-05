@@ -8,8 +8,8 @@
       <span>remove</span>
     </label>
   <% else %>
-    <%= ee_form.label :chicken_id, "Chicken: " %>
-    <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
+    <%= ee_form.label :chicken_id, "Chicken: ", class:"font-bold" %>
+    <%= ee_form.collection_select :chicken_id, @chickens, :id, :name, prompt: 'select a chicken' %>
     <%= ee_form.hidden_field :egg_count, value: 1 %>
   <% end %>
-</div><br/><br/>
+</div><br/>
