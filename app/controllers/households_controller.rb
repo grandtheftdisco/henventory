@@ -1,24 +1,6 @@
 class HouseholdsController < ApplicationController
   before_action :set_household, only: %i[ show edit update destroy ]
 
-  # GET /households or /households.json
-  def index
-    @households = Household.all
-  end
-
-  # GET /households/1 or /households/1.json
-  def show
-  end
-
-  # GET /households/new
-  def new
-    @household = Household.new
-  end
-
-  # GET /households/1/edit
-  def edit
-  end
-
   # POST /households or /households.json
   def create
     @household = Household.new(household_params)

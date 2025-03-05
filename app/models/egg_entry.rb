@@ -2,7 +2,6 @@ class EggEntry < ApplicationRecord
   belongs_to :collection_entry
   belongs_to :chicken
 
-  # validation for 2 egg max
   validate :only_2_eggs_max_per_day_per_chicken!
 
     def only_2_eggs_max_per_day_per_chicken!
