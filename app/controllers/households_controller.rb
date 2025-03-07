@@ -29,7 +29,7 @@ class HouseholdsController < ApplicationController
   def update
     respond_to do |format|
       if @household.update(household_params)
-        format.html { redirect_to @household, notice: "Household was successfully updated." }
+        format.html { redirect_to '/settings', notice: "Household was successfully updated." }
         format.json { render :show, status: :ok, location: @household }
       else
         format.html { render :edit, status: :unprocessable_entity }
