@@ -1,10 +1,7 @@
-<% content_for :title, "Editing household" %>
+<% content_for :title, "Household Settings" %>
 
 <div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing household</h1>
+  <h1 class="font-bold text-4xl mb-5">Change Household Name</h1>
 
   <%= render "form", household: @household %>
-
-  <%= link_to "Show this household", @household, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to households", households_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
 </div>

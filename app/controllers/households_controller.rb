@@ -56,6 +56,6 @@ class HouseholdsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def household_params
-      params.fetch(:household, {})
+      params.require(:household).permit(:name)
     end
 end
