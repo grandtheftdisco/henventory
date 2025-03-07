@@ -3,8 +3,7 @@ class CollectionEntriesController < ApplicationController
 
   # GET /collection_entries or /collection_entries.json
   def index
-    # remember to scope to current household once that PR is approved!
-    @collection_entries = CollectionEntry.includes(egg_entries: :chicken).order("id desc")
+    @pagy, @collection_entries = pagy(Current.household.collection_entries.includes(egg_entries: :chicken).order("id desc"))
   end
 
   def today

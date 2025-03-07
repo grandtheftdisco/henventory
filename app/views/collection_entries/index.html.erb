@@ -1,10 +1,12 @@
 <p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Collection entries" %>
-
 <h2 class="font-extrabold text-amber-700 text-3xl pb-7">COLLECTION ENTRIES</h2>
 
-<%= render "new_ce_button" %>
+<%= render "new_ce_button" %><br/>
+
+<%== pagy_info(@pagy, item_name: 'Entry'.pluralize(@pagy.count)) %>
+<%== pagy_nav(@pagy) %>
 
 <div id="collection_entries" class="md:shrink-0 w-100 md:w-150 items-center justify-self-center">
   <% @collection_entries.each do |collection_entry| %>
