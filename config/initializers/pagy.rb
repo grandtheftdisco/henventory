@@ -41,7 +41,7 @@ Pagy::DEFAULT[:ends]        = true                  # default
 
 # Calendar extra: Add pagination filtering by calendar time unit (year, quarter, month, week, day)
 # See https://ddnexus.github.io/pagy/docs/extras/calendar
-# require 'pagy/extras/calendar'
+require 'pagy/extras/calendar'
 # Default for each calendar unit class in IRB:
 # >> Pagy::Calendar::Year::DEFAULT
 # >> Pagy::Calendar::Quarter::DEFAULT
@@ -50,12 +50,12 @@ Pagy::DEFAULT[:ends]        = true                  # default
 # >> Pagy::Calendar::Day::DEFAULT
 #
 # Uncomment the following lines, if you need calendar localization without using the I18n extra
-# module LocalizePagyCalendar
-#   def localize(time, opts)
-#     ::I18n.l(time, **opts)
-#   end
-# end
-# Pagy::Calendar.prepend LocalizePagyCalendar
+module LocalizePagyCalendar
+  def localize(time, opts)
+    ::I18n.l(time, **opts)
+  end
+end
+Pagy::Calendar.prepend LocalizePagyCalendar
 
 # Countless extra: Paginate without any count, saving one query per rendering
 # See https://ddnexus.github.io/pagy/docs/extras/countless
@@ -73,11 +73,11 @@ Pagy::DEFAULT[:ends]        = true                  # default
 
 # Headers extra: http response headers (and other helpers) useful for API pagination
 # See https://ddnexus.github.io/pagy/docs/extras/headers
-require 'pagy/extras/headers'
-Pagy::DEFAULT[:headers] = { page: 'Current-Page',
-                            limit: 'Page-Items',
-                            count: 'Total-Count',
-                            pages: 'Total-Pages' }     # default
+# require 'pagy/extras/headers'
+# Pagy::DEFAULT[:headers] = { page: 'Current-Page',
+                            # limit: 'Page-Items',
+                            # count: 'Total-Count',
+                            # pages: 'Total-Pages' }     # default
 
 # Keyset extra: Paginate with the Pagy keyset pagination technique
 # See https://ddnexus.github.io/pagy/docs/extras/keyset
