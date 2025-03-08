@@ -24,13 +24,16 @@
 
   <div class="bg-green-200 border-1 border-green-300 justify-self-center justify-items-center p-5 rounded-2xl"">
     <p class="text-blue-950 font-semibold text-xl">You are now viewing entries from</p><p class="font-bold text-lime-800 text-2xl"><%== @calendar[:day].label(format: '%B %d %Y') %></p><br/>
-    <p>Eggs collected on this day: </p>
-    <p class="text-4xl text-blue-950"><%= render "todays_eggs" %></p>
+    <p class="font-semibold text-blue-950">Eggs collected on this day: </p>
+    <p class="text-4xl"><%= render "todays_eggs" %></p>
   </div>
 <% end %>
 
 <div>
   <% if params[:skip] %>
+    <div class="bg-amber-50 border-1 border-amber-100 justify-self-center justify-items-center p-2 rounded-2xl">
+    <p class="text-blue-950 font-semibold text-xl">You are now viewing all collection entries.</p>
+  </div><br/>
     <button class="font-semibold text-white bg-lime-600 hover:bg-lime-700 rounded-2xl px-2"><%= link_to 'Show Calendar Filters', collection_entries_path %></button>
   <% end %>
 </div><br/>
