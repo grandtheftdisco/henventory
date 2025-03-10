@@ -2,19 +2,23 @@
 
   <a href="/collection_entries/<%= collection_entry.id %>"><p class="text-xl font-bold hover:font-extrabold"><%= local_relative_time(collection_entry.created_at, 'weekday-or-date') %></p>
   <p class="text-sm"><%= local_time(collection_entry.created_at, '%l:%M%P') %></p></a><br/>
-  <p>Collected by <%= collection_entry.user.display_name %></p><br/>
 
-  <% collection_entry.egg_entries.each do |ee| %>
-    <div id="<%= dom_id ee %>" class="text-sm justify-items-center">
-      <p class="text-xl font-semibold"><%= ee.chicken.name %></p>
-      <%= image_tag("#{ee.chicken.image_url}", width: 200 ) %>
-      <br/>
-    </div>
-  <% end %>
+  <% if Current.user.mode == "layer" %>
+    <p>Collected by <%= collection_entry.user.display_name %></p><br/>
+
+    <% collection_entry.egg_entries.each do |ee| %>
+      <div id="<%= dom_id ee %>" class="text-sm justify-items-center">
+        <p class="text-xl font-semibold"><%= ee.chicken.name %></p>
+        <%= image_tag("#{ee.chicken.image_url}", width: 200 ) %>
+        <br/>
+      </div>
+    <% end %>
   <br/>
 
   <p class="font-bold text-lime-700">🥚 Eggs Collected: <%= collection_entry.egg_entries.sum(:egg_count) %></p>
-  
+<% else %>
+  <p><%= collection_entry.user.display_name %> collected  <%= collection_entry.egg_entries.sum(:egg_count) %> <%= collection_entry.egg_entries.sum(:egg_count) == 1 ? 'egg' : 'eggs' %>.</p>
+<% end %>
 
-  <br/><br/>
+<br/>
 </div>
