@@ -1,4 +1,6 @@
-<p style="color: green"><%= notice %></p>
+<% if notice.present? %>
+  <p class="py-2 px-3 bg-blue-100 mb-5 text-green-700 font-medium inline-block rounded-2xl" id="notice"><%= notice %></p>
+<% end %>
 
 <% content_for :title, "Collection entries" %>
 
