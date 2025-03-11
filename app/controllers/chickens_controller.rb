@@ -3,7 +3,8 @@ class ChickensController < ApplicationController
 
   # GET /chickens or /chickens.json
   def index
-    @chickens = Current.household.chickens
+    # excluding chicken 99 which is a placeholder for all flock-mode egg entries
+    @chickens = Current.household.chickens.where.not(id: 99)
   end
 
   # GET /chickens/1 or /chickens/1.json

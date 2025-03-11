@@ -101,15 +101,9 @@ class CollectionEntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def collection_entry_params
-      if Current.user.mode == "layer"
-        params.require(:collection_entry).permit(:user_id, egg_entries_attributes: [
-          :id, :egg_count, :chicken_id, :collection_entry_id, :_destroy,
-        ])
-      else
-        params.require(:collection_entry).permit(:user_id, egg_entries_attributes: [
-        :id, :egg_count, :collection_entry_id, :_destroy,
+      params.require(:collection_entry).permit(:user_id, egg_entries_attributes: [
+        :id, :egg_count, :chicken_id, :collection_entry_id, :_destroy,
       ])
-      end
     end
 
     def setup_form_data
