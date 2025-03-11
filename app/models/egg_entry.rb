@@ -1,8 +1,12 @@
 class EggEntry < ApplicationRecord
   belongs_to :collection_entry
-  belongs_to :chicken
+  belongs_to :chicken, optional: true 
 
-  validate :household_owns_chicken!
+  validate :household_owns_chicken!, if: :in_layer_mode?
+
+  def in_layer_mode?
+    Current.user.mode == "layer"
+  end
 
   def household_owns_chicken!
     collection_entry.user.household.chickens.find(chicken_id)

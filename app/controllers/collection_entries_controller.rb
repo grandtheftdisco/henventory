@@ -41,16 +41,31 @@ class CollectionEntriesController < ApplicationController
 
   # POST /collection_entries or /collection_entries.json
   def create
-    @collection_entry = Current.household.collection_entries.build(collection_entry_params)
-    setup_form_data
+    if Current.user.mode == "layer"
+      @collection_entry = Current.household.collection_entries.build(collection_entry_params)
+      setup_form_data
 
-    respond_to do |format|
-      if @collection_entry.save
-        format.html { redirect_to @collection_entry, notice: "Collection entry was successfully created." }
-        format.json { render :show, status: :created, location: @collection_entry }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @collection_entry.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @collection_entry.save
+          format.html { redirect_to @collection_entry, notice: "Collection entry was successfully created." }
+          format.json { render :show, status: :created, location: @collection_entry }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @collection_entry.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      @collection_entry = Current.household.collection_entries.build(collection_entry_params)
+      @users = Current.household.users.all
+
+      respond_to do |format|
+        if @collection_entry.save
+          format.html { redirect_to @collection_entry, notice: "Collection entry was successfully created." }
+          format.json { render :show, status: :created, location: @collection_entry }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @collection_entry.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -86,9 +101,15 @@ class CollectionEntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def collection_entry_params
-      params.require(:collection_entry).permit(:user_id, egg_entries_attributes: [
-        :id, :egg_count, :chicken_id, :collection_entry_id, :_destroy,
+      if Current.user.mode == "layer"
+        params.require(:collection_entry).permit(:user_id, egg_entries_attributes: [
+          :id, :egg_count, :chicken_id, :collection_entry_id, :_destroy,
+        ])
+      else
+        params.require(:collection_entry).permit(:user_id, egg_entries_attributes: [
+        :id, :egg_count, :collection_entry_id, :_destroy,
       ])
+      end
     end
 
     def setup_form_data
