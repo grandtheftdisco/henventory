@@ -1,13 +1,11 @@
-<div>
-  <%= link_to "Back to chickens", chickens_path %>
-</div>
-
 <% content_for :title, "New chicken" %>
 
-<h1>New chicken</h1>
+<h1 class="font-extrabold text-3xl text-blue-600 pb-5">NEW CHICKEN</h1>
 
 <%= render "form", chicken: @chicken %>
 
 <br>
 
-
+<div>
+  <%= link_to "Back to chickens", chickens_path %>
+</div>
