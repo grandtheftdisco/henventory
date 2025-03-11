@@ -2,13 +2,15 @@
 
 <% content_for :title, "My Flock" %>
 
-<h2>My Flock</h2>
+<h2 class="font-extrabold text-lime-700 text-3xl pb-7">MY FLOCK</h2>
 
-<div id="chickens">
+<button class="p-5 mb-10 bg-lime-600 text-white font-bold rounded-2xl"><%= link_to "🐣 add new chicken", new_chicken_path %></button>
+
+<div id="chickens" class="justify-items-center text-blue-950">
   <% @chickens.each do |chicken| %>
     <div class="py-5 bg-blue-200 md:shrink-0 w-90 md:w-120 justify-items-center rounded-2xl">
       <p class="font-bold text-2xl"><%= chicken.name %></p><br/>
-      <%= image_tag(chicken.image_url, width: 300) %>
+      <%= image_tag(chicken.image_url, width: 300 ) %>
       <p class="text-blue-800 font-semibold hover:font-bold text-lg"><br/>
         <%= link_to "🗒️ Details", chicken %>
       </p>
@@ -16,5 +18,3 @@
     <br/>
   <% end %>
 </div>
-
-<%= link_to "New chicken", new_chicken_path %>
