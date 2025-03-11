@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   post '/users' => 'users#create'
   get '/settings' => 'marketing#settings', as: :settings
   get '/faq' => 'marketing#faq'
-  get '/users/:id/edit' => 'users#edit'
+  get '/users/:id/edit' => 'users#edit', as: :edit_user
   # update all other routes with this syntax
   ########################
   
