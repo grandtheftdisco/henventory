@@ -1,8 +1,14 @@
 <h1 class="font-extrabold text-blue-500 text-4xl pb-7">Hi, <%= Current.user.display_name %>! </h1>
 <div class="bg-blue-100 md:shrink-0 w-100 md:w-150 items-center justify-self-center py-5 rounded-2xl">
   <h2 class="font-bold text-lime-700 text-2xl pb-7">Eggs collected for <%= local_time(Time.current, '%A, %B %e') %></h2>
-  <p class="text-5xl pb-10"><%= render "collection_entries/todays_eggs" %></p>
-  <p>(visit <a href='collection_entries/today' class="font-bold text-lime-700 hover:text-lime-900">Today's Entries</a> for more details!)</p>
+  <p class="text-5xl">
+    <% if @collection_entries.length == 0 %>
+      <p class="font-semibold">Uh oh! None logged yet.</p>
+    <% else %>
+      <%= render "collection_entries/todays_eggs" %>
+      <p class="pt-10">(visit <a href='collection_entries/today' class="font-bold text-lime-700 hover:text-lime-900">Today's Entries</a> for more details!)</p>
+    <% end %></p>
+  
 </div><br/>
 <%= render "collection_entries/new_ce_button" %>
 <p>Hope you're having an egg-cellent day 🐣</p>
