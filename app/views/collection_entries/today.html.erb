@@ -1,6 +1,6 @@
 <p class="font-bold text-3xl text-lime-700"><%= local_time(Time.current, '%A, %B %e') %></p>
 
-<h3 class="font-bold text-lime-800 text-2xl pt-7 pb-10">TALLY:<%= render "todays_eggs" %></h2>
+<h3 class="font-bold text-lime-800 text-2xl pt-7 pb-10">TALLY:<%= render "todays_eggs" %></h3>
 <%= render "new_ce_button" %>
 <div id="collection_entries" class="md:shrink-0 w-100 md:w-150 items-center justify-self-center">
   <% @collection_entries.each do |collection_entry| %>

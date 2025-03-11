@@ -3,7 +3,13 @@ class CollectionEntriesController < ApplicationController
 
   # GET /collection_entries or /collection_entries.json
   def index
-    @collection_entries = Current.household.collection_entries.includes(egg_entries: :chicken).order("created_at desc")
+    @calendar, @pagy, @collection_entries = pagy_calendar(Current.household.collection_entries.includes(egg_entries: :chicken).order("created_at desc"),
+      year: {},
+      month: { format: '%B %Y' },
+      week: { format: 'w of %b %d' },
+      day:  { format: '%b %d' },
+      pagy: {},
+      active: !params[:skip])
   end
 
   def today
