@@ -1,6 +1,15 @@
 class HouseholdsController < ApplicationController
   before_action :set_household, only: %i[ show edit update destroy ]
 
+  # GET /households/new
+  def new
+    @household = Household.new
+  end
+
+  # GET /households/1/edit
+  def edit
+  end
+
   # POST /households or /households.json
   def create
     @household = Household.new(household_params)
@@ -20,7 +29,7 @@ class HouseholdsController < ApplicationController
   def update
     respond_to do |format|
       if @household.update(household_params)
-        format.html { redirect_to @household, notice: "Household was successfully updated." }
+        format.html { redirect_to '/settings', notice: "Household was successfully updated." }
         format.json { render :show, status: :ok, location: @household }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -47,6 +56,6 @@ class HouseholdsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def household_params
-      params.fetch(:household, {})
+      params.require(:household).permit(:name)
     end
 end

@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  allow_unauthenticated_access only: %i[ new create ]
   include ActiveModel::Attributes
 
   def show
@@ -9,11 +10,13 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
+    user.build_household
     if user.save
-      session[:user_id] = user.id 
-      render :new
+      start_new_session_for user 
+      redirect_to '/'
     else
-      redirect_to '/signup'
+      raise user.errors.inspect
+      render :new
     end   
   end
 
