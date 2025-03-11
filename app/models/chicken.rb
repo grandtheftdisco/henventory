@@ -3,7 +3,7 @@ class Chicken < ApplicationRecord
   belongs_to :household
 
   validates :name, :breed, presence: true
-  validates_presence_of :dob, message: '(date of birth) can\'t be blank'
+  validates :dob, presence: { message: '(date of birth) can\'t be blank' }
 
   validates :image_url, allow_blank: true, format: {
     with: %r{\.(gif|jpg|png)\z}i,

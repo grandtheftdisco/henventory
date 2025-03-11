@@ -2,7 +2,7 @@
 <div class="bg-blue-100 md:shrink-0 w-100 md:w-150 items-center justify-self-center py-5 rounded-2xl">
   <h2 class="font-bold text-lime-700 text-2xl pb-7">Eggs collected for <%= local_time(Time.current, '%A, %B %e') %></h2>
   <p class="text-5xl">
-    <% if @collection_entries.length == 0 %>
+    <% if !@collection_entries.exists? %>
       <p class="font-semibold">Uh oh! None logged yet.</p>
     <% else %>
       <%= render "collection_entries/todays_eggs" %>
