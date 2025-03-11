@@ -1,5 +1,5 @@
 class MarketingController < ApplicationController
-  allow_unauthenticated_access only: [ faq ]
+  allow_unauthenticated_access only: [ :faq ]
   def home
     # remember to scope to current household once that PR is approved!
     @collection_entries = Current.household.collection_entries.includes(egg_entries: :chicken)
