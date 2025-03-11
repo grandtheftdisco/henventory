@@ -7,6 +7,16 @@
       <%= form.label :display_name, "Name: ", class: 'font-bold' %>
       <%= form.text_field :display_name, class: 'font-semibold w-65' %>
     </div>
+    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
+      <%= form.label :mode, "Mode: ", class: 'font-bold pr-2' %>
+      <%= form.radio_button :mode, "flock" %>
+      <%= form.label :mode_flock, "Flock", class: 'pr-2' %>   
+      <%= form.radio_button :mode, "layer" %>
+      <%= form.label :mode_layer, "Layer" %>
+      <p class="inline mx-2 px-2 bg-blue-200 rounded-2xl opacity-50 hover:opacity-90 w-fit"><a href="/faq">🤔 What's this?</a></p>
+    </div>
+    
+    
     <div class="bg-blue-100 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85"> 
       <%= form.label :email_address, "Email: ", class: 'font-bold' %>
       <%= form.text_field :email_address, class: 'font-semibold w-65' %>
