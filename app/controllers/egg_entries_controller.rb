@@ -1,15 +1,6 @@
 class EggEntriesController < ApplicationController
   before_action :set_egg_entry, only: %i[ show edit update destroy ]
 
-  # GET /egg_entries or /egg_entries.json
-  def index
-    @egg_entries = EggEntry.all
-  end
-
-  # GET /egg_entries/1 or /egg_entries/1.json
-  def show
-  end
-
   # GET /egg_entries/new
   def new
     @egg_entry = EggEntry.new(egg_entry_params)

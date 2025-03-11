@@ -17,6 +17,7 @@
 
   <p class="font-bold text-lime-700">🥚 Eggs Collected: <%= collection_entry.egg_entries.sum(:egg_count) %></p>
 <% else %>
+  <!-- a way to neaten this up? -->
   <p><%= collection_entry.user.display_name %> collected  <%= collection_entry.egg_entries.sum(:egg_count) %> <%= collection_entry.egg_entries.sum(:egg_count) == 1 ? 'egg' : 'eggs' %>.</p>
 <% end %>
 

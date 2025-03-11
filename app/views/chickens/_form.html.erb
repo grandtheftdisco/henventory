@@ -1,37 +1,45 @@
-<%= form_with(model: chicken) do |form| %>
-  <% if chicken.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(chicken.errors.count, "error") %> prohibited this chicken from being saved:</h2>
+<div class="border-1 rounded-2xl bg-blue-200 justify-items-center text-xl text-blue-950 justify-self-center md:shrink-0 w-100 md:w-150 items-center pt-5">
+  <%= form_with(model: chicken) do |form| %>
+    <% if chicken.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(chicken.errors.count, "error") %> prohibited this chicken from being saved:</h2>
 
-      <ul>
-        <% chicken.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% chicken.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2">
+      <%= form.label :name, "Name: ", class: 'font-bold' %>
+      <%= form.text_field :name, class: 'font-semibold pl-2' %>
+    </div>
+
+    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2">
+      <%= form.label :breed, "Breed: ", class: 'font-bold' %>
+      <%= form.text_field :breed, class: 'font-semibold pl-2' %>
+    </div>
+
+    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2">
+      <%= form.label :tell, "Tell: ", class: 'font-bold' %>
+      <%= form.text_field :tell, class: 'font-semibold pl-2' %>
+    </div>
+
+    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2">
+      <%= form.label :dob, "Hatch Date: ", class: 'font-bold' %>
+      <%= form.date_field :dob, class: 'font-semibold pl-2' %>
+    </div>
+
+    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2">
+      <%= form.label :image_url, "Image URL: ", class: 'font-bold' %>
+      <%= form.text_field :image_url, class: 'font-semibold pl-2' %>
+    </div>
+    
+    <br/>
+    <div class="inline cursor-pointer">
+      <%= form.submit class: 'bg-yellow-300 hover:bg-yellow-500 p-3 rounded-2xl mb-5' %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :breed, style: "display: block" %>
-    <%= form.text_field :breed %>
-  </div>
-
-  <div>
-    <%= form.label :tell, style: "display: block" %>
-    <%= form.text_field :tell %>
-  </div>
-
-  <div>
-    <%= form.label :image_url, style: "display: block" %>
-    <%= form.text_field :image_url %>
-  </div>
-  <br/>
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

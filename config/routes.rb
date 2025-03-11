@@ -9,11 +9,14 @@ Rails.application.routes.draw do
       get :today
     end
   end
-  get '/signup' => 'users#new'
+  get '/signup' => 'users#new', as: :new_user
   post '/users' => 'users#create'
-  get '/settings' => 'marketing#settings'
+  get '/settings' => 'marketing#settings', as: :settings
   get '/faq' => 'marketing#faq'
   get '/users/:id/edit' => 'users#edit'
+  # update all other routes with this syntax
+  ########################
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
