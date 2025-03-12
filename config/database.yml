@@ -22,18 +22,19 @@ default: &default
 sqlite: &sqlite
   primary: 
     <<: *default
-    database: henventory_development
+    database: "henventory_development"
 
   cache:
     <<: *sqlite
-    database: henventory_development_cache.sqlite3
-    database: henventory_development_cable.sqlite3
+    database: "henventory_development_cache.sqlite3"
+    database: "henventory_development_cable.sqlite3"
     migrations_paths: db:/cable_migrate
   
   test:
     <<: *default
-    database: henventory_test
+    database: "henventory_test"
 
   production:
     primary:
       <<: *default
+      database: "henventory_development"
