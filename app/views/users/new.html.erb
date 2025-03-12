@@ -2,24 +2,6 @@
 <p class="text-blue-950 pb-5">(We're egg-cited to meet you!)</p>
 
 <div class="border-1 rounded-2xl bg-blue-200 text-l text-left text-blue-950 justify-self-center md:shrink-0 w-100 md:w-150 pt-5 px-3 justify-items-center">
-  <%= form_for :user, url: '/users' do |form| %>
-    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
-      <%= form.label :display_name, "Name: ", class: 'font-bold' %>
-      <%= form.text_field :display_name, class: 'font-semibold w-65' %>
-    </div>
-    <div class="bg-blue-100 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85"> 
-      <%= form.label :email_address, "Email: ", class: 'font-bold' %>
-      <%= form.text_field :email_address, class: 'font-semibold w-65' %>
-    </div>
-    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
-      <%= form.label :password, "Password: ", class: 'font-bold' %>
-      <%= form.password_field :password, class: 'font-semibold w-60' %>
-    </div>
-    <div class="bg-blue-100 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
-      <%= form.label :password_confirmation, "Confirm Password: ", class: 'font-bold' %>
-      <%= form.password_field :password_confirmation %>
-    </div>
-    <br>
+<p class="font-bold text-blue-950 text-2xl"> Oops! This page hasn't hatched yet 🐣</p>
+<p class="font-bold text-blue-950 text-lg"> Come back in April to sign up </p>
 </div>
-<%= form.submit "Submit", class: "font-bold text-white bg-lime-600 hover:bg-lime-700 p-3 rounded-2xl mt-5 align-self-center" %>
-<% end %>
