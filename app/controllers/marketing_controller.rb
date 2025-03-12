@@ -10,4 +10,7 @@ class MarketingController < ApplicationController
     @user = Current.user
     @household = Current.household
   end
+
+  def faq
+  end
 end
