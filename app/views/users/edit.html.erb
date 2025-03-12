@@ -1,1 +1,11 @@
-<p>users#edit</p>
+<% content_for :title, "User Settings" %>
+
+<h1>User Settings</h1>
+
+<div>
+  <%= render "form", user: @user %>
+</div>
+
+<div>
+  <%= link_to "Back to settings", settings_path %>
+</div>

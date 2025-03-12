@@ -10,5 +10,4 @@
 
 <button class="font-bold text-white bg-amber-600 hover:bg-amber-700 p-3 rounded-2xl mt-5 align-self-center"><%= link_to "change your password", edit_password_path(Current.user.password_reset_token) %></button><br/>
 
-<button class="font-bold text-white bg-blue-500 hover:bg-blue-600 p-3 rounded-2xl mt-5 align-self-center"><%= link_to "change egg-tracking mode", edit_user_path(Current.user) %></button>
-<!-- see code review notes from today for how to fix this syntax issue you're having with edit_user_path -->
+<button class="font-bold text-white bg-blue-500 hover:bg-blue-600 p-3 rounded-2xl mt-5 align-self-center"><%= link_to "user settings", edit_user_path(Current.user) %></button>

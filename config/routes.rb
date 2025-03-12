@@ -9,11 +9,13 @@ Rails.application.routes.draw do
       get :today
     end
   end
-  get '/signup' => 'users#new', as: :new_user
+  resources :users
+  get '/signup' => 'users#new'
   post '/users' => 'users#create'
   get '/settings' => 'marketing#settings', as: :settings
   get '/faq' => 'marketing#faq'
-  get '/users/:id/edit' => 'users#edit', as: :edit_user
+  get '/users/:id/edit' => 'users#edit'
+  post '/users' => 'users#update'
   # update all other routes with this syntax
   ########################
   
