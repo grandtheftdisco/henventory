@@ -1,0 +1,29 @@
+databases:
+  - name: henventory
+    databaseName: henven_postgres
+    user: mysite
+    plan: starter
+
+services:
+  - type: web
+    name: mysite
+    runtime: ruby
+    plan: basic-256mb
+    buildCommand: "./bin/render-build.sh"
+    # preDeployCommand: "bundle exec rails db:migrate" # preDeployCommand only available on paid instance types
+    startCommand: "bundle exec rails server"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mysite
+          property: connectionString
+      - key: STORE_DATABASE_PASSWORD
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: WEB_CONCURRENCY
+        value: 2 # sensible default
+
+# If you don’t set WEB_CONCURRENCY, Rails determines a value based on the runtime’s
+#  physical CPU count. This might result in your application running out of memory
+# immediately on boot. We recommend setting this value to 2 as a default, but also
+# optimizing this value for your own application.
