@@ -1,4 +1,4 @@
-<h1 class="font-extrabold text-3xl text-lime-700 pb-5">Update your password</h1>
+<h1 class="font-extrabold text-3xl text-amber-700 pb-5">Update your password</h1>
 
 <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
 <div class="border-1 rounded-2xl bg-blue-200 text-l text-left text-blue-950 justify-self-center md:shrink-0 w-100 md:w-150 py-5 px-3 justify-items-center">
@@ -10,5 +10,9 @@
     <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 72 %>
     </div>
 </div>
-    <%= form.submit "Save", class: "mt-5 rounded-md px-3.5 py-2.5 bg-lime-600 hover:bg-lime-700 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit "Save", class: "mt-5 rounded-md px-3.5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white inline-block font-medium cursor-pointer" %>
   <% end %>
+
+<div class="py-6 border border-blue-200 rounded-2xl bg-blue-100 text-lg text-blue-950 my-4 w-110 md:w-150 justify-self-center">
+  <%= link_to "⬅️ Back to settings", settings_path %>
+</div>
