@@ -1,5 +1,5 @@
 class MarketingController < ApplicationController
-  allow_unauthenticated_access only: [ :faq, :how_it_works ]
+  allow_unauthenticated_access only: [ :faq, :how_it_works, :acknowledgements ]
   def home
     @collection_entries = Current.household.collection_entries.includes(egg_entries: :chicken)
     .where(created_at: Time.current.localtime.beginning_of_day..Time.current.localtime.end_of_day)
@@ -15,5 +15,8 @@ class MarketingController < ApplicationController
   end
 
   def how_it_works
+  end
+
+  def acknowledgements
   end
 end
