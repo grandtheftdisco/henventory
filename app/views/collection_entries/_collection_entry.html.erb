@@ -9,7 +9,7 @@
     <% collection_entry.egg_entries.each do |ee| %>
       <div id="<%= dom_id ee %>" class="text-sm justify-items-center">
         <p class="text-xl font-semibold"><%= ee.chicken.name %></p>
-        <%= image_tag("#{ee.chicken.image_url}", width: 200 ) %>
+        <%= image_tag("#{ee.chicken.image_url}", width: 200, class: 'rounded-2xl'  ) %>
         <br/>
       </div>
     <% end %>

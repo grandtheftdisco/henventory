@@ -1,7 +1,7 @@
 <div id="<%= dom_id chicken %>">
   <h3 class="py-5 text-blue-500 font-extrabold text-5xl"><%= chicken.name %></h3><br/>
 
-  <%= image_tag("#{chicken.image_url}", width: 450, class: "justify-self-center") %>
+  <%= image_tag("#{chicken.image_url}", width: 450, class: "justify-self-center rounded-2xl") %>
   <br/>
   <div class="text-left px-5 text-xl">
     <p><b>Breed: </b><%= chicken.breed %></p><br/>
