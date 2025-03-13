@@ -2,7 +2,7 @@ class EggEntry < ApplicationRecord
   belongs_to :collection_entry
   belongs_to :chicken, optional: true 
 
-  validate :household_owns_chicken!, if: :in_layer_mode?
+  validate :household_owns_chicken! unless :ghost_chicken?
   validate :only_2_eggs_max_per_day_per_chicken!
   
   def chicken
@@ -10,8 +10,7 @@ class EggEntry < ApplicationRecord
     Chicken::NULL_CHICKEN
   end
 
-  def in_layer_mode?
-    Current.user.mode == "layer"
+  def ghost_chicken?
   end
   
   def household_owns_chicken!
