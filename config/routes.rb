@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   resources :users
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
-  get '/settings' => 'marketing#settings', as: :settings
+  get '/settings' => 'users#settings', as: :settings
   get '/faq' => 'marketing#faq'
   get '/users/:id/edit' => 'users#edit'
   post '/users' => 'users#update'
