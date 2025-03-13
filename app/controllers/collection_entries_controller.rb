@@ -87,7 +87,7 @@ class CollectionEntriesController < ApplicationController
     @collection_entry.destroy!
 
     respond_to do |format|
-      format.html { redirect_to collection_entries_path, status: :see_other, notice: "Collection entry was successfully destroyed." }
+      format.html { redirect_to today_path, status: :see_other, notice: "Collection entry was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -107,6 +107,6 @@ class CollectionEntriesController < ApplicationController
 
     def setup_form_data
       @users = Current.household.users
-      @chickens = Current.household.chickens
+      @chickens = Current.household.chickens.where(status: :layer)
     end
 end
