@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_10_212412) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_13_152716) do
   create_table "chickens", force: :cascade do |t|
     t.string "name"
     t.string "breed"
@@ -21,6 +21,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_10_212412) do
     t.integer "user_id"
     t.string "image_url"
     t.integer "household_id"
+    t.string "status"
   end
 
   create_table "collection_entries", force: :cascade do |t|
