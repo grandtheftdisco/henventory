@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   get '/faq' => 'marketing#faq'
   get '/users/:id/edit' => 'users#edit'
   post '/users' => 'users#update'
+  get '/my_pullets' => 'chickens#pullets', as: :pullets
+  get '/expired_chickens' => 'chickens#expired', as: :expired_chickens
   # update all other routes with this syntax
   ########################
   
