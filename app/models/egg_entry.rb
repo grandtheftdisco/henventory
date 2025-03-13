@@ -1,9 +1,17 @@
 class EggEntry < ApplicationRecord
   belongs_to :collection_entry
-  belongs_to :chicken
+  belongs_to :chicken, optional: true 
 
-  validate :household_owns_chicken!
+  validate :household_owns_chicken! unless :ghost_chicken?
   validate :only_2_eggs_max_per_day_per_chicken!
+  
+  def chicken
+    return super if chicken_id
+    Chicken::NULL_CHICKEN
+  end
+
+  def ghost_chicken?
+  end
   
   def household_owns_chicken!
     collection_entry.user.household.chickens.find(chicken_id)
