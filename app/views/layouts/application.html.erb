@@ -22,7 +22,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-blue-50">
+  <body class="bg-blue-50 text-blue-950">
     <header class="p-4 -mb-6 text-center bg-blue-100">
       <h1 class="text-5xl font-extrabold text-blue-400 hover:text-amber-600"><a href="/">🐔 Henventory 🥚</a></h1><br/>
     </header> 
@@ -33,12 +33,16 @@
           <% if Current.user %>
             <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries/today">📅 Today's Entries</a></li>
             <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries">All Entries</a></li>
-            <li class="p-4 font-semibold hover:text-blue-400"><a href="/chickens">My Flock</a></li>
+            <% if Current.user.mode == "layer" %>
+              <li class="p-4 font-semibold hover:text-blue-400"><a href="/chickens">My Flock</a></li>
+            <% end %>
             <li class="p-4 font-semibold hover:text-blue-400"><a href="/settings">Settings</a></li>
             <li class="p-4 font-semibold hover:text-red-700"><%= button_to "👋 Log out", session_path, method: :delete%></a></li>
           <% else %>
-            <li class="p-4 font-semibold text-lime-800"><%= link_to ' ➡️ Login', new_session_path %></li>
+            <li class="p-4 font-bold hover:text-blue-800"><%= link_to ' ➡️ Login', new_session_path %></li>
             <li class="p-4 font-bold hover:text-blue-800"><%= link_to '✍️ Sign up', new_user_path %></li>
+            <li class="p-4 font-bold hover:text-blue-800"><%= link_to '❇️ How it Works', how_it_works_path%></li>
+            <li class="p-4 font-bold hover:text-blue-800"><%= link_to '✴️ FAQ', faq_path %></li>
           <% end %>
         </ul>
       </nav>
@@ -49,4 +53,8 @@
     </main>
 
   </body>
+  <footer class="text-center bg-blue-100 py-15">
+    <p class="font-semibold my-4">©️ AJ <%= Time.now.year %></p>
+    <p class="font-semibold my-4 hover:text-amber-700"><%= link_to "🥂 Acknowledgments 🥂", acknowledgements_path %></p>
+  </footer>
 </html>
