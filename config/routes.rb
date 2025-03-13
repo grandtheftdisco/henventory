@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   # update all other routes with this syntax
   ########################
   get '/settings' => 'marketing#settings', as: :settings
+  get '/users/:id/edit' => 'users#edit'
+  get '/faq' => 'marketing#faq', as: :faq
+  get '/how_it_works' => 'marketing#how_it_works', as: :how_it_works
+  get '/acknowledgements' => 'marketing#acknowledgements', as: :acknowledgements
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
