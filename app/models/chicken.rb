@@ -9,4 +9,7 @@ class Chicken < ApplicationRecord
     with: %r{\.(gif|jpg|png)\z}i,
     message: 'must be a URL for GIF, JPG, or PNG image.'
   }
+
+  NULL_CHICKEN = new(id: nil, name: 'Flock Mode Placeholder', breed: 'ghost', tell: 'not really a chicken', dob: Time.now, status: 'layer')
+  NULL_CHICKEN.freeze # does not save to Active Record
 end

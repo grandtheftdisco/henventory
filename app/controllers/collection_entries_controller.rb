@@ -42,13 +42,13 @@ class CollectionEntriesController < ApplicationController
   def create
     if Current.user.mode == "layer"
       @collection_entry = Current.household.collection_entries.build(collection_entry_params)
-      setup_form_data
 
       respond_to do |format|
         if @collection_entry.save
           format.html { redirect_to @collection_entry, notice: "Collection entry was successfully created." }
           format.json { render :show, status: :created, location: @collection_entry }
         else
+          setup_form_data
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @collection_entry.errors, status: :unprocessable_entity }
         end

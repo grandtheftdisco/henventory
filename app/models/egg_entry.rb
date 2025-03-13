@@ -5,6 +5,11 @@ class EggEntry < ApplicationRecord
   validate :household_owns_chicken!, if: :in_layer_mode?
   validate :only_2_eggs_max_per_day_per_chicken!
   
+  def chicken
+    return super if chicken_id
+    Chicken::NULL_CHICKEN
+  end
+
   def in_layer_mode?
     Current.user.mode == "layer"
   end
