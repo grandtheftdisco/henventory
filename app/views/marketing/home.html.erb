@@ -1,34 +1,14 @@
-<% if Current.user  %>
-  <h1 class="font-extrabold text-blue-500 text-4xl pb-7">Hi, <%= Current.user.display_name %>! </h1>
-  <div class="bg-blue-100 md:shrink-0 w-100 md:w-150 items-center justify-self-center py-5 rounded-2xl">
-    <h2 class="font-bold text-lime-700 text-2xl pb-7">Eggs collected for <%= local_time(Time.current, '%A, %B %e') %></h2>
-    <p class="text-5xl">
-      <% if !@collection_entries.exists? %>
-        <p class="font-semibold">Uh oh! None logged yet.</p>
-      <% else %>
-        <%= render "collection_entries/todays_eggs" %>
-        <p class="pt-10">(visit <a href='collection_entries/today' class="font-bold text-lime-700 hover:text-lime-900">Today's Entries</a> for more details!)</p>
-      <% end %></p>
-    
-  </div><br/>
-  <%= render "collection_entries/new_ce_button" %>
-  <p>Hope you're having an egg-cellent day 🐣</p>
-<% else %>
-  <h1 class="font-extrabold text-lime-700 text-4xl">Welcome to</h1>
-  <h2 class="font-extrabold text-lime-800 text-7xl pb-7">Henventory</h2>
-
-  <div class>
-    <p class="font-bold text-lime-800 text-lg">The app for chicken owners:</p>
-    <p class="font-semibold text-lime-800 italic">from backyard broods to small-scale farms.</p>
-  </div>
-
-  <div class="m-10">
-    <div class="bg-blue-100 hover:bg-blue-200 border border-blue-200 rounded-xl justify-self-center p-5 m-5 font-semibold hover:text-blue-800">
-      <p>👀 see <%= link_to "how it works", how_it_works_path %></p>
-    </div>
-
-    <div class="bg-blue-100 hover:bg-blue-200 border border-blue-200 rounded-xl justify-self-center p-5 m-5 font-semibold hover:text-blue-800">
-      <%= link_to "🤔 got questions?", faq_path %>
-    </div>
-  </div>
-<% end %>
+<h1 class="font-extrabold text-blue-500 text-4xl pb-7">Hi, <%= Current.user.display_name %>! </h1>
+<div class="bg-blue-100 md:shrink-0 w-100 md:w-150 items-center justify-self-center py-5 rounded-2xl">
+  <h2 class="font-bold text-lime-700 text-2xl pb-7">Eggs collected for <%= local_time(Time.current, '%A, %B %e') %></h2>
+  <p class="text-5xl">
+    <% if !@collection_entries.exists? %>
+      <p class="font-semibold">Uh oh! None logged yet.</p>
+    <% else %>
+      <%= render "collection_entries/todays_eggs" %>
+      <p class="pt-10">(visit <a href='collection_entries/today' class="font-bold text-lime-700 hover:text-lime-900">Today's Entries</a> for more details!)</p>
+    <% end %></p>
+  
+</div><br/>
+<%= render "collection_entries/new_ce_button" %>
+<p>Hope you're having an egg-cellent day 🐣</p>

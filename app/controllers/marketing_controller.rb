@@ -1,5 +1,9 @@
 class MarketingController < ApplicationController
-  allow_unauthenticated_access
+  allow_unauthenticated_access only: [ :hello, :how_it_works, :acknowledgements, :faq ]
+
+  def hello
+  end
+
   def home
     if Current.user
       @collection_entries = Current.household.collection_entries.includes(egg_entries: :chicken)
