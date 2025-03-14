@@ -1,24 +1,20 @@
 <div id="<%= dom_id collection_entry %>" class="text-blue-950">
 
   <a href="/collection_entries/<%= collection_entry.id %>"><p class="text-xl font-bold hover:font-extrabold"><%= local_relative_time(collection_entry.created_at, 'weekday-or-date') %></p>
-  <p class="text-sm"><%= local_time(collection_entry.updated_at, '%l:%M%P') %></p></a><br/>
+  <p class="text-sm mb-5"><%= local_time(collection_entry.updated_at, '%l:%M%P') %></p></a>
 
   <% if Current.user.mode == "layer" %>
-    <p>Collected by <%= collection_entry.user.display_name %></p><br/>
+    <p class="mb-5">Collected by <%= collection_entry.user.display_name %></p>
 
     <% collection_entry.egg_entries.each do |ee| %>
-      <div id="<%= dom_id ee %>" class="text-sm justify-items-center">
+      <div id="<%= dom_id ee %>" class="justify-items-center mb-5">
         <p class="text-xl font-semibold"><%= ee.chicken.name %></p>
-        <%= image_tag("#{ee.chicken.image_url}", width: 200, class: 'rounded-2xl'  ) %>
-        <br/>
+        <%= image_tag("#{ee.chicken.image_url}", width: 200, class: 'rounded-2xl mb-5' ) %>
       </div>
     <% end %>
-  <br/>
 
-  <p class="font-bold text-lime-700">🥚 Eggs Collected: <%= collection_entry.egg_entries.sum(:egg_count) %></p>
+  <p class="font-bold text-lime-700 mb-5">🥚 Eggs Collected: <%= collection_entry.egg_entries.sum(:egg_count) %></p>
 <% else %>
-  <p><%= collection_entry.user.display_name %> collected <%= pluralize(collection_entry.egg_entries.sum(:egg_count), 'egg') %>.</p>
+  <p class="font-semibold mb-5"><%= collection_entry.user.display_name %> collected <%= pluralize(collection_entry.egg_entries.sum(:egg_count), 'egg') %>.</p>
 <% end %>
-
-<br/>
 </div>

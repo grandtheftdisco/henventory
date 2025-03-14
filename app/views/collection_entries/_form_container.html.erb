@@ -1,4 +1,4 @@
-<div class="border-1 rounded-2xl bg-blue-200 justify-items-center text-xl text-blue-950 justify-self-center md:shrink-0 w-100 md:w-150 items-center">
+<div class="border-1 rounded-2xl bg-blue-200 justify-items-center text-xl text-blue-950 justify-self-center md:shrink-0 w-100 md:w-150 items-center pb-5">
   <%= form_with model: @collection_entry do |collection_entry_form| %>
     <% if collection_entry.errors.any? %>
       <div style="color: red">
@@ -12,12 +12,10 @@
       </div>
     <% end %>
 
-    <br/>
-    <div class="bg-blue-50 rounded-2xl">
-      <%= collection_entry_form.label :user_id, "Who collected?", class:'text-blue-800 font-bold text-2xl' %><br/>
+    <div class="bg-blue-50 rounded-2xl my-5">
+      <div><%= collection_entry_form.label :user_id, "Who collected?", class:'text-blue-800 font-bold text-2xl mb-5' %></div>
       <%= collection_entry_form.collection_select :user_id, @users, :id, :display_name, prompt: 'select your name' %>
     </div>
-    <br/>
   
     <% if Current.user.mode == "layer" %>
       <%= render partial: 'form_layer_mode', locals: { collection_entry_form: } %>
@@ -26,9 +24,7 @@
     <% end %>
 
     <div class="inline cursor-pointer">
-      <%= collection_entry_form.submit class: 'bg-yellow-300 hover:bg-yellow-500 p-3 rounded-2xl'%>
+      <%= collection_entry_form.submit "Submit", class: 'bg-yellow-300 hover:bg-yellow-500 p-3 rounded-2xl'%>
     </div>
   <% end %>
-
-  <br/><br/>
 </div>
