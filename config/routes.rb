@@ -10,15 +10,13 @@ Rails.application.routes.draw do
       get :today
     end
   end
+  get '/users/edit/me' => 'users#edit', as: :edit_user # find way to remove the id# @ end of url
   resources :users
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
   get '/settings' => 'marketing#settings', as: :settings
   get '/faq' => 'marketing#faq'
-  get '/users/:id/edit' => 'users#edit'
   post '/users' => 'users#update'
-  get '/my_pullets' => 'chickens#pullets', as: :pullets
-  get '/expired_chickens' => 'chickens#expired', as: :expired_chickens
   get '/collection_entries/today' => 'collection_entries#today', as: :today
   # update all other routes with this syntax
   ########################

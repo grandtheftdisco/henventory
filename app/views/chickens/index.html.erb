@@ -2,14 +2,17 @@
 
 <% content_for :title, "My Flock" %>
 
-<h2 class="font-extrabold text-lime-700 text-3xl pb-7 uppercase">My Layers</h2>
+<h2 class="font-extrabold text-lime-700 text-3xl pb-7 uppercase">My Flock</h2>
 
-<div class="p-3 mb-8 border border-blue-200 rounded-2xl bg-blue-100 text-lg text-blue-950 justify-self-center">
+<div class="p-3 mb-8 border border-blue-200 rounded-2xl bg-blue-100 text-lg text-blue-950 text-left justify-self-center">
   <div>
-    <%= link_to "🐤 View My Pullets", pullets_path, class: "font-semibold hover:text-blue-800" %>
+    <%= link_to "🐔 View My Layers", chickens_path(layers: true), class: "font-semibold hover:text-blue-800" %>
   </div>
   <div>
-    <%= link_to "🪦 View Expired Chickens", expired_chickens_path, class: "font-semibold hover:text-blue-800" %>
+    <%= link_to "🐤 View My Pullets", chickens_path(pullets: true), class: "font-semibold hover:text-blue-800" %>
+  </div>
+  <div>
+    <%= link_to "🧑‍🌾 View All Chickens", chickens_path(all: true), class: "font-semibold hover:text-blue-800" %>
   </div>
 </div>
 
