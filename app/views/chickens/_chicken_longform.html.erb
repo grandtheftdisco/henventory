@@ -1,5 +1,5 @@
 <div id="<%= dom_id @chicken %>">
-  <h3 class="py-5 text-blue-500 font-extrabold text-5xl"><%= @chicken.name %></h3><br/>
+  <h3 class="py-3 mb-5 text-blue-500 font-extrabold text-5xl"><%= @chicken.name %></h3>
 
   <%= image_tag("#{@chicken.image_url}", width: 450, class: "justify-self-center rounded-2xl mb-4") %>
   <div class="text-left px-5 text-xl">
@@ -13,6 +13,6 @@
     <p class="mb-5"><%= @chicken.tell %></p>
 
     <p class="font-bold">Eggs Laid in 2025</p>
-    <p class="mb-5"><%= @chicken.egg_entries.sum(:egg_count) %></p>
+    <p><%= @chicken.egg_entries.sum(:egg_count) %></p>
   </div>
 </div>
