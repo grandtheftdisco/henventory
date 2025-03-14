@@ -3,8 +3,19 @@ class ChickensController < ApplicationController
 
   # GET /chickens or /chickens.json
   def index
-    # excluding chicken 99 which is a placeholder for all flock-mode egg entries
-    @chickens = Current.household.chickens.where(status: :layer).where.not(id: 99)
+    # base definition
+    @chickens = Current.household.chickens 
+
+    # filtering of view based on chicken status
+    if params[:pullets]
+      @chickens = @chickens.where(status: :pullet)
+    elsif params[:expired]
+      @chickens = @chickens.where(status: :expired)
+    elsif params[:layers]
+      @chickens = @chickens.where(status: :layer)
+    elsif params[:all]
+      render :index
+    end
   end
 
   def pullets

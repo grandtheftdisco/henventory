@@ -9,4 +9,10 @@
   <div><button class="font-bold text-white bg-blue-500 hover:bg-blue-600 p-3 rounded-2xl w-70"><%= link_to "user settings", edit_user_path(Current.user) %></button></div> 
 
   <div><button class="font-bold text-white bg-amber-600 hover:bg-amber-700 p-3 rounded-2xl mt-5 w-70"><%= link_to "change your password", edit_password_path(Current.user.password_reset_token) %></button></div>
+
+  <% if @expired_chickens.exists? %>
+    <div>
+      <%= link_to "🪦 View Expired Chickens", chickens_path(expired: true), class: "font-semibold hover:text-blue-800" %>
+    </div>
+  <% end %>
 </div>
