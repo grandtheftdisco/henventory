@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
+<% if !params[:expired] %>
 <% content_for :title, "My Flock" %>
-
 <h2 class="font-extrabold text-lime-700 text-3xl pb-7 uppercase">My Flock</h2>
 
 <div class="p-3 mb-8 border border-blue-200 rounded-2xl bg-blue-100 text-lg text-blue-950 text-left justify-self-center">
@@ -11,12 +11,20 @@
   <div>
     <%= link_to "🐤 View My Pullets", chickens_path(pullets: true), class: "font-semibold hover:text-blue-800" %>
   </div>
+
   <div>
     <%= link_to "🧑‍🌾 View All Chickens", chickens_path(all: true), class: "font-semibold hover:text-blue-800" %>
   </div>
 </div>
 
 <button class="p-5 mb-10 bg-lime-600 text-white font-bold rounded-2xl"><%= link_to "🐣 add new chicken", new_chicken_path %></button>
+<% elsif params[:expired] %>
+  <% content_for :title, "Expired Chickens" %>
+  <h2 class="font-extrabold text-amber-700 text-3xl pb-7">👼 Gone, But Not Forgotten 👼</h2>
+  <div class="p-4 border border-blue-200 rounded-2xl bg-blue-100 text-lg text-blue-950 mt-1 mb-4 justify-self-center">
+  <%= link_to "⬅️ Back to settings", settings_path %>
+</div>
+<% end %>
 
 <div id="chickens" class="justify-items-center text-blue-950">
   <% @chickens.each do |chicken| %>
