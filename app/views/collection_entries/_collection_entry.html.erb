@@ -1,7 +1,7 @@
 <div id="<%= dom_id collection_entry %>" class="text-blue-950">
 
   <a href="/collection_entries/<%= collection_entry.id %>"><p class="text-xl font-bold hover:font-extrabold"><%= local_relative_time(collection_entry.created_at, 'weekday-or-date') %></p>
-  <p class="text-sm"><%= local_time(collection_entry.created_at, '%l:%M%P') %></p></a><br/>
+  <p class="text-sm"><%= local_time(collection_entry.updated_at, '%l:%M%P') %></p></a><br/>
 
   <% if Current.user.mode == "layer" %>
     <p>Collected by <%= collection_entry.user.display_name %></p><br/>
