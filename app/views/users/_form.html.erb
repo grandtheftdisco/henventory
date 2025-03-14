@@ -17,12 +17,14 @@
       <%= form.text_field :display_name, class: 'font-semibold pl-2' %>
     </div>
 
-    <div class="inline-flex gap-1 md:gap-3.5 bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-5 md:shrink-0 w-100 md:w-120 ">
+    <div class="inline-flex gap-1 md:gap-3.5 bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 md:shrink-0 w-100 md:w-120 ">
       <%= form.label :mode, "Mode: ", class: 'font-bold pr-2' %>
       <%= form.radio_button :mode, "flock" %>
-      <%= form.label :mode_flock, "Flock", class: 'pr-2' %>   
+      <%= form.label :mode_flock, "🪺 Flock", class: 'pr-2' %>   
       <%= form.radio_button :mode, "layer" %>
-      <%= form.label :mode_layer, "Layer" %>
+      <%= form.label :mode_layer, "🐔 Layer" %>
+    </div>
+    <div class="inline-flex gap-1 md:shrink-0 w-100 md:w-120 mb-5">
       <p class="inline mx-2 px-2 bg-blue-200 rounded-2xl opacity-50 hover:opacity-90 w-fit"><a href="/faq" target="_blank">🤔 What's this?</a></p>
     </div>
 
