@@ -1,7 +1,7 @@
-<p class="font-bold text-2xl"><%= chicken.name %></p><br/>
+<p class="font-bold text-2xl mb-5"><%= chicken.name %></p>
 <% if chicken.image_url %>
   <%= image_tag(chicken.image_url, width: 300, class:'rounded-2xl' ) %>
 <% end %>
-<p class="text-blue-800 font-semibold hover:font-bold text-lg"><br/>
+<p class="text-blue-800 font-semibold hover:font-bold text-lg mt-5">
   <%= link_to "🗒️ Details", chicken %>
 </p>
