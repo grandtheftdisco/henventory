@@ -7,7 +7,7 @@
 
 <% if @calendar %>
   <div class="justify-self-center justify-items-center bg-blue-100 pt-2 pb-5 px-5 rounded-2xl">
-    <h3 class="text-xl font-bold text-gray-600 pb-2">FILTERS</h3>
+    <h3 class="text-xl font-bold text-gray-600 pb-2 upcase">Filters</h3>
     <p>Select Month:</p>
     <%== pagy_nav(@calendar[:month]) %>
     <br/>
@@ -27,7 +27,7 @@
   <div class="bg-green-200 border-1 border-green-300 justify-self-center justify-items-center p-5 rounded-2xl"">
     <p class="text-blue-950 font-semibold text-xl">You are now viewing entries from</p><p class="font-bold text-lime-800 text-2xl"><%== @calendar[:day].label(format: '%B %d %Y') %></p><br/>
     <p class="font-semibold text-blue-950">Eggs collected on this day: </p>
-    <p class="text-4xl"><%= render "todays_eggs" %></p>
+    <p class="text-4xl"><%= render 'egg_emoji_tally' %></p>
   </div>
 <% end %>
 

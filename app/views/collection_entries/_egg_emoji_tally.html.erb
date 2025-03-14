@@ -1,0 +1,10 @@
+<% if !@collection_entries.exists? %>
+      <p class="font-semibold">Uh oh! None logged yet.</p>
+<% else %>
+  <p class="text-5xl">
+  <% @collection_entries.each do |collection_entry| %>
+    <% collection_entry.egg_entries.each do |ce| %>
+      🥚
+    <% end %>
+  <% end %></p>
+<% end %>

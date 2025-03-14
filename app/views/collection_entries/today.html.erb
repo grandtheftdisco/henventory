@@ -2,10 +2,14 @@
   <p class="py-2 px-3 bg-blue-100 mb-5 text-green-700 font-medium inline-block rounded-2xl" id="notice"><%= notice %></p>
 <% end %>
 
-<p class="font-bold text-3xl text-lime-700"><%= local_time(Time.current, '%A, %B %e') %></p>
+<div class="bg-blue-100 md:shrink-0 w-100 md:w-150 items-center justify-self-center p-5 rounded-2xl mb-8">
+  <h2 class="font-bold text-lime-700 text-2xl pb-2">Today's Egg Count:</h2>
+  <p class="font-semibold text-sm pb-3 ">(for <%= local_time(Time.current, '%A, %B %e') %>)</p>
+  <%= render 'egg_emoji_tally' %>
+</div>
 
-<h3 class="font-bold text-lime-800 text-2xl pt-7 pb-10">TALLY:<%= render "todays_eggs" %></h3>
 <%= render "new_ce_button" %>
+
 <div id="collection_entries" class="md:shrink-0 w-100 md:w-150 items-center justify-self-center">
   <% @collection_entries.each do |collection_entry| %>
     <div class="flex flex-col py-6 border border-blue-300 rounded-2xl bg-blue-200">
