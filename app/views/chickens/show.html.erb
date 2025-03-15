@@ -2,11 +2,11 @@
 
 <% content_for :title, @chicken.name %>
 
-<div class="md:shrink-0 w-120 md:w-150 items-center justify-self-center text-blue-950">
+<div class="md:shrink-0 w-120 md:w-150 items-center justify-self-center">
   <div class="py-6 border border-blue-300 rounded-2xl bg-blue-200 mb-5">
     <%= render 'chicken_longform' %>
   </div>
-  <div class="py-6 md:shrink-0 w-120 md:w-150 items-center justify-self-center border border-blue-200 rounded-2xl bg-blue-100 text-lg text-blue-950 mt-5">
+  <div class="py-6 md:shrink-0 w-120 md:w-150 items-center justify-self-center border border-blue-200 rounded-2xl bg-blue-100 text-lg mt-5">
     <div class="py-3"><%= link_to "✏️ Edit this chicken", edit_chicken_path(@chicken), class: 'hover:font-bold' %></div> 
     <div class="py-3"><%= link_to "⬅️ Back to my flock", chickens_path, class: 'hover:font-bold' %></div>
     <div class="py-3"><%= button_to "🗑️ Delete this chicken", @chicken, method: :delete, class: 'text-amber-700 hover:font-bold' %></div>
