@@ -1,6 +1,8 @@
 <% if notice.present? %>
   <p class="py-2 px-3 bg-blue-100 mb-5 text-green-700 font-medium inline-block rounded-2xl" id="notice"><%= notice %></p>
 <% end %>
+
+<% content_for :title, "Settings - All" %>
   
 <h1 class="font-extrabold text-3xl text-blue-800 mb-1">Settings</h1>
 <p class="text-sm italic mb-2">Logged in as <%= @user.display_name %></p>
