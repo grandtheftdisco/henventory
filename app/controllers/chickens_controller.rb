@@ -7,14 +7,6 @@ class ChickensController < ApplicationController
     @chickens = Current.household.chickens.where(status: :layer).where.not(id: 99)
   end
 
-  def pullets
-    @chickens = Current.household.chickens.where(status: :pullet)
-  end
-
-  def expired
-    @chickens = Current.household.chickens.where(status: :expired)
-  end
-
   # GET /chickens/1 or /chickens/1.json
   def show
   end

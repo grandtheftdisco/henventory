@@ -22,4 +22,7 @@ class MarketingController < ApplicationController
 
   def acknowledgements
   end
+
+  def faq
+  end
 end
