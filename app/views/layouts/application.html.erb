@@ -32,7 +32,9 @@
           <% if Current.user %>
             <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries/today">📅 Today's Entries</a></li>
             <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries">All Entries</a></li>
-            <li class="p-4 font-semibold hover:text-blue-400"><a href="/chickens">My Flock</a></li>
+            <% if Current.user.mode == "layer" %>
+              <li class="p-4 font-semibold hover:text-blue-400"><a href="/chickens">My Flock</a></li>
+            <% end %>
             <li class="p-4 font-semibold hover:text-blue-400"><a href="/settings">Settings</a></li>
             <li class="p-4 font-semibold hover:text-red-700"><%= button_to "👋 Log out", session_path, method: :delete%></a></li>
           <% else %>
@@ -51,6 +53,6 @@
   </body>
   <footer class="text-center bg-blue-100 py-15">
     <p class="font-semibold my-4">©️ AJ <%= Time.now.year %></p>
-    <p class="font-semibold my-4 hover:text-amber-700"><%= link_to "🥂 Thank Yous 🥂", acknowledgements_path %></p>
+    <p class="font-semibold my-4 hover:text-amber-700"><%= link_to "🥂 Acknowledgments 🥂", acknowledgements_path %></p>
   </footer>
 </html>

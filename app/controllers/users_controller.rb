@@ -8,6 +8,10 @@ class UsersController < ApplicationController
   def new
   end
 
+  def edit
+    @user = Current.user
+  end
+
   def create
     user = User.new(user_params)
     user.build_household
@@ -20,8 +24,21 @@ class UsersController < ApplicationController
     end   
   end
 
+  def update
+    @user = Current.user
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to settings_path, notice: "User settings were successfully updated." }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
     def user_params
-      params.require(:user).permit(:display_name, :email_address, :password, :password_confirmation)
+      params.require(:user).permit(:display_name, :email_address, :password, :password_confirmation, :mode)
     end
 end

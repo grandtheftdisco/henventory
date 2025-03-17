@@ -1,0 +1,26 @@
+<% if notice.present? %>
+  <p class="py-2 px-3 bg-blue-100 mb-5 text-green-700 font-medium inline-block rounded-2xl" id="notice"><%= notice %></p>
+<% end %>
+
+<% content_for :title, "Expired Chickens" %>
+
+<h2 class="font-extrabold text-amber-700 text-3xl pb-7 uppercase">🪦Expired Chickens🪦</h2>
+
+<div class="p-3 border border-blue-200 rounded-2xl bg-blue-100 text-lg text-blue-950 justify-self-center">
+  <%= link_to "⬅️ Back to Layers", chickens_path %>
+</div>
+
+<div id="chickens" class="justify-items-center text-blue-950 mt-10">
+  <% @chickens.each do |chicken| %>
+    <div class="py-5 bg-blue-200 md:shrink-0 w-90 md:w-120 justify-items-center rounded-2xl">
+      <p class="font-bold text-2xl"><%= chicken.name %></p><br/>
+      <% if chicken.image_url %>
+        <%= image_tag(chicken.image_url, width: 300 ) %>
+      <% end %>
+      <p class="text-blue-800 font-semibold hover:font-bold text-lg"><br/>
+        <%= link_to "🗒️ Details", chicken %>
+      </p>
+    </div>
+    <br/>
+  <% end %>
+</div>

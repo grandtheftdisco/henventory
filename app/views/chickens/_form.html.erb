@@ -36,6 +36,18 @@
       <%= form.label :image_url, "Image URL: ", class: 'font-bold' %>
       <%= form.text_field :image_url, class: 'font-semibold pl-2' %>
     </div>
+
+    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2">
+      <%= form.label :status, "Status: ", class: 'font-bold pr-3' %>
+      <%= form.radio_button :status, class: 'font-semibold pl-3' %>
+      <%= form.label :status_pullet, "🐤 Pullet", class: 'pr-3' %>
+      <%= form.radio_button :status, class: 'font-semibold pl-3' %>
+      <%= form.label :status_layer, "🐔 Layer", class: 'pr-3' %>
+      <% if chicken.persisted? %>
+        <%= form.radio_button :status, "expired", class: 'font-semibold pl-3' %>
+        <%= form.label :status_expired, "🪦 Expired", class: 'pr-3 text-red-700' %>
+      <% end %>
+    </div>
     
     <br/>
     <div class="inline cursor-pointer">

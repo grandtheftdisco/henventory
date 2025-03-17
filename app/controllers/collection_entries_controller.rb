@@ -40,16 +40,31 @@ class CollectionEntriesController < ApplicationController
 
   # POST /collection_entries or /collection_entries.json
   def create
-    @collection_entry = Current.household.collection_entries.build(collection_entry_params)
-    setup_form_data
+    if Current.user.mode == "layer"
+      @collection_entry = Current.household.collection_entries.build(collection_entry_params)
 
-    respond_to do |format|
-      if @collection_entry.save
-        format.html { redirect_to @collection_entry, notice: "Collection entry was successfully created." }
-        format.json { render :show, status: :created, location: @collection_entry }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @collection_entry.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @collection_entry.save
+          format.html { redirect_to @collection_entry, notice: "Collection entry was successfully created." }
+          format.json { render :show, status: :created, location: @collection_entry }
+        else
+          setup_form_data
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @collection_entry.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      @collection_entry = Current.household.collection_entries.build(collection_entry_params)
+      @users = Current.household.users.all
+
+      respond_to do |format|
+        if @collection_entry.save
+          format.html { redirect_to @collection_entry, notice: "Collection entry was successfully created." }
+          format.json { render :show, status: :created, location: @collection_entry }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @collection_entry.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -72,7 +87,7 @@ class CollectionEntriesController < ApplicationController
     @collection_entry.destroy!
 
     respond_to do |format|
-      format.html { redirect_to collection_entries_path, status: :see_other, notice: "Collection entry was successfully destroyed." }
+      format.html { redirect_to today_path, status: :see_other, notice: "Collection entry was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -92,6 +107,6 @@ class CollectionEntriesController < ApplicationController
 
     def setup_form_data
       @users = Current.household.users
-      @chickens = Current.household.chickens
+      @chickens = Current.household.chickens.where(status: :layer)
     end
 end
