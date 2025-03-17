@@ -27,10 +27,8 @@ class ChickensController < ApplicationController
     respond_to do |format|
       if @chicken.save
         format.html { redirect_to @chicken, notice: "Chicken was successfully created." }
-        format.json { render :show, status: :created, location: @chicken }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @chicken.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -40,10 +38,8 @@ class ChickensController < ApplicationController
     respond_to do |format|
       if @chicken.update(chicken_params)
         format.html { redirect_to @chicken, notice: "Chicken was successfully updated." }
-        format.json { render :show, status: :ok, location: @chicken }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @chicken.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -54,7 +50,6 @@ class ChickensController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to chickens_path, status: :see_other, notice: "Chicken was successfully destroyed." }
-      format.json { head :no_content }
     end
   end
 

@@ -17,10 +17,8 @@ class HouseholdsController < ApplicationController
     respond_to do |format|
       if @household.save
         format.html { redirect_to @household, notice: "Household was successfully created." }
-        format.json { render :show, status: :created, location: @household }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @household.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -30,10 +28,8 @@ class HouseholdsController < ApplicationController
     respond_to do |format|
       if @household.update(household_params)
         format.html { redirect_to '/settings', notice: "Household was successfully updated." }
-        format.json { render :show, status: :ok, location: @household }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @household.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -44,7 +40,6 @@ class HouseholdsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to households_path, status: :see_other, notice: "Household was successfully destroyed." }
-      format.json { head :no_content }
     end
   end
 

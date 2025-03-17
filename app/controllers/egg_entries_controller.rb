@@ -20,10 +20,8 @@ class EggEntriesController < ApplicationController
     respond_to do |format|
       if @egg_entry.save
         format.html { redirect_to @egg_entry, notice: "Egg entry was successfully created." }
-        format.json { render :show, status: :created, location: @egg_entry }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @egg_entry.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -33,10 +31,8 @@ class EggEntriesController < ApplicationController
     respond_to do |format|
       if @egg_entry.update(egg_entry_params)
         format.html { redirect_to @egg_entry, notice: "Egg entry was successfully updated." }
-        format.json { render :show, status: :ok, location: @egg_entry }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @egg_entry.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -47,7 +43,6 @@ class EggEntriesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to egg_entries_path, status: :see_other, notice: "Egg entry was successfully destroyed." }
-      format.json { head :no_content }
     end
   end
 
