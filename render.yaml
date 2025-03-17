@@ -2,7 +2,7 @@ databases:
   - name: henven-postgres
     databaseName: henven_postgres
     user: henven_postgres_user
-    plan: free
+    plan: Basic-256mb
 
 services:
   - type: web
