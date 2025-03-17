@@ -1,7 +1,11 @@
 <% content_for :title, "Household Settings" %>
 
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-blue-950 text-3xl mb-5">Change Household Name</h1>
+<div class="md:w-2/3 w-full justify-self-center">
+  <h1 class="font-bold text-lime-700 text-3xl mb-5">Change Household Name</h1>
 
   <%= render "form", household: @household %>
+</div>
+
+<div class="py-6 border border-blue-200 rounded-2xl bg-blue-100 text-lg text-blue-950 my-4 w-110 md:w-150 justify-self-center">
+  <%= link_to "⬅️ Back to settings", settings_path %>
 </div>

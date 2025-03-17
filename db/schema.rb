@@ -13,7 +13,6 @@
 ActiveRecord::Schema[8.0].define(version: 2025_02_26_232826) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
-
   create_table "chickens", force: :cascade do |t|
     t.string "name"
     t.string "breed"
@@ -24,6 +23,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_232826) do
     t.integer "user_id"
     t.string "image_url"
     t.integer "household_id"
+    t.string "status"
   end
 
   create_table "collection_entries", force: :cascade do |t|

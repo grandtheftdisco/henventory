@@ -1,3 +1,4 @@
+# order of routes matters!
 Rails.application.routes.draw do
   resources :households
   resources :egg_entries
@@ -9,13 +10,18 @@ Rails.application.routes.draw do
       get :today
     end
   end
-  get '/signup' => 'users#new', as: :new_user
+  resources :users
+  get '/signup' => 'users#new'
   post '/users' => 'users#create'
+  get '/settings' => 'marketing#settings', as: :settings
+  get '/faq' => 'marketing#faq'
+  get '/users/:id/edit' => 'users#edit'
+  post '/users' => 'users#update'
+  get '/my_pullets' => 'chickens#pullets', as: :pullets
+  get '/expired_chickens' => 'chickens#expired', as: :expired_chickens
+  get '/collection_entries/today' => 'collection_entries#today', as: :today
   # update all other routes with this syntax
   ########################
-  get '/settings' => 'marketing#settings', as: :settings
-  get '/users/:id/edit' => 'users#edit'
-  get '/faq' => 'marketing#faq', as: :faq
   get '/how_it_works' => 'marketing#how_it_works', as: :how_it_works
   get '/acknowledgements' => 'marketing#acknowledgements', as: :acknowledgements
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
