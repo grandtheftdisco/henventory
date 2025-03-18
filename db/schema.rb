@@ -64,6 +64,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_13_152716) do
     t.datetime "updated_at", null: false
     t.string "display_name"
     t.integer "household_id"
+    t.string "mode"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
