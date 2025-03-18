@@ -1,8 +1,5 @@
 class MarketingController < ApplicationController
-  allow_unauthenticated_access only: [ :hello, :how_it_works, :acknowledgements, :faq ]
-
-  def hello
-  end
+  allow_unauthenticated_access only: [ :how_it_works, :acknowledgements, :faq ]
 
   def home
     if Current.user
