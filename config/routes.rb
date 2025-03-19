@@ -1,6 +1,6 @@
 # order of routes matters!
 Rails.application.routes.draw do
-  resources :households
+  resources :households, param: :invite_token
   resources :egg_entries
   resource :session
   resources :passwords, param: :token
