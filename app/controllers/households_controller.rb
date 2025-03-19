@@ -6,6 +6,10 @@ class HouseholdsController < ApplicationController
     @household = Household.new
   end
 
+  def show
+    @household = Household.find(params[:invite_token])
+  end
+
   # GET /households/1/edit
   def edit
   end
