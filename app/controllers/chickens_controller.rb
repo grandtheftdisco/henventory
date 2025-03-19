@@ -86,7 +86,7 @@ class ChickensController < ApplicationController
     # Only allow a list of trusted parameters through.
     def chicken_params
       # params.expect(chicken: [ :name, :breed, :tell ])
-      params.require(:chicken).permit(:name, :breed, :tell, :dob, :image_url, :user_id, egg_entries_attributes: [
+      params.require(:chicken).permit(:name, :breed, :tell, :dob, :image_url, :user_id, :household_id, :status, egg_entries_attributes: [
         :egg_count, :chicken_id, :collection_entry_id,
       ])
     end

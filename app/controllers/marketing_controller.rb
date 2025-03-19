@@ -5,11 +5,6 @@ class MarketingController < ApplicationController
     .where(created_at: Time.current.localtime.beginning_of_day..Time.current.localtime.end_of_day)
   end
 
-  def settings
-    @user = Current.user
-    @household = Current.household
-  end
-
   def how_it_works
   end
 
