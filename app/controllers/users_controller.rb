@@ -12,6 +12,12 @@ class UsersController < ApplicationController
     @user = Current.user
   end
 
+  def settings
+    @user = Current.user
+    @household = Current.household
+    @expired_chickens = Current.household.chickens.where(status: :expired)
+  end
+
   def create
     user = User.new(user_params)
     user.build_household
