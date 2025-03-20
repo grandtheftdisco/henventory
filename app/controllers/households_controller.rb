@@ -7,7 +7,7 @@ class HouseholdsController < ApplicationController
   end
 
   def show
-    @household = Household.find(params[:invite_token])
+    @household = Household.find_by_invite_token(params[:invite_token])
   end
 
   # GET /households/1/edit
@@ -60,6 +60,6 @@ class HouseholdsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def household_params
-      params.require(:household).permit(:name)
+      params.require(:household).permit(:name, :id)
     end
 end

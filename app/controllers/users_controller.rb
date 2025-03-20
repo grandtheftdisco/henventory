@@ -7,9 +7,9 @@ class UsersController < ApplicationController
 
   def new
     @user = User.build
-    @household = Household.find_by_invite_token(params[:invite_token]) if params[:invite_token]
+    @household = Household.find_by(params[:invite_token]) if params[:invite_token]
     # will this pass the inviting household's id to the user?
-    inviting_household_id = @household.id
+    # inviting_household_id = @household.id
   end
 
   def edit
@@ -24,7 +24,13 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    user.build_household
+    if user.save && params[:user].key?(:invite_token)
+      household = Household.find_by_invite_token(params[:user][:invite_token])
+      # household_id = household.id
+    else 
+      user.build_household
+    end
+    
     if user.save
       start_new_session_for user 
       redirect_to '/'
@@ -32,6 +38,7 @@ class UsersController < ApplicationController
       raise user.errors.inspect
       render :new
     end   
+    
   end
 
   def update
@@ -49,6 +56,6 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:display_name, :email_address, :password, :password_confirmation, :mode)
+      params.require(:user).permit(:display_name, :email_address, :password, :household_id, :password_confirmation, :mode)
     end
 end
