@@ -6,6 +6,10 @@ class UsersController < ApplicationController
   end
 
   def new
+    @user = User.build
+    @household = Household.find_by_invite_token(params[:invite_token]) if params[:invite_token]
+    # will this pass the inviting household's id to the user?
+    inviting_household_id = @household.id
   end
 
   def edit
