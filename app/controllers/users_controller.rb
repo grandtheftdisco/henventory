@@ -23,12 +23,10 @@ class UsersController < ApplicationController
 
   def update
     @user = Current.user
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to settings_path, notice: "User settings were successfully updated." }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+    if @user.update(user_params)
+      redirect_to settings_path, notice: "User settings were successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 

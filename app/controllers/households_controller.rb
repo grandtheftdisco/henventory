@@ -14,23 +14,19 @@ class HouseholdsController < ApplicationController
   def create
     @household = Household.new(household_params)
 
-    respond_to do |format|
-      if @household.save
-        format.html { redirect_to @household, notice: "Household was successfully created." }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @household.save
+      redirect_to @household, notice: "Household was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /households/1 or /households/1.json
   def update
-    respond_to do |format|
-      if @household.update(household_params)
-        format.html { redirect_to '/settings', notice: "Household was successfully updated." }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+    if @household.update(household_params)
+      redirect_to '/settings', notice: "Household was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -38,9 +34,7 @@ class HouseholdsController < ApplicationController
   def destroy
     @household.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to households_path, status: :see_other, notice: "Household was successfully destroyed." }
-    end
+    redirect_to households_path, status: :see_other, notice: "Household was successfully destroyed."
   end
 
   private
