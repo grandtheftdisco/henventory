@@ -10,29 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_13_152716) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_21_173234) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "chickens", force: :cascade do |t|
-    t.string "name"
-    t.string "breed"
+    t.string "name", null: false
+    t.string "breed", null: false
     t.string "tell"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "dob"
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.string "image_url"
     t.integer "household_id"
     t.string "status"
   end
 
   create_table "collection_entries", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "household_id"
+    t.integer "household_id", null: false
   end
 
   create_table "egg_entries", force: :cascade do |t|
-    t.integer "egg_count"
+    t.integer "egg_count", null: false
     t.integer "chicken_id"
     t.integer "collection_entry_id"
     t.datetime "created_at", null: false
