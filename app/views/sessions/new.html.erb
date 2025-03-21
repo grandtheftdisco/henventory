@@ -1,6 +1,15 @@
 <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
 <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
 
-<h1 class="font-extrabold text-blue-500 text-4xl pb-7">Under Construction...</h1>
+<h1 class="font-extrabold text-blue-500 text-4xl pb-7">Login</h1>
 
-<p class="font-bold text-blue-950 text-2xl"> Site Hatching April 2025 🐣</p>
+<%= form_with url: session_path do |form| %>
+  <div class="justify-self-center w-1/2 ">
+    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: 'border-1 border-blue-300 focus:bg-blue-50 rounded-lg p-1 my-1' %><br>
+    <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, :size=>"20", class: 'border-1 border-blue-300 focus:bg-blue-50 border-0.5 border-black rounded-lg p-1' %>
+  </div><br><br/>
+  <%= form.submit "Sign in", class: 'text-2xl text-white font-semibold hover:font-bold hover:bg-lime-700 bg-lime-600 py-2 px-3 rounded-lg' %>
+<% end %>
+<br>
+
+<%= link_to "Forgot password?", new_password_path, class: 'text-blue-900 hover:font-bold' %>

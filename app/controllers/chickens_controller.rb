@@ -3,8 +3,19 @@ class ChickensController < ApplicationController
 
   # GET /chickens or /chickens.json
   def index
-    # excluding chicken 99 which is a placeholder for all flock-mode egg entries
-    @chickens = Current.household.chickens.where(status: :layer).where.not(id: 99)
+    # base definition
+    @chickens = Current.household.chickens 
+
+    # filtering of view based on chicken status
+    if params[:pullets]
+      @chickens = @chickens.where(status: :pullet)
+    elsif params[:expired]
+      @chickens = @chickens.where(status: :expired)
+    elsif params[:layers]
+      @chickens = @chickens.where(status: :layer)
+    elsif params[:all]
+      render :index
+    end
   end
 
   # GET /chickens/1 or /chickens/1.json
@@ -55,7 +66,7 @@ class ChickensController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def chicken_params
-      params.require(:chicken).permit(:name, :breed, :tell, :dob, :image_url, :user_id, egg_entries_attributes: [
+      params.require(:chicken).permit(:name, :breed, :tell, :dob, :image_url, :user_id, :household_id, :status, egg_entries_attributes: [
         :egg_count, :chicken_id, :collection_entry_id,
       ])
     end
