@@ -13,8 +13,6 @@ class ChickensController < ApplicationController
       @chickens = @chickens.rewhere(status: :expired)
     elsif params[:layers]
       @chickens = @chickens.where(status: :layer)
-    elsif params[:all]
-      @chickens
     end
   end
 
