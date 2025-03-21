@@ -7,9 +7,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.build
-    @household = Household.find_by(params[:invite_token]) if params[:invite_token]
-    # will this pass the inviting household's id to the user?
-    # inviting_household_id = @household.id
+    @household = Household.find_by(invite_token: params[:household_invite_token]) if params[:household_invite_token] #kv pair arg to find_by
   end
 
   def edit
@@ -24,9 +22,8 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    if user.save && params[:user].key?(:invite_token)
-      household = Household.find_by_invite_token(params[:user][:invite_token])
-      # household_id = household.id
+    if params[:household].key?(:invite_token)
+      user.household = Household.find_by(invite_token: params[:household][:invite_token])
     else 
       user.build_household
     end

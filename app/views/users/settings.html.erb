@@ -7,13 +7,11 @@
 
 <div class="bg-yellow-50 rounded-2xl">
   <p class="font-bold">Invite Link:</p>
-  <input type="text" value="<%= new_household_user_url(@household) %>" data-household-token="<%= @household.invite_token %>"/>
-  <div>
-    <button class="bg-yellow-100 rounded-2xl">regenerate invite link</button>
-    <button class="bg-green-100 rounded-2xl">copy link</button>
+  <input type="text" value="<%= new_household_user_url(@household) %>" data-household-token="<%= @household.invite_token %>" size="100"/>
+  <div class="py-5">
+    <button class="bg-yellow-100 rounded-2xl">regen [PH]</button>
+    <button class="bg-green-100 rounded-2xl">copy [PH]</button>
   </div>
-  <p>test print - my household id is <%= @user.household_id %></p>
-  <p>test print - my household's invite token is <%= @household.invite_token %>
 </div>
 
 <div class="flex flex-col border-1 rounded-2xl bg-blue-100 text-l text-blue-950 justify-self-center justify-items-center md:shrink-0 w-100 md:w-150 py-5 px-3">

@@ -7,7 +7,6 @@ class HouseholdsController < ApplicationController
   end
 
   def show
-    @household = Household.find_by_invite_token(params[:invite_token])
   end
 
   # GET /households/1/edit

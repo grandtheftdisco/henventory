@@ -5,20 +5,25 @@
 <% content_for :title, "Sign Up" %>
 
 <h1 class="font-extrabold text-3xl text-lime-700">Sign Up</h1>
-<p class="pb-5">(We're egg-cited to meet you!)</p>
+<p class="pb-5">(We're egg-cited to meet you.)</p>
+
+<% if @household %>
+  <div class="p-10 mb-5 bg-green-50 rounded-2xl border-1 border-green-100 w-1/2 justify-self-center text-xl font-bold">
+    <p>You've been invited to join the <%= @household.name %> household!</p>
+  </div>
+<% end %>
 
 <div class="border-1 rounded-2xl bg-blue-200 text-l text-left justify-self-center md:shrink-0 w-100 md:w-150 pt-5 px-3 pb-5 justify-items-center">
   <%= form_for :user, url: '/users' do |form| %>
     <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
       <%= form.label :display_name, "Name: ", class: 'font-bold' %>
       <%= form.text_field :display_name, class: 'font-semibold w-65' %>
-      
     </div>
 
     <div>
-      <input type="hidden" id="household_id" name="household[id]" value="#{@household.id}" />
-      <%= form.hidden_field :invite_token, value: @household.invite_token %>
-      <input type="hidden" id="household_invite_token" name="household[invite_token]" value="#{@household.invite_token}">
+      <% if @household %>
+        <input type="hidden" id="household_invite_token" name="household[invite_token]" value="<%= @household.invite_token %>">
+      <% end %>
     </div>
 
     <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
