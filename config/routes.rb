@@ -1,5 +1,6 @@
 # order of routes matters!
 Rails.application.routes.draw do
+  resources :users
   resources :households, param: :invite_token, only: :show do
     resources :users, shallow: true # nests only index, new, and create under household
   end
@@ -12,7 +13,6 @@ Rails.application.routes.draw do
       get :today
     end
   end
-  resources :users
   resources :households
   get '/signup' => 'users#new'
   get '/settings' => 'users#settings', as: :settings

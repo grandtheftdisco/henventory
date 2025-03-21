@@ -34,6 +34,12 @@
       <%= form.label :mode_layer, "Layer" %>
       <p class="inline mx-2 px-2 bg-blue-200 rounded-2xl opacity-50 hover:opacity-90 w-fit"><a href="/faq#anchor-one" target="_blank">🤔 What's this?</a></p>
     </div>
+
+    <% if @household %>
+      <div class="text-xs w-80 px-2 text-justify">
+        <p>(If you've read the 'What's This?' link above and you're still not sure which mode to choose, ask the person who invited you.)</p>
+      </div>
+    <% end %>
     
     <div class="bg-blue-100 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85"> 
       <%= form.label :email_address, "Email: ", class: 'font-bold' %>
