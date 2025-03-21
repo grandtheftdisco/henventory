@@ -1,4 +1,3 @@
-# order of routes matters!
 Rails.application.routes.draw do
   resources :users
   resources :households, param: :invite_token, only: :show do
