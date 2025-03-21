@@ -15,5 +15,4 @@ class ApplicationController < ActionController::Base
   def pagy_calendar_filter(collection, from, to)
     collection.where(created_at: from...to)
   end
-
 end
