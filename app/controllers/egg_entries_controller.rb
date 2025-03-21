@@ -17,27 +17,19 @@ class EggEntriesController < ApplicationController
     @egg_entry = EggEntry.new(egg_entry_params)
     @chickens = Current.user.household.chickens
 
-    respond_to do |format|
-      if @egg_entry.save
-        format.html { redirect_to @egg_entry, notice: "Egg entry was successfully created." }
-        format.json { render :show, status: :created, location: @egg_entry }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @egg_entry.errors, status: :unprocessable_entity }
-      end
+    if @egg_entry.save
+      redirect_to @egg_entry, notice: "Egg entry was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /egg_entries/1 or /egg_entries/1.json
   def update
-    respond_to do |format|
-      if @egg_entry.update(egg_entry_params)
-        format.html { redirect_to @egg_entry, notice: "Egg entry was successfully updated." }
-        format.json { render :show, status: :ok, location: @egg_entry }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @egg_entry.errors, status: :unprocessable_entity }
-      end
+    if @egg_entry.update(egg_entry_params)
+      redirect_to @egg_entry, notice: "Egg entry was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -45,10 +37,7 @@ class EggEntriesController < ApplicationController
   def destroy
     @egg_entry.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to egg_entries_path, status: :see_other, notice: "Egg entry was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to egg_entries_path, status: :see_other, notice: "Egg entry was successfully destroyed."
   end
 
   private
