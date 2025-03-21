@@ -11,23 +11,6 @@ class EggEntriesController < ApplicationController
   def edit
   end
 
-  # POST /egg_entries or /egg_entries.json
-  def create
-    raise params.permit!.to_h.inspect
-    @egg_entry = EggEntry.new(egg_entry_params)
-    @chickens = Current.user.household.chickens
-
-    respond_to do |format|
-      if @egg_entry.save
-        format.html { redirect_to @egg_entry, notice: "Egg entry was successfully created." }
-        format.json { render :show, status: :created, location: @egg_entry }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @egg_entry.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # PATCH/PUT /egg_entries/1 or /egg_entries/1.json
   def update
     respond_to do |format|

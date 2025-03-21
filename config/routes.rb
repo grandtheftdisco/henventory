@@ -1,7 +1,7 @@
 # order of routes matters!
 Rails.application.routes.draw do
   resources :households
-  resources :egg_entries
+  resources :egg_entries, except: [:create]
   resource :session
   resources :passwords, param: :token
   resources :chickens
