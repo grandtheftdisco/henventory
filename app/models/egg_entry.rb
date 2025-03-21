@@ -26,6 +26,6 @@ class EggEntry < ApplicationRecord
   end
 
   def self.for_today
-    where("created_at > ? AND created_at < ?", DateTime.now.localtime.beginning_of_day, DateTime.now.localtime.end_of_day)
+    where(created_at: DateTime.now.localtime.beginning_of_day...DateTime.now.localtime.end_of_day)
   end
 end
