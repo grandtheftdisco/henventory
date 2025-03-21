@@ -34,8 +34,7 @@ class UsersController < ApplicationController
     else
       raise user.errors.inspect
       render :new
-    end   
-    
+    end    
   end
 
   def update

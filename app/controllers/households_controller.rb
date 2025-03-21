@@ -6,9 +6,6 @@ class HouseholdsController < ApplicationController
     @household = Household.new
   end
 
-  def show
-  end
-
   # GET /households/1/edit
   def edit
   end
@@ -59,6 +56,6 @@ class HouseholdsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def household_params
-      params.require(:household).permit(:name, :id)
+      params.require(:household).permit(:name)
     end
 end
