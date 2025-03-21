@@ -7,16 +7,6 @@ class MarketingController < ApplicationController
     end
   end
 
-  def settings
-    @user = Current.user
-    @household = Current.household
-  end
-
-  def settings
-    @user = Current.user
-    @household = Current.household
-  end
-
   def how_it_works
   end
 
