@@ -4,17 +4,15 @@ class ChickensController < ApplicationController
   # GET /chickens or /chickens.json
   def index
     # base definition
-    @chickens = Current.household.chickens 
+    @chickens = Current.household.chickens.where.not(status: :expired)
 
     # filtering of view based on chicken status
     if params[:pullets]
       @chickens = @chickens.where(status: :pullet)
     elsif params[:expired]
-      @chickens = @chickens.where(status: :expired)
+      @chickens = @chickens.rewhere(status: :expired)
     elsif params[:layers]
       @chickens = @chickens.where(status: :layer)
-    elsif params[:all]
-      render :index
     end
   end
 

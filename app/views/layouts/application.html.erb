@@ -21,14 +21,14 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-blue-50 text-blue-950">
-    <header class="p-4 -mb-6 text-center bg-blue-100">
-      <h1 class="text-5xl font-extrabold text-blue-400 hover:text-amber-600"><a href="/">🐔 Henventory 🥚</a></h1><br/>
+  <body class="bg-blue-50 text-blue-950 flex flex-col min-h-screen">
+    <header class="p-4 pb-6 text-center bg-blue-100">
+      <h1 class="text-5xl font-extrabold text-blue-400 hover:text-amber-600"><a href="/">🐔 Henventory 🥚</a></h1>
     </header> 
 
     <section>
       <nav class="flex justify-center bg-blue-200 ">
-        <ul class="flex w:full items-center justify-center text-center text-blue-950">
+        <ul class="flex w:full items-center justify-center text-center">
           <% if Current.user %>
             <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries/today">📅 Today's Entries</a></li>
             <li class="p-4 font-semibold hover:text-blue-400"><a href="/collection_entries">All Entries</a></li>
@@ -46,7 +46,10 @@
       </nav>
     </section>
 
-    <main class="p-6 text-center">
+    <main class="p-6 text-center flex-grow">
+    <% if notice.present? %>
+      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <% end %>
     <%= yield %>
     </main>
 

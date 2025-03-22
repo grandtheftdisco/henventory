@@ -1,7 +1,6 @@
 # order of routes matters!
 Rails.application.routes.draw do
   resources :households
-  resources :egg_entries
   resource :session
   resources :passwords, param: :token
   resources :chickens
@@ -11,10 +10,11 @@ Rails.application.routes.draw do
     end
   end
   get '/users/edit/me' => 'users#edit', as: :edit_user # find way to remove the id# @ end of url
+  get '/users/edit/me' => 'users#edit', as: :edit_user # find way to remove the id# @ end of url
   resources :users
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
-  get '/settings' => 'users#settings', as: :settings
+  get '/settings' => 'users#show', as: :settings
   get '/faq' => 'marketing#faq'
   post '/users' => 'users#update'
   get '/collection_entries/today' => 'collection_entries#today', as: :today

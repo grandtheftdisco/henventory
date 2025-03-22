@@ -1,18 +1,17 @@
 class UsersController < ApplicationController
   allow_unauthenticated_access only: %i[ new create ]
-  include ActiveModel::Attributes
+
+  def show
+    @user = Current.user
+    @household = Current.household
+    @expired_chickens = Current.household.chickens.where(status: :expired)
+  end
 
   def new
   end
 
   def edit
     @user = Current.user
-  end
-
-  def settings
-    @user = Current.user
-    @household = Current.household
-    @expired_chickens = Current.household.chickens.where(status: :expired)
   end
 
   def create

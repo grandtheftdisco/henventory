@@ -1,15 +1,7 @@
-<div id="<%= dom_id chicken %>">
-  <h3 class="py-5 text-blue-500 font-extrabold text-5xl"><%= chicken.name %></h3><br/>
-
-  <%= image_tag("#{chicken.image_url}", width: 450, class: "justify-self-center") %>
-  <br/>
-  <div class="text-left px-5 text-xl">
-    <p><b>Breed: </b><%= chicken.breed %></p><br/>
-
-    <p><b>DOB: </b><%= local_date(chicken.dob) %></p><br/>
-
-    <p><b>Tell: </b><%= chicken.tell %></p><br/>
-
-    <p><b>Eggs Laid This Year: </b><%= chicken.egg_entries.sum(:egg_count) %></p>
-  </div>
-</div>
+<p class="font-bold text-2xl mb-5"><%= chicken.name %></p>
+<% if chicken.image_url %>
+  <%= image_tag(chicken.image_url, width: 300, class:'rounded-2xl' ) %>
+<% end %>
+<p class="text-blue-800 font-semibold hover:font-bold text-lg mt-5">
+  <%= link_to "🗒️ Details", chicken %>
+</p>

@@ -1,0 +1,20 @@
+<div class='my-4 flex flex-col'
+    data-controller='nested-form'
+    data-nested-form-pattern-to-replace-with-index-value='EGG_ENTRY_INDEX'>
+  <template data-nested-form-target="formTemplate">
+
+    <%= collection_entry_form.fields_for :egg_entries, EggEntry.new, child_index: "EGG_ENTRY_INDEX" do |ee_form| %>
+      <%= render partial: 'egg_entry_form', locals: { ee_form: } %>
+    <% end %> 
+  </template>
+    
+  <div data-nested-form-target="itemsList">
+    <%= collection_entry_form.fields_for(:egg_entries) do |ee_form| %>
+      <%= render partial: 'egg_entry_form', locals: { ee_form: } %>
+    <% end %>
+  </div>
+
+  <div class="mb-5">
+    <span class="btn-primary cursor-pointer btn-sm bg-yellow-100 hover:bg-yellow-300 rounded-2xl p-3" data-action="click->nested-form#addItem">Got another egg?</span>
+  </div>
+</div>

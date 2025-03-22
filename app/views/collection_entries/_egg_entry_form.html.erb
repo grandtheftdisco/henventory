@@ -1,14 +1,12 @@
-<div class='bg-blue-100 rounded-xl'>
+<div class='bg-blue-100 rounded-xl mb-7'>
+  <%= ee_form.label :chicken_id, "Chicken: ", class: 'font-bold' %>
+  <%= ee_form.collection_select :chicken_id, @chickens, :id, :name, prompt: 'select a chicken' %>
   <% if ee_form.object.persisted? %>
-    <%= ee_form.label :chicken_id, "Chicken: " %>
-    <%= ee_form.collection_select :chicken_id, @chickens, :id, :name %>
-    <label class="text-red-600 px-2">
+    <label class="text-red-700 px-2 font-semibold">
       <%= ee_form.check_box :_destroy %>
       <span>remove</span>
     </label>
   <% else %>
-    <%= ee_form.label :chicken_id, "Chicken: ", class:"font-bold" %>
-    <%= ee_form.collection_select :chicken_id, @chickens, :id, :name, prompt: 'select a chicken' %>
     <%= ee_form.hidden_field :egg_count, value: 1 %>
   <% end %>
-</div><br/>
+</div>

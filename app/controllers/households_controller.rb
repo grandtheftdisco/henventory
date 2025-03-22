@@ -6,10 +6,10 @@ class HouseholdsController < ApplicationController
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_household
-    @household = Household.find(params.expect(:id))
-  end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_household
+      @household = Current.household
+    end
 
   # Only allow a list of trusted parameters through.
   def household_params
