@@ -1,16 +1,6 @@
 <div class="border-1 rounded-2xl bg-blue-200 justify-items-center text-xl justify-self-center md:shrink-0 w-100 md:w-150 items-center pt-5">
   <%= form_with(model: chicken) do |form| %>
-    <% if chicken.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(chicken.errors.count, "error") %> prohibited this chicken from being saved:</h2>
-
-        <ul>
-          <% chicken.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+    <%= render partial: '/marketing/ui_errors', locals: { obj: chicken } %>
 
     <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2">
       <%= form.label :name, "Name: ", class: 'font-bold' %>
