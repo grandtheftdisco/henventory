@@ -10,7 +10,6 @@ Rails.application.routes.draw do
     end
   end
   get '/users/edit/me' => 'users#edit', as: :edit_user # find way to remove the id# @ end of url
-  get '/users/edit/me' => 'users#edit', as: :edit_user # find way to remove the id# @ end of url
   resources :users
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
