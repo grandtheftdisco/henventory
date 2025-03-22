@@ -2,13 +2,12 @@
 
 <div class="md:w-2/3 w-full justify-self-center">
   <h1 class="font-bold text-blue-700 text-3xl mb-5">User Settings</h1>
- 
 </div>
 
 <div>
   <%= render "form", user: @user %>
 </div>
 
-<div class="py-6 border border-blue-200 rounded-2xl bg-blue-100 text-lg text-blue-950 my-4 w-110 md:w-150 justify-self-center">
+<div class="py-6 md:shrink-0 w-100 md:w-150 items-center justify-self-center border border-blue-200 rounded-2xl bg-blue-100 text-lg mt-5">
   <%= link_to "⬅️ Back to settings", settings_path %>
 </div>
