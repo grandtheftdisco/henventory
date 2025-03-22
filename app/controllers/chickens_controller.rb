@@ -13,17 +13,6 @@ class ChickensController < ApplicationController
       @chickens = @chickens.rewhere(status: :expired)
     elsif params[:layers]
       @chickens = @chickens.where(status: :layer)
-    elsif params[:all]
-      @chickens
-    end
-  end
-
-  def pullets
-    @chickens = Current.household.chickens.where(status: :pullet)
-  end
-
-  def expired
-    @chickens = Current.household.chickens.where(status: :expired)
   end
 
   # GET /chickens/1 or /chickens/1.json
