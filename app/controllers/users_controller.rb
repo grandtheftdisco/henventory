@@ -3,6 +3,9 @@ class UsersController < ApplicationController
   include ActiveModel::Attributes
 
   def show
+    @user = Current.user
+    @household = Current.household
+    @expired_chickens = Current.household.chickens.where(status: :expired)
   end
 
   def new
@@ -10,12 +13,6 @@ class UsersController < ApplicationController
 
   def edit
     @user = Current.user
-  end
-
-  def settings
-    @user = Current.user
-    @household = Current.household
-    @expired_chickens = Current.household.chickens.where(status: :expired)
   end
 
   def create

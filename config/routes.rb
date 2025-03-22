@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :users
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
-  get '/settings' => 'users#settings', as: :settings
+  get '/settings' => 'users#show', as: :show
   get '/faq' => 'marketing#faq'
   post '/users' => 'users#update'
   get '/collection_entries/today' => 'collection_entries#today', as: :today
