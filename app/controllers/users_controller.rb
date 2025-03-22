@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   allow_unauthenticated_access only: %i[ new create ]
-  include ActiveModel::Attributes
 
   def show
     @user = Current.user
