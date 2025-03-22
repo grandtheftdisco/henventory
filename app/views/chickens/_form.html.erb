@@ -29,16 +29,18 @@
 
     <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 mb-5">
       <%= form.label :status, "Status: ", class: 'font-bold pr-3' %>
-      <%= form.radio_button :status, class: 'font-semibold pl-3' %>
+      <%= form.radio_button :status, "pullet"%>
       <%= form.label :status_pullet, "🐤 Pullet", class: 'pr-3' %>
-      <%= form.radio_button :status, class: 'font-semibold pl-3' %>
+      <%= form.radio_button :status, "layer" %>
       <%= form.label :status_layer, "🐔 Layer", class: 'pr-3' %>
       <% if chicken.persisted? %>
-        <%= form.radio_button :status, "expired", class: 'font-semibold pl-3' %>
+        <%= form.radio_button :status, "expired" %>
         <%= form.label :status_expired, "🪦 Expired", class: 'pr-3 text-red-700' %>
       <% end %>
     </div>
     
+    <%= form.hidden_field :household_id, value: Current.user.household_id %>
+    <br/>
     <div class="inline cursor-pointer">
       <%= form.submit class: 'bg-yellow-300 hover:bg-yellow-500 p-3 rounded-2xl mb-5' %>
     </div>

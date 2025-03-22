@@ -50,53 +50,38 @@ class CollectionEntriesController < ApplicationController
     if Current.user.mode == "layer"
       @collection_entry = Current.household.collection_entries.build(collection_entry_params)
 
-      respond_to do |format|
-        if @collection_entry.save
-          format.html { redirect_to @collection_entry, notice: "Collection entry was successfully created." }
-          format.json { render :show, status: :created, location: @collection_entry }
-        else
-          setup_form_data
-          format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: @collection_entry.errors, status: :unprocessable_entity }
-        end
+      if @collection_entry.save
+        redirect_to @collection_entry, notice: "Collection entry was successfully created."
+      else
+        setup_form_data
+        render :new, status: :unprocessable_entity
       end
     else
       @collection_entry = Current.household.collection_entries.build(collection_entry_params)
       @users = Current.household.users.all
 
-      respond_to do |format|
-        if @collection_entry.save
-          format.html { redirect_to @collection_entry, notice: "Collection entry was successfully created." }
-          format.json { render :show, status: :created, location: @collection_entry }
-        else
-          format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: @collection_entry.errors, status: :unprocessable_entity }
-        end
+      if @collection_entry.save
+        redirect_to @collection_entry, notice: "Collection entry was successfully created."
+      else
+        render :new, status: :unprocessable_entity
       end
     end
   end
 
   # PATCH/PUT /collection_entries/1 or /collection_entries/1.json
-  def update
-    respond_to do |format|
+  def update 
       if @collection_entry.update(collection_entry_params)
-        format.html { redirect_to @collection_entry, notice: "Collection entry was successfully updated." }
-        format.json { render :show, status: :ok, location: @collection_entry }
+        redirect_to @collection_entry, notice: "Collection entry was successfully updated."
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @collection_entry.errors, status: :unprocessable_entity }
+        render :edit, status: :unprocessable_entity
       end
-    end
   end
 
   # DELETE /collection_entries/1 or /collection_entries/1.json
   def destroy
     @collection_entry.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to today_path, status: :see_other, notice: "Collection entry was successfully destroyed." }
-      format.json { head :no_content }
-    end
+ 
+    redirect_to today_path, status: :see_other, notice: "Collection entry was successfully destroyed."
   end
 
   private
