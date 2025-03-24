@@ -2,11 +2,9 @@ class PasswordsController < ApplicationController
   allow_unauthenticated_access
   before_action :set_user_by_token, only: %i[ edit update ]
 
-  # renders password recovery form
   def new
   end
 
-  # sends password reset email using PasswordsMailer.rest
   def create
     if user = User.find_by(email_address: params[:email_address])
       PasswordsMailer.reset(user).deliver_later
@@ -15,12 +13,9 @@ class PasswordsController < ApplicationController
     redirect_to new_session_path, notice: "Password reset instructions sent (if user with that email address exists)."
   end
 
-  # renders password edit form if the correct token is present in the URL
-  # if token is not present or invalid, user gets redirected to #new
   def edit
   end
 
-  # updates password, as long as password & password confirmation match
   def update
     if @user.update(params.permit(:password, :password_confirmation))
       redirect_to new_session_path, notice: "Password has been reset."
