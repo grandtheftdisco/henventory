@@ -6,7 +6,7 @@ class CollectionEntriesController < ApplicationController
     collection_entries = Current.household
       .collection_entries
       .includes(egg_entries: :chicken)
-      .order("updated_at desc")
+      .order("created_at desc")
 
     @calendar, @pagy, @collection_entries = pagy_calendar(
       collection_entries,
@@ -22,7 +22,7 @@ class CollectionEntriesController < ApplicationController
   def today
     @collection_entries = Current.household.collection_entries.includes(egg_entries: :chicken)
     .where(created_at: Time.current.localtime.beginning_of_day..Time.current.localtime.end_of_day)
-    .order("updated_at desc")
+    .order("created_at desc")
   end
 
   # GET /collection_entries/1 or /collection_entries/1.json
