@@ -55,7 +55,8 @@ class CollectionEntriesController < ApplicationController
       @users = Current.household.users.all
 
       if @collection_entry.save
-        redirect_to @collection_entry, notice: "Collection entry was successfully created."
+        redirect_to @collection_entry, 
+          notice: "Collection entry was successfully created."
       else
         render :new, status: :unprocessable_entity
       end
@@ -64,7 +65,8 @@ class CollectionEntriesController < ApplicationController
 
   def update 
     if @collection_entry.update(collection_entry_params)
-      redirect_to @collection_entry, notice: "Collection entry was successfully updated."
+      redirect_to @collection_entry, 
+        notice: "Collection entry was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -73,18 +75,23 @@ class CollectionEntriesController < ApplicationController
   def destroy
     @collection_entry.destroy!
  
-    redirect_to today_path, status: :see_other, notice: "Collection entry was successfully destroyed."
+    redirect_to today_path, status: :see_other, 
+      notice: "Collection entry was successfully destroyed."
   end
 
   private
     def set_collection_entry
-      @collection_entry = Current.household.collection_entries.find(params.expect(:id))
+      @collection_entry = Current.household
+        .collection_entries
+        .find(params.expect(:id))
     end
 
     def collection_entry_params
-      params.require(:collection_entry).permit(:user_id, egg_entries_attributes: [
-        :id, :egg_count, :chicken_id, :collection_entry_id, :_destroy,
-      ])
+      params.require(:collection_entry)
+        .permit(:user_id, egg_entries_attributes: [
+          :id, :egg_count, :chicken_id, :collection_entry_id, :_destroy,
+        ]
+      )
     end
 
     def setup_form_data

@@ -3,13 +3,29 @@
 
 <h1 class="font-extrabold text-blue-500 text-4xl pb-7">Login</h1>
 
+<div class="mb-10" >
 <%= form_with url: session_path do |form| %>
-  <div class="justify-self-center w-1/2 ">
-    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: 'border-1 border-blue-300 focus:bg-blue-50 rounded-lg p-1 my-1' %><br>
-    <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, :size=>"20", class: 'border-1 border-blue-300 focus:bg-blue-50 border-0.5 border-black rounded-lg p-1' %>
-  </div><br><br/>
-  <%= form.submit "Sign in", class: 'text-2xl text-white font-semibold hover:font-bold hover:bg-lime-700 bg-lime-600 py-2 px-3 rounded-lg' %>
+  <div class="justify-self-center mb-10 flex flex-col">
+    <%= form.email_field :email_address, 
+      required: true, 
+      autofocus: true, 
+      autocomplete: "username", 
+      placeholder: "Enter your email address", 
+      value: params[:email_address], 
+      class: 'border-1 border-blue-300 focus:bg-blue-50 rounded-lg p-1 mt-1 mb-5' %>
+    <%= form.password_field :password, 
+      required: true, 
+      autocomplete: "current-password", 
+      placeholder: "Enter your password", 
+      maxlength: 72, :size=>"20", 
+      class: 'border-1 border-blue-300 focus:bg-blue-50 rounded-lg p-1' %>
+  </div>
+  <div class="text-2xl text-white font-semibold hover:font-bold 
+    hover:bg-lime-700 bg-lime-600 py-2 px-3 rounded-lg justify-self-center">
+    <%= form.submit "Sign in" %>
+  </div>
 <% end %>
-<br>
+</div>
 
-<%= link_to "Forgot password?", new_password_path, class: 'text-blue-900 hover:font-bold' %>
+<%= link_to "Forgot password?", new_password_path, 
+  class: 'text-blue-900 hover:font-bold' %>

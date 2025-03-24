@@ -1,16 +1,23 @@
 <% content_for :title, "Today's Entries" %>
 
-<div class="bg-blue-100 md:shrink-0 w-100 md:w-150 items-center justify-self-center p-5 rounded-2xl mb-8">
-  <h2 class="font-bold text-lime-700 text-2xl pb-2">Today's Egg Count:</h2>
-  <p class="font-semibold text-sm pb-3 ">(for <%= local_time(Time.current, '%A, %B %e') %>)</p>
+<div class="bg-blue-100 md:shrink-0 w-100 md:w-150 items-center 
+  justify-self-center p-5 rounded-2xl mb-8">
+  <h2 class="font-bold text-lime-700 text-2xl pb-2">
+    Today's Egg Count:
+  </h2>
+  <p class="font-semibold text-sm pb-3 ">
+    (for <%= local_time(Time.current, '%A, %B %e') %>)
+  </p>
   <%= render 'egg_emoji_tally' %>
 </div>
 
 <%= render "new_ce_button" %>
 
-<div id="collection_entries" class="md:shrink-0 w-100 md:w-150 items-center justify-self-center">
+<div id="collection_entries" 
+  class="md:shrink-0 w-100 md:w-150 items-center justify-self-center">
   <% @collection_entries.each do |collection_entry| %>
-    <div class="flex flex-col mb-5 py-6 border border-blue-300 rounded-2xl bg-blue-200">
+    <div class="flex flex-col mb-5 py-6 border border-blue-300 
+      rounded-2xl bg-blue-200">
       <%= render collection_entry %>
       <p class="text-blue-800 font-semibold hover:font-bold text-lg">
         <%= link_to "🗒️ Details", collection_entry %>

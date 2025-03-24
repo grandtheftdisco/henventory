@@ -3,7 +3,9 @@
 <h1 class="font-extrabold text-3xl text-lime-700">Sign Up</h1>
 <p class="pb-5">(We're egg-cited to meet you!)</p>
 
-<div class="border-1 rounded-2xl bg-blue-200 text-l text-left justify-self-center md:shrink-0 w-100 md:w-150 pt-5 px-3 pb-5 justify-items-center">
+<div class="border-1 rounded-2xl bg-blue-200 text-l text-left 
+  justify-self-center md:shrink-0 w-100 md:w-150 pt-5 px-3 pb-5 
+  justify-items-center">
   <%= form_for :user, url: '/users' do |form| %>
     <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
       <%= form.label :display_name, "Name: ", class: 'font-bold' %>
@@ -16,7 +18,12 @@
       <%= form.label :mode_flock, "Flock", class: 'pr-2' %>   
       <%= form.radio_button :mode, "layer" %>
       <%= form.label :mode_layer, "Layer" %>
-      <p class="inline mx-2 px-2 bg-blue-200 rounded-2xl opacity-50 hover:opacity-90 w-fit"><a href="/faq#anchor-one" target="_blank">🤔 What's this?</a></p>
+      <p class="inline mx-2 px-2 bg-blue-200 rounded-2xl opacity-50 
+        hover:opacity-90 w-fit">
+        <a href="/faq#anchor-one" target="_blank">
+          🤔 What's this?
+        </a>
+      </p>
     </div>
     
     <div class="bg-blue-100 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85"> 
@@ -30,9 +37,14 @@
     </div>
 
     <div class="bg-blue-100 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
-      <%= form.label :password_confirmation, "Confirm Password: ", class: 'font-bold' %>
+      <%= form.label :password_confirmation, 
+        "Confirm Password: ", 
+        class: 'font-bold' %>
       <%= form.password_field :password_confirmation %>
     </div>
 </div>
-<%= form.submit "Submit", class: "mt-5 font-bold text-white bg-lime-600 hover:bg-lime-700 p-3 rounded-2xl mt-5 align-self-center" %>
+<div class="mt-5 font-bold text-white bg-lime-600 hover:bg-lime-700 p-3 
+  rounded-2xl align-self-center justify-self-center">
+  <%= form.submit "Submit" %>
+</div>
 <% end %>

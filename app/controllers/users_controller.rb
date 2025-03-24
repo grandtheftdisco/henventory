@@ -4,7 +4,9 @@ class UsersController < ApplicationController
   def show
     @user = Current.user
     @household = Current.household
-    @expired_chickens = Current.household.chickens.where(status: :expired)
+    @expired_chickens = Current.household
+      .chickens
+      .where(status: :expired)
   end
 
   def new
@@ -29,7 +31,8 @@ class UsersController < ApplicationController
   def update
     @user = Current.user
     if @user.update(user_params)
-      redirect_to settings_path, notice: "User settings were successfully updated."
+      redirect_to settings_path, 
+        notice: "User settings were successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -37,6 +40,10 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:display_name, :email_address, :password, :password_confirmation, :mode)
+      params.require(:user)
+        .permit(
+          :display_name, :email_address, :password, 
+          :password_confirmation, :mode
+        )
     end
 end

@@ -45,7 +45,8 @@ class ChickensController < ApplicationController
   def destroy
     @chicken.destroy!
 
-    redirect_to chickens_path, status: :see_other, notice: "Chicken was successfully destroyed."
+    redirect_to chickens_path, status: :see_other, 
+      notice: "Chicken was successfully destroyed."
   end
 
   private
@@ -54,8 +55,12 @@ class ChickensController < ApplicationController
     end
 
     def chicken_params
-      params.require(:chicken).permit(:name, :breed, :tell, :dob, :image_url, :user_id, :household_id, :status, egg_entries_attributes: [
-        :egg_count, :chicken_id, :collection_entry_id,
-      ])
+      params.require(:chicken)
+        .permit(
+          :name, :breed, :tell, :dob, :image_url, :user_id, :household_id, 
+          :status, egg_entries_attributes: [
+            :egg_count, :chicken_id, :collection_entry_id,
+          ]
+        )
     end
 end

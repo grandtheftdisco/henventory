@@ -1,25 +1,39 @@
 <% if !params[:expired] %>
   <% content_for :title, "My Flock" %>
-  <h2 class="font-extrabold text-lime-700 text-3xl pb-7 uppercase">My Flock</h2>
+  <h2 class="font-extrabold text-lime-700 text-3xl pb-7 uppercase">
+    My Flock
+  </h2>
 
-  <div class="p-3 mb-8 border border-blue-200 rounded-2xl bg-blue-100 text-lg text-left justify-self-center w-50 flex-col">
-      <%= link_to "🐔 View My Layers", chickens_path(layers: true), class: "font-semibold hover:text-blue-800" %>
-      <%= link_to "🐤 View My Pullets", chickens_path(pullets: true), class: "font-semibold hover:text-blue-800" %>
-      <%= link_to "🧑‍🌾 View All Chickens", chickens_path(all: true), class: "font-semibold hover:text-blue-800" %>
+  <div class="p-3 mb-8 border border-blue-200 rounded-2xl bg-blue-100 text-lg
+    text-left justify-self-center w-50 flex-col">
+      <%= link_to "🐔 View My Layers", chickens_path(layers: true), 
+        class: "font-semibold hover:text-blue-800" %>
+      <%= link_to "🐤 View My Pullets", chickens_path(pullets: true), 
+        class: "font-semibold hover:text-blue-800" %>
+      <%= link_to "🧑‍🌾 View All Chickens", chickens_path(all: true), 
+        class: "font-semibold hover:text-blue-800" %>
   </div>
 
-  <div><button class="p-5 mb-10 bg-lime-600 text-white font-bold rounded-2xl"><%= link_to "🐣 add new chicken", new_chicken_path %></button></div>
+  <div>
+    <button class="p-5 mb-10 bg-lime-600 text-white font-bold rounded-2xl">
+      <%= link_to "🐣 add new chicken", new_chicken_path %>
+    </button>
+  </div>
 <% elsif params[:expired] %>
   <% content_for :title, "Expired Chickens" %>
-  <h2 class="font-extrabold text-amber-700 text-3xl pb-7">👼 Gone, But Not Forgotten 👼</h2>
-  <div class="p-4 border border-blue-200 rounded-2xl bg-blue-100 text-lg mt-1 mb-4 justify-self-center">
+  <h2 class="font-extrabold text-amber-700 text-3xl pb-7">
+    👼 Gone, But Not Forgotten 👼
+  </h2>
+  <div class="p-4 border border-blue-200 rounded-2xl bg-blue-100 text-lg mt-1
+    mb-4 justify-self-center">
   <%= link_to "⬅️ Back to settings", settings_path %>
 </div>
 <% end %>
 
 <div id="chickens" class="justify-items-center">
   <% @chickens.each do |chicken| %>
-    <div class="py-5 mb-10 bg-blue-200 md:shrink-0 w-90 md:w-120 justify-items-center rounded-2xl">
+    <div class="py-5 mb-10 bg-blue-200 md:shrink-0 w-90 md:w-120
+      justify-items-center rounded-2xl">
       <%= render chicken %>
     </div>
   <% end %>
