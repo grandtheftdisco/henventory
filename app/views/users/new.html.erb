@@ -1,13 +1,25 @@
 <% content_for :title, "Sign Up" %>
 
 <h1 class="font-extrabold text-3xl text-lime-700">Sign Up</h1>
-<p class="pb-5">(We're egg-cited to meet you!)</p>
+<p class="pb-5">(We're egg-cited to meet you.)</p>
+
+<% if @household %>
+  <div class="p-10 mb-5 bg-green-50 rounded-2xl border-1 border-green-100 w-1/2 justify-self-center text-xl font-bold">
+    <p>You've been invited to join the <%= @household.name %> household!</p>
+  </div>
+<% end %>
 
 <div class="border-1 rounded-2xl bg-blue-200 text-l text-left justify-self-center md:shrink-0 w-100 md:w-150 pt-5 px-3 pb-5 justify-items-center">
   <%= form_for :user, url: '/users' do |form| %>
     <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
       <%= form.label :display_name, "Name: ", class: 'font-bold' %>
       <%= form.text_field :display_name, class: 'font-semibold w-65' %>
+    </div>
+
+    <div>
+      <% if @household %>
+        <%= hidden_field_tag 'household[invite_token]', @household.invite_token %>
+      <% end %>
     </div>
 
     <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
@@ -18,6 +30,12 @@
       <%= form.label :mode_layer, "Layer" %>
       <p class="inline mx-2 px-2 bg-blue-200 rounded-2xl opacity-50 hover:opacity-90 w-fit"><a href="/faq#anchor-one" target="_blank">🤔 What's this?</a></p>
     </div>
+
+    <% if @household %>
+      <div class="text-xs w-80 px-2 text-justify">
+        <p>(If you've read the 'What's This?' link above and you're still not sure which mode to choose, ask the person who invited you.)</p>
+      </div>
+    <% end %>
     
     <div class="bg-blue-100 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85"> 
       <%= form.label :email_address, "Email: ", class: 'font-bold' %>
@@ -34,5 +52,7 @@
       <%= form.password_field :password_confirmation %>
     </div>
 </div>
-<%= form.submit "Submit", class: "mt-5 font-bold text-white bg-lime-600 hover:bg-lime-700 p-3 rounded-2xl mt-5 align-self-center" %>
-<% end %>
+<div class="mt-5 font-bold text-white bg-lime-600 hover:bg-lime-700 p-3 
+  rounded-2xl align-self-center justify-self-center">
+  <%= form.submit "Submit" %>
+</div>

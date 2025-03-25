@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_13_152716) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_20_000720) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -46,6 +46,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_13_152716) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+    t.string "invite_token"
+    t.index ["invite_token"], name: "index_households_on_invite_token", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|

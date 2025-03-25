@@ -1,6 +1,6 @@
 <%= collection_entry_form.fields_for :egg_entries do |ee_form| %>
-  <div class='bg-blue-100 rounded-xl mb-5'>
-    <%= ee_form.label :egg_count, "Egg Count: ", class: 'font-semibold' %>
-    <%= ee_form.text_field :egg_count, :size=>"10" %>
+  <div class='bg-blue-100 rounded-xl'>
+    <%= ee_form.label :egg_count, "Egg Count: " %>
+    <%= ee_form.number_field :egg_count, min: 1 %>
   </div>
 <% end %>

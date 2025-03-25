@@ -1,7 +1,11 @@
 <div id="<%= dom_id @chicken %>">
-  <h3 class="py-3 mb-5 text-blue-500 font-extrabold text-5xl"><%= @chicken.name %></h3>
+  <h3 class="py-3 mb-5 text-blue-500 font-extrabold text-5xl">
+    <%= @chicken.name %>
+  </h3>
 
-  <%= image_tag("#{@chicken.image_url}", width: 450, class: "justify-self-center rounded-2xl mb-4") %>
+  <%= image_tag("#{@chicken.image_url}", 
+    width: 450, 
+    class: "justify-self-center rounded-2xl mb-4") %>
   <div class="text-left px-5 text-xl">
     <p class="font-bold">Breed</p>
     <p class="mb-5"><%= @chicken.breed %></p>
