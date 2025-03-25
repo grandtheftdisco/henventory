@@ -22,7 +22,7 @@
 
     <div>
       <% if @household %>
-        <input type="hidden" id="household_invite_token" name="household[invite_token]" value="<%= @household.invite_token %>">
+        <%= hidden_field_tag 'household[invite_token]', @household.invite_token %>
       <% end %>
     </div>
 
