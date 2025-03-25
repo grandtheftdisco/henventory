@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   resources :households, param: :invite_token, only: :show do
     resources :users, shallow: true # nests only index, new, and create under household
   end
-  resources :egg_entries
   resource :session
   resources :passwords, param: :token
   resources :chickens
@@ -14,7 +13,7 @@ Rails.application.routes.draw do
   end
   resources :households
   get '/signup' => 'users#new'
-  get '/settings' => 'users#settings', as: :settings
+  get '/settings' => 'users#show', as: :settings
   get '/faq' => 'marketing#faq'
   get '/collection_entries/today' => 'collection_entries#today', as: :today
   get '/how_it_works' => 'marketing#how_it_works', as: :how_it_works

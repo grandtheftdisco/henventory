@@ -1,8 +1,12 @@
 class UsersController < ApplicationController
   allow_unauthenticated_access only: %i[ new create ]
-  include ActiveModel::Attributes
 
   def show
+    @user = Current.user
+    @household = Current.household
+    @expired_chickens = Current.household
+      .chickens
+      .where(status: :expired)
   end
 
   def new
@@ -12,12 +16,6 @@ class UsersController < ApplicationController
 
   def edit
     @user = Current.user
-  end
-
-  def settings
-    @user = Current.user
-    @household = Current.household
-    @expired_chickens = Current.household.chickens.where(status: :expired)
   end
 
   def create
@@ -39,19 +37,20 @@ class UsersController < ApplicationController
 
   def update
     @user = Current.user
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to settings_path, notice: "User settings were successfully updated." }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(user_params)
+      redirect_to settings_path, 
+        notice: "User settings were successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   private
     def user_params
-      params.require(:user).permit(:display_name, :email_address, :password, :household_id, :password_confirmation, :mode)
+      params.require(:user)
+        .permit(
+          :display_name, :email_address, :password, :household_id, 
+          :password_confirmation, :mode
+        )
     end
 end

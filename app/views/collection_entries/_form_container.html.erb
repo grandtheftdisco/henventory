@@ -1,0 +1,29 @@
+<div class="border-1 rounded-2xl bg-blue-200 justify-items-center text-xl
+  justify-self-center md:shrink-0 w-100 md:w-150 items-center pb-5">
+  <%= form_with model: @collection_entry do |collection_entry_form| %>
+    <%= render partial: '/marketing/ui_errors', 
+      locals: { obj: collection_entry } %>
+
+    <div class="bg-blue-50 rounded-2xl my-5">
+      <div>
+        <%= collection_entry_form.label :user_id, "Who collected?", 
+          class:'text-blue-800 font-bold text-2xl mb-5' %>
+      </div>
+        <%= collection_entry_form.collection_select :user_id, @users, :id, 
+          :display_name, prompt: 'select your name' %>
+    </div>
+  
+    <% if Current.user.mode == "layer" %>
+      <%= render partial: 'form_layer_mode', 
+        locals: { collection_entry_form: } %>
+    <% else %>
+      <%= render partial: 'form_flock_mode', 
+        locals: { collection_entry_form: } %>
+    <% end %>
+
+    <div class="inline cursor-pointer">
+      <%= collection_entry_form.submit "Submit", 
+        class: 'bg-yellow-300 hover:bg-yellow-500 p-3 rounded-2xl' %>
+    </div>
+  <% end %>
+</div>

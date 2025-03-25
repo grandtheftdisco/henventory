@@ -1,13 +1,17 @@
 <% content_for :title, "Editing chicken" %>
 
-<h1>Editing chicken</h1>
+<h1 class="font-extrabold text-lime-700 text-3xl pb-7">
+  Updating <%= @chicken.name %>'s Info
+</h1>
 
 <%= render "form", chicken: @chicken %>
 
-<br>
-
-<div>
-  <p><%= link_to "Show this chicken", @chicken %></p>
-  <br/>
-  <p><%= link_to "Back to chickens", chickens_path %></p>
+<div class="py-6 md:shrink-0 w-100 md:w-150 items-center justify-self-center 
+  border border-blue-200 rounded-2xl bg-blue-100 text-lg mt-5">
+  <div class="py-3"><%= link_to "🔎 Show this chicken", @chicken, 
+    class:'hover:font-bold' %>
+  </div>
+  <div class="py-3"><%= link_to "⬅️ Back to my flock", chickens_path, 
+    class:'hover:font-bold' %>
+  </div>
 </div>

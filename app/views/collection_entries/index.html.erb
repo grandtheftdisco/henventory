@@ -1,58 +1,72 @@
-<% if notice.present? %>
-  <p class="py-2 px-3 bg-blue-100 mb-5 text-green-700 font-medium inline-block rounded-2xl" id="notice"><%= notice %></p>
-<% end %>
-
-<% content_for :title, "Collection entries" %>
-<h2 class="font-extrabold text-amber-700 text-3xl pb-7 uppercase">Collection Entries</h2>
+<% content_for :title, "Collection Entries" %>
+<h2 class="font-extrabold text-amber-700 text-3xl pb-7 uppercase">
+  Collection Entries
+</h2>
 
 <% if @calendar %>
-  <div class="justify-self-center justify-items-center bg-blue-100 pt-2 pb-5 px-5 rounded-2xl">
-    <h3 class="text-xl font-bold text-gray-600 pb-2">FILTERS</h3>
+  <div class="justify-self-center justify-items-center bg-blue-100 pt-2 px-5
+    rounded-2xl mb-5">
+    <h3 class="text-xl font-bold text-gray-600 pb-2 upcase">Filters</h3>
     <p>Select Month:</p>
     <%== pagy_nav(@calendar[:month]) %>
-    <br/>
 
-    <p>Select Week:</p>
+    <p class="mt-5">Select Week:</p>
     <%== pagy_nav(@calendar[:week]) %>
-    <br/>
 
-    <p>Select Day:</p>
+    <p class="mt-5">Select Day:</p>
     <%== pagy_nav(@calendar[:day]) %>
-    <br/>
-    <button class="text-white text-sm bg-gray-400 font-semibold hover:bg-gray-500 rounded-2xl px-2"><%= link_to 'Hide Calendar Filters', collection_entries_path(skip: true) %></button>
-    <br/>
-    
-  </div><br/>
 
-  <div class="bg-green-200 border-1 border-green-300 justify-self-center justify-items-center p-5 rounded-2xl"">
-    <p class="text-blue-950 font-semibold text-xl">You are now viewing entries from</p><p class="font-bold text-lime-800 text-2xl"><%== @calendar[:day].label(format: '%B %d %Y') %></p><br/>
-    <p class="font-semibold text-blue-950">Eggs collected on this day: </p>
-    <p class="text-4xl"><%= render "todays_eggs" %></p>
+    <button class="text-white text-sm bg-gray-400 font-semibold
+      hover:bg-gray-500 rounded-2xl px-2 my-5">
+      <%= link_to 'Hide Calendar Filters', 
+        collection_entries_path(skip: true) %>
+    </button>
+    
+  </div>
+
+  <div class="bg-green-200 border-1 border-green-300 justify-self-center
+    justify-items-center p-5 rounded-2xl mb-5">
+    <p class="font-semibold text-xl">
+      You are now viewing entries from</p>
+    <p class="font-bold text-lime-800 text-2xl mb-5">
+      <%== @calendar[:day].label(format: '%B %d %Y') %>
+    </p>
+    <p class="font-semibold">Eggs collected on this day: </p>
+    <p class="text-4xl"><%= render 'egg_emoji_tally' %></p>
   </div>
 <% end %>
 
 <div>
   <% if params[:skip] %>
-    <div class="bg-amber-50 border-1 border-amber-100 justify-self-center justify-items-center p-2 rounded-2xl">
-    <p class="text-blue-950 font-semibold text-xl">You are now viewing all collection entries.</p>
-  </div><br/>
-    <button class="font-semibold text-white bg-lime-600 hover:bg-lime-700 rounded-2xl px-2"><%= link_to 'Show Calendar Filters', collection_entries_path %></button>
+    <div class="bg-amber-50 border-1 border-amber-100 justify-self-center
+      justify-items-center p-2 rounded-2xl mb-5">
+    <p class="font-semibold text-xl">
+      You are now viewing all collection entries.
+    </p>
+  </div>
+    <button class="font-semibold text-white bg-lime-600 hover:bg-lime-700
+      rounded-2xl px-2 mb-5">
+      <%= link_to 'Show Calendar Filters', collection_entries_path %>
+    </button>
   <% end %>
-</div><br/>
+</div>
 
-<div id="collection_entries" class="md:shrink-0 w-100 md:w-150 items-center justify-self-center">
+<div id="collection_entries" 
+  class="md:shrink-0 w-100 md:w-150 items-center justify-self-center">
   <% @collection_entries.each do |collection_entry| %>
-    <div class="flex flex-col py-6 border border-blue-300 rounded-2xl bg-blue-200">
+    <div class="flex flex-col py-6 mb-5 border border-blue-300 
+      rounded-2xl bg-blue-200">
       <%= render collection_entry %>
       <p class="text-blue-600 hover:font-semibold">
         <%= link_to "🗒️ Details", collection_entry %>
       </p>
-    </div><br/>
+    </div>
   <% end %>
 </div>
 
 <div class="justify-self-center justify-items-center pt-5">
   <%== pagy_nav(@pagy) %>
-  <br/>
-  <%== pagy_info(@pagy, item_name: 'Entry'.pluralize(@pagy.count)) %>
+  <p class="mt-5">
+    <%== pagy_info(@pagy, item_name: 'Entry'.pluralize(@pagy.count)) %>
+  </p>
 </div>

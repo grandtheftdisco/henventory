@@ -1,86 +1,163 @@
-<% if notice.present? %>
-  <p class="py-2 px-3 bg-blue-100 mb-5 text-green-700 font-medium inline-block rounded-2xl" id="notice"><%= notice %></p>
-<% end %>
-
 <% content_for :title, "FAQ" %>
 
-<h1 class="font-bold text-4xl text-lime-700 pb-5">Frequently Asked Questions</h1>
+<h1 class="font-bold text-4xl text-lime-700 pb-5">
+  Frequently Asked Questions
+</h1>
 
+<div class="text-left w-100 md:w-150 justify-self-center">
 <div class="text-left w-100 md:w-150 justify-self-center">
   <div class="p-5">
     <h2 class="font-bold text-2xl pb-2"> ❓ Who is Henventory for?</h2>
     <div class="pl-10">
-      <p class="pb-2"><b>Henventory</b> helps chicken farmers keep track of egg production.</p>
-      <p class="pb-2">Whether you have a small backyard flock or several dozen hens, Henventory will answer questions like:</p>
+      <p class="pb-2">
+        <b>Henventory</b> helps chicken farmers keep track of egg production.
+      </p>
+      <p class="pb-2">
+        Whether you have a small backyard flock or several dozen hens, 
+        Henventory will answer questions like:
+      </p>
       <ul class="font-semibold italic text-sm">
-        <li class="py-1">🥚 How many eggs do I get per day, on average? </li>
-        <li class="py-1">🥚 Do my Rhode Island Reds lay more than my Barred Rocks?</li>
-        <li class="py-1">🥚 Which of my chickens is Employee of the Month?</li>
+        <li class="py-1">
+          🥚 How many eggs do I get per day, on average?
+        </li>
+        <li class="py-1">
+          🥚 Do my Rhode Island Reds lay more than my Barred Rocks?
+        </li>
+        <li class="py-1">
+          🥚 Which of my chickens is Employee of the Month?
+        </li>
       </ul>
     </div>
   </div>
   <hr class="border-0.5">
   <div class="p-5">
-    <a name="anchor-one"><h2 class="font-bold text-2xl pb-2">❓ What are 'flock mode' and 'layer mode'?</h2>
+    <a name="anchor-one">
+      <h2 class="font-bold text-2xl pb-2">
+        ❓ What are 'flock mode' and 'layer mode'?
+      </h2>
     
     <div class="pl-10">
-      <p class="py-2">🪺<b>Flock mode</b> allows you to track <i>only</i> how many eggs you collect, and when you collect them. It's the core Henventory experience.</p>
-
-      <p class="pt-2 pb-5">🐔<b>Layer mode</b>, on the other hand, allows you to collect data on individual hens: like how many eggs they lay throughout the week, month, and year. Think of this as Henventory with some bells & whistles.</p>
-      
+      <p class="py-2">
+        🪺<b>Flock mode</b> allows you to track <i>only</i> how many eggs you
+        collect, and when you collect them. It's the core Henventory experience.
+      </p>
+      <p class="pt-2 pb-5">
+        🐔<b>Layer mode</b>, on the other hand, allows you to collect data on 
+        individual hens: like how many eggs they lay throughout the week, 
+        month, and year. Think of this as Henventory with some bells & whistles.
+      </p>
       <div class="bg-blue-100 border border-0.5 rounded-2xl px-4 mb-5 py-2">
-        <p class="font-semibold text-lg">➡️ You might want to use <b>flock mode</b> if:</p>
+        <p class="font-semibold text-lg">
+          ➡️ You might want to use <b>flock mode</b> if:
+        </p>
         <ul class="pb-2">
-          <li>🥚 you have a small farm with too many chickens to track individually</li>
-          <li>🥚 you're interested in <i>how many eggs</i> you get each day (instead of tracking who's laying what)</li>
-          <li>🥚 your hens lay eggs that look similar (or identical) to one another</li>
-          <li>🥚 you only check for eggs once or twice a day</li>
+          <li>
+            🥚 you have a small farm with too many chickens to track individually
+          </li>
+          <li>
+            🥚 you're interested in <i>how many eggs</i> you get each day 
+            (instead of tracking who's laying what)
+          </li>
+          <li>
+            🥚 your hens lay eggs that look similar (or identical) to one another
+          </li>
+          <li>
+            🥚 you only check for eggs once or twice a day
+          </li>
         </ul>
       </div>
-      
       <div class="bg-blue-100 border border-0.5 rounded-2xl px-4 mb-5 py-2">
-        <p class="font-semibold text-lg">➡️ You might want to use <b>layer mode</b> if:</p>
+        <p class="font-semibold text-lg">
+          ➡️ You might want to use <b>layer mode</b> if:
+        </p>
         <ul class="pb-2">
-          <li>🥚 you can tell your hens' eggs apart</li>
-          <li>🥚 you have a few different breeds and want to compare their productivity, peak egg-laying seasons, etc.</li>
-          <li>🥚 you check for eggs frequently throughout the day</li>
+          <li>
+            🥚 you can tell your hens' eggs apart
+          </li>
+          <li>
+            🥚 you have a few different breeds and want to compare their
+            productivity, peak egg-laying seasons, etc.
+          </li>
+          <li>
+            🥚 you check for eggs frequently throughout the day
+          </li>
         </ul>
       </div>
     </div>
   </div>
   <hr class="border-0.5">
   <div class="p-5">
-    <h2 class="font-bold text-2xl pb-2">❓ How does the app work?</h2>
+    <h2 class="font-bold text-2xl pb-2">
+      ❓ How does the app work?
+    </h2>
 
     <div class="pl-10">
-      <p>Great question! Check out our <%= link_to "How it Works", how_it_works_path, class: 'hover:text-blue-800 font-bold' %> page for a demo.</p>
+      <p>
+        Great question! Check out our 
+        <%= link_to "How it Works", how_it_works_path, 
+          class: 'hover:text-blue-800 font-bold' %> 
+        page for a demo.
+      </p>
     </div>
   </div>
   <hr class="border-0.5">
   <div class="p-5">
-    <h2 class="font-bold text-2xl pb-2">❓ Are there plans to add more features to Henventory?</h2>
+    <h2 class="font-bold text-2xl pb-2">
+      ❓ Are there plans to add more features to Henventory?
+    </h2>
 
     <div class="pl-10">
-      <p class="py-4">Absolutely! What we're about to launch is an <i>alpha version</i> of Henventory.</p>
-      <p class="font-semibold">❓ What's an alpha version?</p>
-      <p class="pb-2">Well, if you've heard of a <i>beta version</i> before, just imagine something a little less polished.</p>
-      <p>The formal definition of an alpha version is:</p>
+      <p class="py-4">
+        Absolutely! What we're about to launch is an 
+        <i>alpha version</i> of Henventory.
+      </p>
+      <p class="font-semibold">
+        ❓ What's an alpha version?
+      </p>
+      <p class="pb-2">
+        Well, if you've heard of a <i>beta version</i> before, just imagine 
+        something a little less polished.
+      </p>
+      <p>The formal definition of an alpha version is: </p>
       <div class="px-8 py-3 italic text-sm"> 
-        <blockquote cite="https://dictionary.cambridge.org/us/ dictionary/english/alpha-version"><p>a version of a piece of software that is made available for testing, typically by employees of the company that is developing it, before its general release.</p></blockquote>
+        <blockquote 
+          cite="https://dictionary.cambridge.org/us/dictionary/english/alpha-version">
+          <p>a version of a piece of software that is made available for
+          testing, typically by employees of the company that is developing it, 
+          before its general release.</p>
+        </blockquote>
       </div>
 
-      <p class="pb-2">So, long story short -- you're an insider. 🤠</p>
-      <p class="pb-2">Welcome to the beginning of the Henventory journey! We're glad to have you here.</p>
-      <p class="pb-2">If you have any ideas for new features, <a href="mailto:henventory@gmail.com", class="hover:text-blue-800 font-bold">drop us a line!</a></p>
+      <p class="pb-2">
+        So, long story short -- you're an insider. 🤠
+      </p>
+      <p class="pb-2">
+        Welcome to the beginning of the Henventory journey! We're glad to 
+        have you here.
+      </p>
+      <p class="pb-2">
+        If you have any ideas for new features, 
+        <a href="mailto:henventory@gmail.com", 
+          class="hover:text-blue-800 font-bold">
+          drop us a line!
+        </a>
+      </p>
     </div>
   </div>
   <hr class="border-0.5">
   <div class="p-5">
     <h2 class="font-bold text-2xl pb-2">❓ When can I sign up?</h2>
       <div class="pl-10">
-        <p class="pb-2">Very soon! We are preparing for our official alpha launch & setting up our database as you read this.</p>
-        <p class="pb-2">Once our <%= link_to "signup", new_user_path %> page is live, you can create an account and start exploring!</p>
-        <p class="pb-2">Check back for more updates in the days ahead. 🤠</p>
+        <p class="pb-2">Right now! Join 
+          <%= link_to "here", new_user_path, 
+          class: 'font-bold hover:text-blue-800' %>
+          . 🤠
+        </p>
+        <p class="pb-2">
+          Stay tuned for an update about inviting other users to your account,
+          so everyone in your household can join!
+        </p>
       </div>
     </div>
   </div>
+</div>
