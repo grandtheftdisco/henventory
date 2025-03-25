@@ -26,23 +26,16 @@ class User < ApplicationRecord
           tell: "lives in the computer (unlike your actual chickens)",
           household_id: household_id,
           image_url: "https://static-00.iconduck.com/assets.00/hatching-chick-emoji-2048x1941-k2v2nyey.png",
-          created_at: Time.current,
-          updated_at: Time.current
         )
-
         ee = EggEntry.create(
           egg_count: 1,
           collection_entry_id: ce.id,
-          created_at: Time.current,
-          updated_at: Time.current,
           chicken_id: chk.id
         )
       elsif mode == "flock"
         ee = EggEntry.create(
           egg_count: 1,
           collection_entry_id: ce.id,
-          created_at: Time.current,
-          updated_at: Time.current,
           chicken_id: nil
         )
       end
