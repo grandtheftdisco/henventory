@@ -10,6 +10,13 @@ class User < ApplicationRecord
 
   private
     def seed_account
+      ce = CollectionEntry.create(
+        user_id: id,
+        household_id: household_id,
+        created_at: Time.current,
+        updated_at: Time.current
+      )
+
       if mode == "layer"
         chk = Chicken.create(
           name: "Sample Chicken",
@@ -22,13 +29,6 @@ class User < ApplicationRecord
           created_at: Time.current,
           updated_at: Time.current
         )
-        
-        ce = CollectionEntry.create(
-          user_id: id,
-          household_id: household_id,
-          created_at: Time.current,
-          updated_at: Time.current
-        )
 
         ee = EggEntry.create(
           egg_count: 1,
@@ -38,13 +38,6 @@ class User < ApplicationRecord
           chicken_id: chk.id
         )
       elsif mode == "flock"
-        ce = CollectionEntry.create(
-          user_id: id,
-          household_id: household_id,
-          created_at: Time.current,
-          updated_at: Time.current
-        )
-
         ee = EggEntry.create(
           egg_count: 1,
           collection_entry_id: ce.id,
