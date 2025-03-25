@@ -3,7 +3,7 @@ class EggEntry < ApplicationRecord
   belongs_to :chicken, optional: true 
 
   validate :household_owns_chicken!, unless: :ghost_chicken?
-  validate :only_2_eggs_max_per_day_per_chicken!
+  validate :only_2_eggs_max_per_day_per_chicken!, unless: :ghost_chicken?
   
   def chicken
     return super if chicken_id
