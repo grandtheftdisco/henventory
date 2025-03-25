@@ -3,7 +3,7 @@
 <% else %>
   <p class="text-5xl">
   <% @collection_entries.each do |collection_entry| %>
-    <% collection_entry.egg_entries.each do |ce| %>
+    <% collection_entry.egg_entries.sum(:egg_count).times do %>
       🥚
     <% end %>
   <% end %></p>

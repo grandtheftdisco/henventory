@@ -1,6 +1,8 @@
-# order of routes matters!
 Rails.application.routes.draw do
-  resources :households
+  resources :users
+  resources :households, param: :invite_token, only: :show do
+    resources :users, shallow: true # nests only index, new, and create under household
+  end
   resource :session
   resources :passwords, param: :token
   resources :chickens
@@ -9,16 +11,11 @@ Rails.application.routes.draw do
       get :today
     end
   end
-  get '/users/edit/me' => 'users#edit', as: :edit_user # find way to remove the id# @ end of url
-  resources :users
+  resources :households
   get '/signup' => 'users#new'
-  post '/users' => 'users#create'
   get '/settings' => 'users#show', as: :settings
   get '/faq' => 'marketing#faq'
-  post '/users' => 'users#update'
   get '/collection_entries/today' => 'collection_entries#today', as: :today
-  # update all other routes with this syntax
-  ########################
   get '/how_it_works' => 'marketing#how_it_works', as: :how_it_works
   get '/acknowledgements' => 'marketing#acknowledgements', as: :acknowledgements
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
