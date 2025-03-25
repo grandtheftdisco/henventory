@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :collection_entries do
     collection do
       get :today
-    end
+    end   
   end
   resources :households
   get '/signup' => 'users#new'
