@@ -1,10 +1,19 @@
 <% content_for :title, "Edit Collection Entry" %>
 
-<h1 class="font-extrabold text-lime-700 text-3xl pb-7 uppercase">Edit Collection Entry</h1>
+<h1 class="font-extrabold text-lime-700 text-3xl pb-7 uppercase">
+  Edit Collection Entry
+</h1>
 
 <%= render "form_container", collection_entry: @collection_entry %>
 
-<div class=" my-5 py-6 md:shrink-0 w-100 md:w-150 items-center justify-self-center border border-blue-200 rounded-2xl bg-blue-100 text-lg">
-  <div class="py-3"><%= link_to "🔎 Show this collection entry", @collection_entry, class:'hover:font-bold' %></div>
-  <div class="py-3"><%= link_to "⬅️Back to all entries", collection_entries_path, class:'hover:font-bold' %></div>
+<div class=" my-5 py-6 md:shrink-0 w-100 md:w-150 items-center
+  justify-self-center border border-blue-200 rounded-2xl bg-blue-100 text-lg">
+  <div class="py-3">
+    <%= link_to "🔎 Show this collection entry", @collection_entry, 
+      class:'hover:font-bold' %>
+  </div>
+  <div class="py-3">
+    <%= link_to "⬅️ Back to all entries", collection_entries_path, 
+      class:'hover:font-bold' %>
+  </div>
 </div>

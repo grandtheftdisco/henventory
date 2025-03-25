@@ -21,8 +21,11 @@ class EggEntry < ApplicationRecord
   end
 
   def only_2_eggs_max_per_day_per_chicken!
-    return if EggEntry.for_today.where(chicken_id: self.chicken_id).count <= 1 #self isn't needed here
-    errors.add(:base, :invalid, message: '-- This chicken can\'t lay any more eggs today 😴🐔')
+    return if EggEntry.for_today
+      .where(chicken_id: self.chicken_id)
+      .count <= 1 
+    errors.add(:base, :invalid, 
+      message: '-- This chicken can\'t lay any more eggs today 😴🐔')
   end
 
   def self.for_today

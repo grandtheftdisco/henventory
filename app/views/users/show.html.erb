@@ -1,16 +1,30 @@
 <% content_for :title, "Settings - All" %>
   
 <h1 class="font-extrabold text-3xl text-blue-800 mb-1">Settings</h1>
-<p class="text-sm italic mb-2">Logged in as <%= @user.display_name %></p>
-
-<div class="flex flex-col border-1 rounded-2xl bg-blue-100 text-l justify-self-center justify-items-center md:shrink-0 w-100 md:w-150 py-5 px-3">
-  <div><button class="font-bold text-white bg-blue-500 hover:bg-blue-600 p-3 rounded-2xl w-70"><%= link_to "user settings", edit_user_path %></button></div> 
-
-  <div><button class="font-bold text-white bg-amber-600 hover:bg-amber-700 p-3 rounded-2xl mt-5 w-70"><%= link_to "change your password", edit_password_path(Current.user.password_reset_token) %></button></div>
-
+<p class="text-sm italic mb-2">
+  Logged in as <%= @user.display_name %>
+</p>
+<div class="flex flex-col border-1 rounded-2xl bg-blue-100 text-l 
+  justify-self-center justify-items-center md:shrink-0 w-100 md:w-150 
+  py-5 px-3">
+  <div>
+    <button class="font-bold text-white bg-blue-500 hover:bg-blue-600 
+      p-3 rounded-2xl w-70">
+      <%= link_to "user settings", edit_user_path %>
+    </button>
+  </div> 
+  <div>
+    <button class="font-bold text-white bg-amber-600 hover:bg-amber-700 
+      p-3 rounded-2xl mt-5 w-70">
+      <%= link_to "change your password", 
+        edit_password_path(Current.user.password_reset_token) %>
+    </button>
+  </div>
   <% if @expired_chickens.exists? %>
     <div class="mt-5">
-      <%= link_to "🪦 View Expired Chickens", chickens_path(expired: true), class: "font-semibold hover:text-blue-800" %>
+      <%= link_to "🪦 View Expired Chickens", 
+        chickens_path(expired: true), 
+        class: "font-semibold hover:text-blue-800" %>
     </div>
   <% end %>
 </div>

@@ -4,5 +4,4 @@ class Session < ApplicationRecord
   def household
     user&.household
   end
-
 end
