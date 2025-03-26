@@ -75,10 +75,24 @@
     </main>
 
   </body>
-  <footer class="text-center bg-blue-100 py-15">
-    <p class="font-semibold my-4">©️ AJ <%= Time.now.year %></p>
-    <p class="font-semibold my-4 hover:text-amber-700">
-      <%= link_to "🥂 Acknowledgments 🥂", acknowledgements_path %>
-    </p>
+  <footer class="text-center bg-blue-100 py-5">
+    <div class="flex flex-row gap-5 justify-self-center">
+      <div>
+        <ul class="list-none p-2 text-sm">
+          <li class="hover:text-amber-700 hover:cursor-pointer">
+            How it Works
+          </li>
+          <li class="hover:text-amber-700 hover:cursor-pointer">
+            FAQ
+          </li>
+          <li class="hover:text-amber-700">
+            <%= link_to "Acknowledgments", acknowledgements_path %>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <p class="font-semibold mt-4 text-xs">©️ AJ <%= Time.now.year %></p>
+
   </footer>
 </html>
