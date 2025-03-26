@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get '/collection_entries/today' => 'collection_entries#today', as: :today
   get '/how_it_works' => 'marketing#how_it_works', as: :how_it_works
   get '/acknowledgements' => 'marketing#acknowledgements', as: :acknowledgements
+  get '/home' => 'marketing#home', as: :landing
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -29,5 +30,5 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-root "marketing#home"
+root "marketing#hello"
 end
