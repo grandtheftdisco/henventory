@@ -80,10 +80,10 @@
       <div>
         <ul class="list-none p-2 text-sm">
           <li class="hover:text-amber-700 hover:cursor-pointer">
-            How it Works
+            <%= link_to "How it Works", how_it_works_path %>
           </li>
           <li class="hover:text-amber-700 hover:cursor-pointer">
-            FAQ
+            <%= link_to "FAQ", faq_path %>
           </li>
           <li class="hover:text-amber-700">
             <%= link_to "Acknowledgments", acknowledgements_path %>
@@ -92,7 +92,9 @@
       </div>
     </div>
     
-    <p class="font-semibold mt-4 text-xs">©️ AJ <%= Time.now.year %></p>
+    <p class="font-semibold mt-4 text-xs">
+      ©️ AJ <%= Time.now.year %>
+    </p>
 
   </footer>
 </html>
