@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
 
   allow_browser versions: :modern
-  around_action :set_time_zone
+  around_action :set_time_zone if Current.user
 
   # return the start and end limits of the collection as a 2 items array
   def pagy_calendar_period(collection)

@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     if params[:household].key?(:invite_token)
       user.household = Household.find_by(invite_token: params[:household][:invite_token])
     else 
-      user.build_household
+      user.build_household(time_zone: params[:household][:time_zone])
     end
     
     if user.save
