@@ -14,7 +14,7 @@ class CollectionEntriesController < ApplicationController
       week: { format: 'w of %b %d' },
       day:  { format: '%b %d' },
       pagy: {},
-      active: !params[:skip]
+      active: params[:skip]
     )
   end
 
