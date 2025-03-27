@@ -5,22 +5,14 @@
   Logged in as <%= @user.display_name %>
 </p>
 <div class="flex flex-col border-1 rounded-2xl bg-blue-100 text-l 
-  justify-self-center justify-items-center md:shrink-0 w-100 md:w-150 
-  py-5 px-3">
-  <div>
-    <button class="font-bold text-white bg-blue-500 hover:bg-blue-600 
-      p-3 rounded-2xl w-70">
-      <%= link_to "user settings", edit_user_path(Current.user) %>
-    </button>
-  </div> 
-  <div>
-    <button class="font-bold text-white bg-amber-600 hover:bg-amber-700 
-      p-3 rounded-2xl mt-5 w-70">
-      <%= link_to "change your password", 
-        edit_password_path(Current.user.password_reset_token) %>
-    </button>
+    justify-self-center md:shrink-0 w-100 md:w-150 py-5 px-3">
+  <div class="flex flex-col self-center">
+    <%= link_to "user settings", edit_user_path(Current.user),
+      class: 'font-bold text-white bg-blue-500 hover:bg-blue-600 p-3 rounded-2xl w-70' %>
+    <%= link_to "change your password", 
+      edit_password_path(Current.user.password_reset_token),
+      class: 'font-bold text-white bg-amber-600 hover:bg-amber-700 p-3 rounded-2xl mt-5 w-70' %>
   </div>
-
   <div class="bg-blue-50 border-1 border-blue-200 rounded-2xl mt-4 mx-2" 
     data-controller="invite">
     <p class="font-bold mb-5 pt-2">Add Someone To Your Household</p>
@@ -30,7 +22,7 @@
       value="<%= new_household_user_url(@household) %>" 
       data-target="invite.url" 
       data-household-token="<%= @household.invite_token %>" 
-      size="50"/>
+      size="40"/>
     <div class="py-5">
       <button class="bg-green-100 hover:bg-green-200 click: border-1 
         border-green-200 rounded-2xl p-2 text-sm font-semibold" 
