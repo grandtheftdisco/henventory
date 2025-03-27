@@ -20,9 +20,11 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    if params[:household].key?(:invite_token)
-      user.household = Household.find_by(invite_token: params[:household][:invite_token])
-    else 
+    if params[:household]
+      if params[:household].key?(:invite_token)
+        user.household = Household.find_by(invite_token: params[:household][:invite_token])
+      end
+    else
       user.build_household
     end
     
