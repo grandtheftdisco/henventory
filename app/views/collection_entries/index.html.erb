@@ -45,10 +45,11 @@
       You are now viewing all collection entries.
     </p>
   </div>
-    <button class="font-semibold text-white bg-lime-600 hover:bg-lime-700
-      rounded-2xl px-2 mb-5">
-      <%= link_to 'Show Calendar Filters', collection_entries_path %>
-    </button>
+    <div class="my-5 pb-5">
+      <%= link_to 'Show Calendar Filters', collection_entries_path,
+        class: 'text-white text-sm bg-lime-600 font-semibold
+        hover:bg-lime-700 rounded-2xl px-4 py-2' %>
+    </div>
   <% end %>
 </div>
 
