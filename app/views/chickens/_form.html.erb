@@ -43,9 +43,8 @@
     
     <%= form.hidden_field :household_id, value: Current.user.household_id %>
     <br/>
-    <div class="inline cursor-pointer bg-yellow-300 hover:bg-yellow-500 
-      p-3 rounded-2xl">
-      <%= form.submit %>
+    <div>
+      <%= form.submit class: 'inline cursor-pointer bg-yellow-300 hover:bg-yellow-500 p-3 rounded-2xl' %>
     </div>
   <% end %>
 </div>
