@@ -20,9 +20,10 @@
       maxlength: 72, :size=>"20", 
       class: 'border-1 border-blue-300 focus:bg-blue-50 rounded-lg p-1' %>
   </div>
-  <div class="text-2xl text-white font-semibold hover:font-bold 
-    hover:bg-lime-700 bg-lime-600 py-2 px-3 rounded-lg justify-self-center">
-    <%= form.submit "Sign in" %>
+  <div>
+    <%= form.submit "Sign in",
+      class: 'text-2xl text-white font-semibold hover:font-bold 
+    hover:bg-lime-700 bg-lime-600 py-2 px-3 rounded-lg justify-self-center' %>
   </div>
 <% end %>
 </div>
