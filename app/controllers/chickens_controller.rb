@@ -15,6 +15,10 @@ class ChickensController < ApplicationController
   end
 
   def show
+    if @chicken.egg_entries.exists?
+      @days_since_first_egg = (Time.now - @chicken.egg_entries.first.created_at) / (60*60*24)
+      @weeks_since_first_egg = @days_since_first_egg / 7
+    end
   end
 
   def new

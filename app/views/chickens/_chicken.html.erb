@@ -1,4 +1,4 @@
-<p class="font-bold text-2xl mb-5"><%= chicken.name %></p>
+<p class="font-bold text-2xl mb-5"><%= link_to "#{chicken.name}", chicken %></p>
 <% if chicken.image_url %>
   <%= image_tag(chicken.image_url, width: 300, class:'rounded-2xl' ) %>
 <% end %>
