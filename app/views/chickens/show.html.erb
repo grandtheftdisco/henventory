@@ -13,7 +13,10 @@
       chickens_path, class: 'hover:font-bold' %>
     </div>
     <div class="py-3"><%= button_to "🗑️ Delete this chicken", 
-      @chicken, method: :delete, class: 'text-amber-700 hover:font-bold' %>
+      @chicken, method: :delete, class: 'text-amber-700 hover:font-bold', data: {
+        turbo_method: :delete, 
+        turbo_confirm: '⚠️ Are you sure? ⚠️ If you delete a chicken, all of their egg entries will be deleted, too.',
+      } %>
     </div>
   </div>
 </div>
