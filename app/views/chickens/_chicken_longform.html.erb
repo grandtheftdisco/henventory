@@ -20,8 +20,10 @@
       <p class="font-bold">I laid my first egg on</p>
       <p class="mb-5"><%= @chicken.egg_entries.first.created_at.strftime("%B %-d, %Y") %>.</p>
       <p class="font-bold">Since then, I've laid</p>
-      <p class="mb-5"><%= pluralize(@chicken.egg_entries.sum(:egg_count), 'egg') %> altogether.</p>
-      <p class="font-bold">I lay about <%= pluralize((@chicken.egg_entries.sum(:egg_count) / @weeks_since_first_egg).truncate, 'egg') %> per week.</p>
+      <p class="mb-5"><%= pluralize(@chicken.egg_entries.sum(:egg_count), 'egg') %> in total.</p>
+      <% if @weeks_since_first_egg > 2 %>
+        <p class="font-bold">On average, I lay about <%= pluralize((@chicken.egg_entries.sum(:egg_count) / @weeks_since_first_egg).truncate, 'egg') %> per week.</p>
+      <% end %>
     <% else %>
       <p class="text-sm italic">(I haven't laid any eggs yet!)</p>
     <% end %>
