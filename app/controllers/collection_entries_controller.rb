@@ -16,19 +16,16 @@ class CollectionEntriesController < ApplicationController
       pagy: {},
       active: params[:skip]
     )
-    @local_time_zone = Current.user.household.time_zone
   end
 
   def today
     @collection_entries = Current.household.collection_entries.includes(egg_entries: :chicken)
     .where(created_at: Time.current.beginning_of_day..Time.current.end_of_day)
     .order("created_at desc")
-    @local_time_zone = Current.user.household.time_zone
   end
 
   def show
     @collection_entry = Current.household.collection_entries.includes(egg_entries: :chicken).find(params.expect(:id))
-    @local_time_zone = Current.user.household.time_zone
   end
 
   def new
