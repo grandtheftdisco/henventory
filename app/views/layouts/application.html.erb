@@ -20,11 +20,7 @@
   <body class="bg-blue-50 text-blue-950 flex flex-col min-h-screen">
     <header class="p-4 pb-6 text-center bg-blue-100">
       <h1 class="text-5xl font-extrabold text-blue-400 hover:text-amber-600">
-        <% if Current.user %>
-          <%= link_to "🐔 Henventory 🥚", landing_path %>
-        <% else %>
-          <%= link_to "🐔 Henventory 🥚", root_url %>
-        <% end %>
+        <%= link_to "🐔 Henventory 🥚", Current.user ? landing_path : root_path %>
       </h1>
     </header> 
 
