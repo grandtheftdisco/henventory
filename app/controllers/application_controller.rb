@@ -20,11 +20,10 @@ class ApplicationController < ActionController::Base
   private
 
   def set_time_zone
-    old_time_zone = Time.zone
-    @local_time_zone = Current.user.household.time_zone
-    Time.zone = @local_time_zone
-    yield
-  ensure
-    Time.zone = old_time_zone
+    if logged_in?
+      Time.use_zone(Current.user.household.time_zone) { yield }
+    else 
+      yield
+    end
   end
 end
