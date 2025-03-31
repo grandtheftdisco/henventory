@@ -7,17 +7,16 @@
   <div class="p-3 mb-8 border border-blue-200 rounded-2xl bg-blue-100 text-lg
     text-left justify-self-center w-50 flex-col">
       <%= link_to "🐔 View My Layers", chickens_path(layers: true), 
-        class: "font-semibold hover:text-blue-800" %>
+        class: 'font-semibold hover:text-blue-800' %>
       <%= link_to "🐤 View My Pullets", chickens_path(pullets: true), 
-        class: "font-semibold hover:text-blue-800" %>
+        class: 'font-semibold hover:text-blue-800' %>
       <%= link_to "🧑‍🌾 View All Chickens", chickens_path(all: true), 
-        class: "font-semibold hover:text-blue-800" %>
+        class: 'font-semibold hover:text-blue-800' %>
   </div>
 
-  <div>
-    <button class="p-5 mb-10 bg-lime-600 text-white font-bold rounded-2xl">
-      <%= link_to "🐣 add new chicken", new_chicken_path %>
-    </button>
+  <div class="my-10 w-fit justify-self-center">
+    <%= link_to "🐣 add new chicken", new_chicken_path,
+      class: 'p-5 mb-10 bg-lime-600 text-white font-bold rounded-2xl' %>
   </div>
 <% elsif params[:expired] %>
   <% content_for :title, "Expired Chickens" %>
