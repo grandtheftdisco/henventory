@@ -3,33 +3,43 @@
   <%= form_with model: @user do |form| %>
     <%= render partial: '/marketing/ui_errors', locals: { obj: user } %>
 
-    <div class="inline-flex bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 
+    <div class="inline-flex bg-blue-50 rounded-2xl text-left my-3 pl-2 py-1 
       md:shrink-0 w-100 md:w-120 ">
       <%= form.label :display_name, "Display Name: ", class: 'font-bold' %>
       <%= form.text_field :display_name, class: 'font-semibold pl-2' %>
     </div>
 
-    <div class="inline-flex gap-1 md:gap-3.5 bg-blue-50 rounded-2xl text-left 
-      mt-3 pl-2 py-1 mb-2 md:shrink-0 w-100 md:w-120 ">
+    <div class="pt-3 justify-self-center bg-red-100 rounded-2xl my-3 border 
+      border-red-200">
+      <div class="w-2/3 justify-self-center bg-red-50 rounded-2xl p-2">
+        <p class="text-red-700 text-sm font-bold">⚠️ WARNING ⚠️</p>
+        <p class="text-xs font-semibold pb-3">
+          Avoid changing this setting too often 
+          (ie, no more than a couple times a year).
+        </p>
+        <p class="text-xs font-semibold">
+          Frequently switching between modes makes it harder for Henventory 
+          to analyze your data long-term.
+        </p>
+      </div>
+      <div class="inline-flex gap-1 md:gap-3.5 bg-red-50 rounded-2xl text-left 
+      mt-3 pl-2 py-1 md:shrink-0 w-100 md:w-120 ">
       <%= form.label :mode, "Mode: ", class: 'font-bold pr-2' %>
       <%= form.radio_button :mode, "flock" %>
       <%= form.label :mode_flock, "🪺 Flock", class: 'pr-2' %>   
       <%= form.radio_button :mode, "layer" %>
       <%= form.label :mode_layer, "🐔 Layer" %>
+      </div>
+      <div class="pb-2">
+        <p class="inline mx-2 px-2 bg-red-200 rounded-2xl opacity-50 
+          hover:opacity-100 w-fit text-xs justify-self-center">
+          <%= link_to "🤔 What's this?", faq_path %>
+        </p>
+      </div>
     </div>
-    <div class="inline-flex gap-1 md:shrink-0 w-100 md:w-120 mb-5">
-      <p class="inline mx-2 px-2 bg-blue-200 rounded-2xl opacity-50 
-        hover:opacity-100 w-fit">
-        <a href="/faq" target="_blank">
-          🤔 What's this?
-        </a>
-      </p>
-    </div>
-
-    <div>
-      <%= form.submit "Save",
-      class: 'rounded-2xl px-3.5 py-2.5 font-bold text-white bg-blue-600 
-        hover:bg-blue-700 cursor-pointer' %>
+    <div class="rounded-2xl px-3.5 py-2.5 font-bold text-white bg-blue-600 
+      hover:bg-blue-700 cursor-pointer">
+      <%= form.submit "Save" %>
     </div>
   <% end %>
 </div>
