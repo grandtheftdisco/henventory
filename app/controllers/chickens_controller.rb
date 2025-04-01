@@ -19,6 +19,7 @@ class ChickensController < ApplicationController
       @days_since_first_egg = (Time.now - @chicken.egg_entries.first.created_at) / (60*60*24)
       @weeks_since_first_egg = @days_since_first_egg / 7
       @days_since_last_egg = ((Time.now - @chicken.egg_entries.last.created_at) / (60*60*24)).truncate
+      @eggs_laid_this_month = @chicken.egg_entries.where(created_at: Time.current.localtime.beginning_of_month..Time.current.localtime).sum(:egg_count)
     end
   end
 
