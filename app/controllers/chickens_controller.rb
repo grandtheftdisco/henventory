@@ -3,14 +3,17 @@ class ChickensController < ApplicationController
 
   def index
     @chickens = Current.household.chickens.where.not(status: :expired)
+    @filtered_title = "My Flock"
 
     # filtering of view based on chicken status
     if params[:pullets]
       @chickens = @chickens.where(status: :pullet)
+      @filtered_title = "My Pullets"
     elsif params[:expired]
       @chickens = @chickens.rewhere(status: :expired)
     elsif params[:layers]
       @chickens = @chickens.where(status: :layer)
+      @filtered_title = "My Layers"
     end
   end
 
