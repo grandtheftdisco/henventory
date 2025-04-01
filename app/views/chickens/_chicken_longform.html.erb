@@ -27,7 +27,11 @@
     <% else %>
       <p class="text-sm italic">(I haven't laid any eggs yet!)</p>
     <% end %>
-
-    
+    <p class="font-bold">The last time I laid an egg was 
+      <% if @days_since_last_egg == 0 %>
+        today.</p>
+      <% else %>
+        <%= pluralize(@days_since_last_egg, 'day') %> ago.</p>    
+      <% end %>
   </div>
 </div>
