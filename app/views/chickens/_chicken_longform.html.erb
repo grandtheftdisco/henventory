@@ -1,20 +1,35 @@
 <div id="<%= dom_id @chicken %>">
+  <hr class="my-5 border-3 border-blue-300 border-dotted">
   <h3 class="py-3 mb-5 text-blue-500 font-extrabold text-5xl">
     <%= @chicken.name %>
   </h3>
+  <hr class="my-5 border-3 border-blue-300 border-dotted">
+
 
   <%= image_tag("#{@chicken.image_url}", 
     width: 450, 
     class: "justify-self-center rounded-2xl mb-4") %>
   <div class="text-left px-5 text-xl">
-    <p class="font-bold">I'm a</p>
-    <p class="mb-5"><%= @chicken.breed %></p>
+    <% if @chicken.egg_entries.exists? %>
+      <p class="font-bold">🥚 The last time I laid an egg was 
+        <% if @days_since_last_egg == 0 %>
+          today.</p>
+        <% else %>
+          <%= pluralize(@days_since_last_egg, 'day') %> ago.</p>    
+        <% end %>
+    <% end %>
+    <hr class="my-5 border-3 border-blue-300 border-dotted">
+    <div>
+      <p class="font-bold">I'm a</p>
+      <p class="mb-5"><%= @chicken.breed %></p>
 
-    <p class="font-bold">I am </p>
-    <p class="mb-5"><%= pluralize((((Time.now - @chicken.dob) / (60*60*24)) / 30).truncate, 'month') %> old.</p>
+      <p class="font-bold">I am </p>
+      <p class="mb-5"><%= pluralize((((Time.now - @chicken.dob) / (60*60*24)) / 30).truncate, 'month') %> old.</p>
 
-    <p class="font-bold">How to tell me apart from the others:</p>
-    <p class="mb-5"><%= @chicken.tell %></p>
+      <p class="font-bold">How to tell me apart from the others:</p>
+      <p class="mb-5"><%= @chicken.tell %></p>
+    </div>
+    <hr class="my-5 border-3 border-blue-300 border-dotted">
 
     <% if @chicken.egg_entries.exists? %>
       <p class="font-bold">I laid my first egg on</p>
@@ -27,11 +42,5 @@
     <% else %>
       <p class="text-sm italic">(I haven't laid any eggs yet!)</p>
     <% end %>
-    <p class="font-bold">The last time I laid an egg was 
-      <% if @days_since_last_egg == 0 %>
-        today.</p>
-      <% else %>
-        <%= pluralize(@days_since_last_egg, 'day') %> ago.</p>    
-      <% end %>
   </div>
 </div>
