@@ -4,6 +4,7 @@ class ChickensController < ApplicationController
   def index
     @chickens = Current.household.chickens.where.not(status: :expired)
     @filtered_title = "My Flock"
+    @pullets = Current.household.chickens.where(status: :pullet)
 
     # filtering of view based on chicken status
     if params[:pullets]

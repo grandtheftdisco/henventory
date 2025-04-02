@@ -9,7 +9,7 @@
       <%= link_to "🐔 View My Layers", chickens_path(layers: true), 
         class: "font-semibold hover:text-blue-800" %>
       <%= link_to "🐤 View My Pullets", chickens_path(pullets: true), 
-        class: "font-semibold hover:text-blue-800" %>
+        class: "font-semibold hover:text-blue-800" if @pullets.exists? %>
       <%= link_to "🧑‍🌾 View All Chickens", chickens_path(all: true), 
         class: "font-semibold hover:text-blue-800" %>
   </div>
