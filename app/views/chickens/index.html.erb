@@ -1,24 +1,32 @@
 <% if !params[:expired] %>
   <% content_for :title, "My Flock" %>
-  <h2 class="font-extrabold text-lime-600 text-5xl pb-7 uppercase">
+  <h2 class="font-extrabold text-lime-600 text-5xl pb-10 uppercase">
     <%= @filtered_title %>
   </h2>
-
-  <div class="p-3 mb-8 border border-blue-200 rounded-2xl bg-blue-100 text-lg
-    text-left justify-self-center w-50 flex-col">
-      <%= link_to "🐔 View My Layers", chickens_path(layers: true), 
-        class: "font-semibold hover:text-blue-800" %>
-      <%= link_to "🐤 View My Pullets", chickens_path(pullets: true), 
-        class: "font-semibold hover:text-blue-800" if @pullets.exists? %>
-      <%= link_to "🧑‍🌾 View All Chickens", chickens_path(all: true), 
-        class: "font-semibold hover:text-blue-800" %>
-  </div>
-
   <div>
     <button class="p-5 mb-10 bg-lime-600 text-white font-bold rounded-2xl">
       <%= link_to "🐣 add new chicken", new_chicken_path %>
     </button>
   </div>
+  <h3 class="mb-4 font-semibold bg-slate-200 rounded-2xl justify-self-center 
+    px-2 uppercase text-sm">
+    Filter by:
+  </h3>
+  <div class="inline-flex flex-wrap gap-2">
+    <%= link_to "🐔 Layers", chickens_path(layers: true), 
+      class: "font-semibold hover:text-blue-800 p-1 px-2 mb-8 border
+        border-blue-200 rounded-2xl bg-blue-100 
+        justify-self-center" %>
+    <%= link_to "🐤 Pullets", chickens_path(pullets: true), 
+      class: "font-semibold hover:text-blue-800 p-1 px-2 mb-8 border
+        border-blue-200 rounded-2xl bg-blue-100 
+        justify-self-center" if @pullets.exists? %>
+    <%= link_to "🧑‍🌾 All Chickens", chickens_path(all: true), 
+      class: "font-semibold hover:text-blue-800 p-1 px-2 mb-8 border
+        border-blue-200 rounded-2xl bg-blue-100 
+        justify-self-center" %>
+  </div>
+
 <% elsif params[:expired] %>
   <% content_for :title, "Expired Chickens" %>
   <h2 class="font-extrabold text-amber-700 text-3xl pb-7">
