@@ -14,18 +14,21 @@ class CollectionEntriesController < ApplicationController
       week: { format: 'w of %b %d' },
       day:  { format: '%b %d' },
       pagy: {},
-      active: !params[:skip]
+      active: params[:skip]
     )
+    set_local_time_zone
   end
 
   def today
     @collection_entries = Current.household.collection_entries.includes(egg_entries: :chicken)
-    .where(created_at: Time.current.localtime.beginning_of_day..Time.current.localtime.end_of_day)
+    .where(created_at: Time.current.beginning_of_day..Time.current.end_of_day)
     .order("created_at desc")
+    set_local_time_zone
   end
 
   def show
     @collection_entry = Current.household.collection_entries.includes(egg_entries: :chicken).find(params.expect(:id))
+    set_local_time_zone
   end
 
   def new
@@ -97,5 +100,9 @@ class CollectionEntriesController < ApplicationController
     def setup_form_data
       @users = Current.household.users
       @chickens = Current.household.chickens.where(status: :layer)
+    end
+
+    def set_local_time_zone
+      @local_time_zone = Current.user.household.time_zone
     end
 end
