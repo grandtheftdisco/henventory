@@ -14,8 +14,9 @@
     placeholder: "Enter your email address", 
     value: params[:email_address], 
     class: 'border-1 border-blue-300 focus:bg-blue-50 rounded-lg p-1 mb-5' %>
-  <div class="text-lg text-white font-semibold hover:bg-lime-700 
-    bg-lime-600 py-2 px-3 rounded-lg">
-    <%= form.submit "Email reset instructions" %>
+  <div>
+    <%= form.submit "Email reset instructions",
+      class: 'text-lg text-white font-semibold hover:bg-lime-700 
+        bg-lime-600 py-2 px-3 rounded-lg' %>
   </div>
 <% end %>

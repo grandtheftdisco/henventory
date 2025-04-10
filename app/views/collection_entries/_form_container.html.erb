@@ -7,7 +7,7 @@
     <div class="bg-blue-50 rounded-2xl my-5">
       <div>
         <%= collection_entry_form.label :user_id, "Who collected?", 
-          class:'text-blue-800 font-bold text-2xl mb-5' %>
+          class: 'text-blue-800 font-bold text-2xl mb-5' %>
       </div>
         <%= collection_entry_form.collection_select :user_id, @users, :id, 
           :display_name, prompt: 'select your name' %>

@@ -1,5 +1,5 @@
 class Chicken < ApplicationRecord
-  has_many :egg_entries
+  has_many :egg_entries, dependent: :destroy
   belongs_to :household
 
   validates :name, :breed, presence: true

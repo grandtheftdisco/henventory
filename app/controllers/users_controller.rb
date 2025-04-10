@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    if params[:household].key?(:invite_token)
+    if params.dig(:household, :invite_token)
       user.household = Household.find_by(invite_token: params[:household][:invite_token])
     else 
       user.build_household(time_zone: params[:household][:time_zone])
