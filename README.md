@@ -10,7 +10,7 @@
   - Whcih of my chickens is Employee of the Month?
  
 ## 👀 See It in Action!
-Go check out [Henventory](www.henventory.com) in production!
+Go check out [Henventory](https://www.henventory.com) in production!
 - *-slaps hood-* She's in alpha[^1], folks, so go easy on her.
 
 ## 💻 How to Run Henventory Locally
