@@ -14,12 +14,13 @@ Go check out [Henventory](https://www.henventory.com) in production!
 - *-slaps hood-* She's in alpha[^1], folks, so go easy on her.
 
 ## 💻 How to Run Henventory Locally
-- clone as per usual
-- [install Rails 8](https://guides.rubyonrails.org/install_ruby_on_rails.html) if you don't already have it
-- in your terminal, navigate to the root dir and run `bin/rails server`
-- then, visit `localhost:3000` in your browser
-- from there, you'll be able to explore the public side of Henventory
-- to get the full experience, sign up for an account in dev
+1. clone as per usual
+2. [install Rails 8](https://guides.rubyonrails.org/install_ruby_on_rails.html) if you don't already have it
+3. in your terminal, navigate to the root dir and run `bin/rails server`
+4. then, visit `localhost:3000` in your browser
+5. from there, you'll be able to explore the public side of Henventory
+6. to get the full experience, sign up for an account in dev
+
 - *full how-to guide coming soon!*
 - run into any snags? [Gimme a shout](mailto:grandtheftdisco@gmail.com) or submit an [Issue](https://github.com/grandtheftdisco/henventory/issues)
 
@@ -28,5 +29,5 @@ Go check out [Henventory](https://www.henventory.com) in production!
 ______________________________________________________________________________
 ______________________________________________________________________________
 
-# ⚒️ Process
+# ⚒️ PROCESS ⚒️
 *coming soon!*
