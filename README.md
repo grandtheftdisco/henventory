@@ -113,4 +113,61 @@ ______________________________________________________________________________
 ______________________________________________________________________________
 
 # 👷‍♀️WHAT I'D DO DIFFERENTLY NOW 👷‍♀️
-*coming soon!*
+
+## tl:dr; This is my first project. Therefore, it is objectively my worst one.
+This app is not reflective of my current abilities, but what it _does_ do is show you a crystallized point in time, by which to _compare_ my current abilities.
+
+In other words...
+- **If you think this app is bad: I strive to be better than this.**
+- **And if you think it's good: I strive to be better than this.**
+
+## If I had a chance to do this app differently. I'd certainly have done more planning upfront.
+- I was so excited to dive into Rails that, well, I just dove into Rails.
+- I did learn a lot in this style of development[^12], but I also ran into some setbacks that could have been avoided had I planned upfront. Here are 2 of those missed opportunities:
+  - **Schema drama.** In 3 months, I had to change my schema at least 3 times, and I'm currently working on re-normalizing my database as you read this. My instinct today[^13] is that this is a terrible ratio.
+  - **Prototype, prototype, prototype.** There's no nice way to say this: I half-assed this stage. I put 5 carts before 1 horse. I robbed Peter, Paul, and Mary to pay someone who wasn't even around by the time I got there. A third metaphor. Basically: now I know just how much you learn about your UX, your data flow, and your logic needs when you wireframe & prototype properly.
+ 
+## I also would have written automated tests.
+- I had several bugs (and breaks) that I was forced to manually test, which took hours and created grey hairs.
+- For all the 'speed' I felt that I had in the early weeks of development, I think these bugs ended up netting me negative.
+- TDD felt cumbersome when I started learning Rails, but in my current project, I'm forcing myself to reject that mindset so that I can go _further_, not just faster.
+
+## I'd probably lean a little more on Stimulus and/or Turbo, too.
+- I'm all for React, but going forward I've set my sights on mastering the Hotwire ecosystem.
+- There's gotta be a reason it ships with Rails now, right?
+
+## **In short, I learned the value of wireframing, thorough schema design and UX/UI planning, and automated tests.**
+- I'll carry these lessons with me as I embark on my next Rails adventure. The repo will be public soon, and I'll link to it when that happens!
+
+[^12]: 'style' here is used as loosely as Sandi Metz couples her objects
+[^13]: as of April 2025
+
+______________________________________________________________________________
+______________________________________________________________________________
+______________________________________________________________________________
+
+# ✍️ CONTACT
+
+I would love to hear from you: even if you have a bug report.[^14]
+
+## > For devs who find bugs or have technical questions
+- please log an [Issue](https://github.com/grandtheftdisco/henventory/issues) or start a Discussion.
+
+
+## > For non-devs who find bugs or have technical questions
+- Until we get our bug report form up and running, you can just [drop us a line](mailto:henventory@gmail.com) and let us know what you found.
+
+- In your email, please include:
+
+  - when you found the bug (date & time)
+  - what you were doing (or trying to do) in the app when the bug appeared
+  - any screenshots or recordings, if possible
+
+Your bug reports help make sure that Henventory runs well now -- and scales well later. **Thank you!**
+
+
+## > Wanna work with me?
+- I'd love to hear from you!
+- [Drop me a line](mailto:grandtheftdisco@gmail.com) and we'll set up a time to talk.
+
+[^14]: _Especially_ if you have a bug report.
