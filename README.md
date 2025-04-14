@@ -83,7 +83,7 @@ ______________________________________________________________________________
 
 ### > My Biggest Challenges
 - Timestamps and time zone conversion, hands down.
-- Route customization (vanity URLs, parameters, masking instance ids)
+- Route customization (vanity URLs, passing parameters, masking instance ids)
 - UI design[^9]
 
 ### > What did I learn in a holistic sense?
@@ -102,9 +102,9 @@ ______________________________________________________________________________
 [^4]: I know: I'm a menace.
 [^5]: I'm looking at you, Laravel.
 [^6]: Anyone got this figured out yet?
-[^7]: Again: remind me to just _start_ with Postgres next time.
+[^7]: Read: 'frustrations'. Again: remind me to just _start_ with Postgres next time.
 [^8]: I am decidedly low-tech in my personal life, so this felt Herculean to accomplish.
-[^9]: Don't get me wrong, I can do this. I just know that there are people out there who were straight-up _born_ to do it, and who would run perfectly centered and drop-shadowed circles around me. I have the utmost respect for my siblings on the front-end.
+[^9]: Don't get me wrong, I can do this. I just know that there are people out there who were straight-up _born_ to do it, and who would run perfectly centered, drop-shadowed circles around me. I have the utmost respect for my siblings on the front-end.
 [^10]: At least temporarily: I stubbornly refuse to give up on any bugs.
 [^11]: Cal Newport's book _Deep Work_ has been my north star here. Daily walks through the garden abound.
 
@@ -124,16 +124,16 @@ In other words...
 ## If I had a chance to build this app again, I'd certainly do more planning upfront.
 - I was so excited to dive into Rails that, well, I just dove into Rails.
 - I did learn a lot in this style of development[^12], but I also ran into some setbacks that could have been avoided had I planned upfront. Here are 2 of those missed opportunities:
-  - **Schema drama.** In 3 months, I had to change my schema at least 3 times, and I'm currently working on re-normalizing my database as you read this. My instinct today[^13] is that this is a terrible ratio.
+  - **Schema drama.** In 3 months, I had to adjust my schema at least 3 times, and I'm currently working on re-normalizing my database as you read this. My instinct today[^13] is that this is a terrible ratio.
   - **Prototype, prototype, prototype.** There's no nice way to say this: I half-assed this stage. I put 5 carts before 1 horse. I robbed Peter, Paul, and Mary to pay someone who wasn't even around by the time I got there. A third metaphor. Basically: now I know just how much you learn about your UX, your data flow, and your logic needs when you wireframe & prototype properly.
  
 ## I also would write automated tests.
-- I had several bugs (and breaks) that I was forced to manually test, which took hours and created grey hairs.
+- I had several bugs (and breaks) that I was forced to manually test, which took hours from me (and created grey hairs).
 - For all the 'speed' I felt that I had in the early weeks of development, I think these bugs ended up netting me negative.
-- TDD felt cumbersome when I started learning Rails, but in my current project, I'm forcing myself to reject that mindset so that I can go _further_, not just faster.
+- TDD felt cumbersome when I started learning Rails, but in my current project, I'm forcing myself to reject that mindset so that I can go _far_, not just fast.
 
 ## I'd probably lean a little more on Stimulus and/or Turbo, too.
-- I'm all for React, but going forward I've set my sights on mastering the Hotwire ecosystem.
+- I'm all for React, but going forward, I've set my sights on mastering the Hotwire ecosystem.
 - There's gotta be a reason it ships with Rails now, right?
 
 ## **In short, I learned the value of wireframing, thorough schema design and UX/UI planning, and automated tests.**
