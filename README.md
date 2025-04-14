@@ -70,7 +70,7 @@ ______________________________________________________________________________
   - Now, I feel empowered to learn other MVC frameworks in the future.[^5]
 - I learned a _lot_ about how to work with timestamps, which is not something that I expected to be difficult.
   - The most interesting challenge here was learning how to sort instances by their timestamps with consideration to the user's own time zone (instead of sorting by the database default-- UTC).
-- I learned how to debug: a skill which is second only to knowing how to write code without any bugs.[^6]
+- I learned how to debug: a skill which is second only to knowing how to write code _without_ any bugs.[^6]
 - I learned the joys[^7] of switching DBMSs in order to deploy.
 - I learned how to write & submit PRs.
   - I've always enjoyed writing, so this was a great chance to exercise these skills in a new environment.
@@ -79,11 +79,11 @@ ______________________________________________________________________________
 ### > My Favorite Parts of Learning Rails
 - Getting acquainted with Active Record query interface
 - Determining what to abstract out of the views
-- Generally, anything towards the back of the stack
+- More generally, anything towards the back of the stack
 
 ### > My Biggest Challenges
 - Timestamps and time zone conversion, hands down.
-- Route customization (vanity URLs, parameters, instance ids)
+- Route customization (vanity URLs, parameters, masking instance ids)
 - UI design[^9]
 
 ### > What did I learn in a holistic sense?
@@ -93,13 +93,13 @@ ______________________________________________________________________________
 - I learned how & when to ask for help (no one is an island!), and likewise, when to push myself to find the answers independently.
 - On that note, I learned how to develop without AI.
   - This was a big one for me, and maybe a bit controversial, too.
-  - I think there's a time and a place to use assistants and/or agents, but I wanted to go through the process, start to finish, with only human brains involved. I'm very glad I did.
+  - I think there's a time and a place to use AI, but I wanted to go through the process -- start to finish -- with only human brains involved. I'm very glad I did.
 - I learned how to put my big, looming, often-foggy questions into words.
-  - This is one of the most challenging aspects of software development: knowing how to ask a question without having a paradigm in place _for_ that question. In other words: it's hard to ask about something that you don't yet understand.
+  - This is one of the most challenging aspects of learning software development: knowing how to ask a question without having a paradigm in place _for_ that question. In other words: it's hard to ask about something that you don't yet understand.
 
 **Most importantly:** I would not have learned any of these things without Bookis' technical guidance and touchbase meetings. Seriously. After this experience, I firmly believe that good development cannot be done in a vacuum. While Rails may be known as 'the one-person framework', I would truly hate to be forced to use it that way. 
  
-[^4]: I, too, like to live dangerously.
+[^4]: I know: I'm a menace.
 [^5]: I'm looking at you, Laravel.
 [^6]: Anyone got this figured out yet?
 [^7]: Again: remind me to just _start_ with Postgres next time.
@@ -121,7 +121,7 @@ In other words...
 - **If you think this app is bad: I strive to be better than this.**
 - **And if you think it's good: I strive to be better than this.**
 
-## If I had a chance to do this app differently. I'd certainly have done more planning upfront.
+## If I had a chance to do this app differently, I'd certainly have done more planning upfront.
 - I was so excited to dive into Rails that, well, I just dove into Rails.
 - I did learn a lot in this style of development[^12], but I also ran into some setbacks that could have been avoided had I planned upfront. Here are 2 of those missed opportunities:
   - **Schema drama.** In 3 months, I had to change my schema at least 3 times, and I'm currently working on re-normalizing my database as you read this. My instinct today[^13] is that this is a terrible ratio.
