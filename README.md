@@ -16,10 +16,11 @@ Go check out [Henventory](https://www.henventory.com) in production!
 ## 💻 How to Run Henventory Locally
 1. `git clone` as per usual
 2. [Install Rails 8](https://guides.rubyonrails.org/install_ruby_on_rails.html) if you don't already have it
-3. In your terminal, navigate to the root dir and run `bin/rails server`
-4. Then, visit `localhost:3000` in your browser
-5. From there, you'll be able to explore the public side of Henventory
-6. To get the full experience, sign up for an account in dev
+3. Likewise, [install Stimulus](https://stimulus.hotwired.dev/handbook/installing) as needed
+4. In your terminal, navigate to the root dir and run `bin/rails server`
+5. Then, visit `localhost:3000` in your browser
+6. From there, you'll be able to explore the public side of Henventory
+7. To get the full experience, sign up for an account in dev
 
 - *full how-to guide coming soon!*
 - Run into any snags? [Gimme a shout](mailto:grandtheftdisco@gmail.com) or submit an [Issue](https://github.com/grandtheftdisco/henventory/issues)
