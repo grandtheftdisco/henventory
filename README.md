@@ -7,7 +7,7 @@
 - Whether you have a small backyard flock or several dozen hens, Henventory will answer questions like:
   - How many eggs do I get per day, on average? Does it change with the seasons?
   - Do my Rhode Island Reds lay more than my Barred Rocks?
-  - Whcih of my chickens is Employee of the Month?
+  - Which of my chickens is Employee of the Month?
  
 ## 👀 See It in Action!
 Go check out [Henventory](https://www.henventory.com) in production!
@@ -15,14 +15,14 @@ Go check out [Henventory](https://www.henventory.com) in production!
 
 ## 💻 How to Run Henventory Locally
 1. `git clone` as per usual
-2. [install Rails 8](https://guides.rubyonrails.org/install_ruby_on_rails.html) if you don't already have it
-3. in your terminal, navigate to the root dir and run `bin/rails server`
-4. then, visit `localhost:3000` in your browser
-5. from there, you'll be able to explore the public side of Henventory
-6. to get the full experience, sign up for an account in dev
+2. [Install Rails 8](https://guides.rubyonrails.org/install_ruby_on_rails.html) if you don't already have it
+3. In your terminal, navigate to the root dir and run `bin/rails server`
+4. Then, visit `localhost:3000` in your browser
+5. From there, you'll be able to explore the public side of Henventory
+6. To get the full experience, sign up for an account in dev
 
 - *full how-to guide coming soon!*
-- run into any snags? [Gimme a shout](mailto:grandtheftdisco@gmail.com) or submit an [Issue](https://github.com/grandtheftdisco/henventory/issues)
+- Run into any snags? [Gimme a shout](mailto:grandtheftdisco@gmail.com) or submit an [Issue](https://github.com/grandtheftdisco/henventory/issues)
 
 [^1]: I don't have all of the data-analysis tools up and running yet; we're growing a nice crop of data this spring so we've got something to work with in beta development!
 
