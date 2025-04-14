@@ -11,26 +11,27 @@
  
 ## 👀 See It in Action!
 Go check out [Henventory](https://www.henventory.com) in production!
-- *-slaps hood-* She's in alpha[^1], folks, so go easy on her.
+- *-slaps hood-* She's in alpha[^0], folks, so go easy on her.
 
 ## 💻 How to Run Henventory Locally
 1. `git clone` as per usual
 2. [Install Rails 8](https://guides.rubyonrails.org/install_ruby_on_rails.html) if you don't already have it
 3. Likewise, [install Stimulus](https://stimulus.hotwired.dev/handbook/installing) as needed
-5. In your terminal, navigate to the root dir of the repo
-6. First, run `bundle install`
-7. Once you've got all your gems in a row, run `rails db:setup` to initialize your db
-8. After that, run `rails db:migrate` - friends don't let friends forget to run migrations
-9. You may need to `gem install foreman` to initialize the server, so go ahead and do that
-10. Finally! You can now run `bin/rails server`
-11. 11. Then, visit `localhost:3000` in your browser
-12. From there, you'll be able to explore the public side of Henventory
-13. To get the full experience, sign up for an account in dev
+4. In your terminal[^1], navigate to the root dir of the repo
+5. First, run `bundle install`
+6. Once you've got all your gems in a row, run `rails db:setup` to initialize your db
+7. After that, run `rails db:migrate` - friends don't let friends forget to run migrations
+8. You may need to `gem install foreman` to initialize the server, so go ahead and do that
+9. Finally! You can now run `bin/rails server`
+10. Then, visit `localhost:3000` in your browser
+11. From there, you'll be able to explore the public side of Henventory
+12. To get the full experience, sign up for an account in dev
 
 - *full how-to guide coming soon!*
 - Run into any snags? [Gimme a shout](mailto:grandtheftdisco@gmail.com) or submit an [Issue](https://github.com/grandtheftdisco/henventory/issues)
 
-[^1]: I don't have all of the data-analysis tools up and running yet; we're growing a nice crop of data this spring so we've got something to work with in beta development!
+[^0]: I don't have all of the data-analysis tools up and running yet; we're growing a nice crop of data this spring so we've got something to work with in beta development!
+[^1]: I use git bash for Windows, so I'm not sure if this is different for, say, Powershell or CMD
 
 ______________________________________________________________________________
 ______________________________________________________________________________
