@@ -67,7 +67,7 @@ ______________________________________________________________________________
 - Reading documentation: I used to dread it, but now it's one of the first places I look.
 - I got comfortable with the MVC pattern.
   - I thought that I could just read about it and get it, but it didn't fully click until I immersed myself in it.
-  - Now, I feel empowered to learn other MVC frameworks in the future.[^5]
+  - Now, I feel empowered to learn other MVC frameworks.[^5]
 - I learned a _lot_ about how to work with timestamps, which is not something that I expected to be difficult.
   - The most interesting challenge here was learning how to sort instances by their timestamps with consideration to the user's own time zone (instead of sorting by the database default-- UTC).
 - I learned how to debug: a skill which is second only to knowing how to write code _without_ any bugs.[^6]
@@ -151,7 +151,7 @@ ______________________________________________________________________________
 I would love to hear from you: even if you have a bug report.[^14]
 
 ## > For devs who find bugs or have technical questions
-- please log an [Issue](https://github.com/grandtheftdisco/henventory/issues) or start a Discussion.
+- Please log an [Issue](https://github.com/grandtheftdisco/henventory/issues) or see if you can track me down by my IP address
 
 
 ## > For non-devs who find bugs or have technical questions
