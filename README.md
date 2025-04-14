@@ -28,6 +28,38 @@ Go check out [Henventory](https://www.henventory.com) in production!
 
 ______________________________________________________________________________
 ______________________________________________________________________________
+______________________________________________________________________________
 
 # ⚒️ PROCESS ⚒️
+
+## Goals
+- The goal of this project was, primarily, to help my family.
+- The other goal was more technical: to learn Rails.
+  - Tutorials are great, but what better way to learn than to build something?
+ 
+## Team
+- I could **never** call this a solo project and be able to sleep at night.
+- My technical mentor Bookis has been indispensable throughout the process.
+
+## Stack
+- Ruby on Rails | Stimulus.js | Tailwind
+  - Development DB: SQLite
+  - Production DB: Postgres[^2]
+- Deployment platform: Render
+
+## Timeframe
+- alpha: January - March 2025
+- beta: *in development*
+
+## Outcomes
+- I have two loyal users: the people I built this app for.
+  - My main motivation for building this app was to make their lives easier, so any other users -- or anything else I've learned along the way -- well, that's just lagniappe[^3].
+ 
+[^2]: Remind me to *start* with Postgres next time.
+[^3]: (pronounced '*LAN-yap*' -- Cajun for "extra stuff" )
+
+______________________________________________________________________________
+______________________________________________________________________________
+______________________________________________________________________________
+# 📚 WHAT I LEARNED 📚
 *coming soon!*
