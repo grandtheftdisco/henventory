@@ -4,7 +4,8 @@ class User < ApplicationRecord
   belongs_to :household
   has_many :chickens
   has_many :collection_entries
-  after_create :seed_account
+  attr_accessor :skip_account_seed
+  after_create :seed_account, unless: :skip_account_seed
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 

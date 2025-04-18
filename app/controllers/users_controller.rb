@@ -22,6 +22,7 @@ class UsersController < ApplicationController
     user = User.new(user_params)
     if params.dig(:household, :invite_token)
       user.household = Household.find_by(invite_token: params[:household][:invite_token])
+      user.skip_account_seed
     else 
       user.build_household(time_zone: params[:household][:time_zone])
     end
@@ -50,7 +51,7 @@ class UsersController < ApplicationController
       params.require(:user)
         .permit(
           :display_name, :email_address, :password, :household_id, 
-          :password_confirmation, :mode
+          :password_confirmation, :mode, :skip_account_seed
         )
     end
 end

@@ -19,6 +19,7 @@
     <div>
       <% if @household %>
         <%= hidden_field_tag 'household[invite_token]', @household.invite_token %>
+        <%= hidden_field_tag 'user[skip_account_seed]' %>
       <% end %>
     </div>
 
