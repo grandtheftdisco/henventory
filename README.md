@@ -51,8 +51,8 @@ ______________________________________________________________________________
 ## Stack
 - Ruby on Rails
 - Database:
-  - Development: SQLite
-  - Production: Postgres[^2]
+  - during development: SQLite
+  - since deployment: Postgres[^2]
 - Stimulus.js
 - Tailwind
 - Deployment platform: Render
@@ -140,14 +140,14 @@ In other words...
 ## I also would write automated tests.
 - I had several bugs (and breaks) that I was forced to manually test, which took hours from me (and created grey hairs).
 - For all the 'speed' I felt that I had in the early weeks of development, I think these bugs ended up netting me negative.
-- TDD felt cumbersome when I started learning Rails, but in my current project, I'm forcing myself to reject that mindset so that I can go _far_, not just fast.
+- TDD felt cumbersome when I started learning Rails, but in my [current project](https://www.github.com/grandtheftdisco/siempreviva), I'm forcing myself to reject that mindset so that I can go _far_, not just fast.
 
 ## I'd probably lean a little more on Stimulus and/or Turbo, too.
 - I'm all for React, but going forward, I've set my sights on mastering the Hotwire ecosystem.
 - There's gotta be a reason it ships with Rails now, right?
 
 ## **In short, I learned the value of wireframing, thorough schema design and UX/UI planning, and automated tests.**
-- I'll carry these lessons with me as I embark on my next Rails adventure. The repo will be public soon, and I'll link to it when that happens!
+- I'll carry these lessons with me as I embark on [my next Rails adventure](https://www.github.com/grandtheftdisco/siempreviva).
 
 [^12]: 'style' here is used as loosely as Sandi Metz couples her objects
 [^13]: as of April 2025
