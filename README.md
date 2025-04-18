@@ -49,9 +49,12 @@ ______________________________________________________________________________
 - My technical mentor Bookis has been indispensable throughout the process.
 
 ## Stack
-- Ruby on Rails | Stimulus.js | Tailwind
-  - Development DB: SQLite
-  - Production DB: Postgres[^2]
+- Ruby on Rails
+- Database:
+  - Development: SQLite
+  - Production: Postgres[^2]
+- Stimulus.js
+- Tailwind
 - Deployment platform: Render
 
 ## Timeframe
