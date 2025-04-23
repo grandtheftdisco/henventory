@@ -24,10 +24,6 @@ class CollectionEntriesController < ApplicationController
     .order("created_at desc")
   end
 
-  def show
-    @collection_entry = Current.household.collection_entries.includes(egg_entries: :chicken).find(params.expect(:id))
-  end
-
   def new
     @collection_entry = Current.household.collection_entries.build
     @collection_entry.egg_entries.build
@@ -45,7 +41,7 @@ class CollectionEntriesController < ApplicationController
       @collection_entry = Current.household.collection_entries.build(collection_entry_params)
 
       if @collection_entry.save
-        redirect_to @collection_entry, notice: "Collection entry was successfully created."
+        redirect_to today_path, notice: "Collection entry was successfully created."
       else
         setup_form_data
         render :new, status: :unprocessable_entity
