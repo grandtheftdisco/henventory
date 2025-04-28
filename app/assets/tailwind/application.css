@@ -43,7 +43,7 @@
 		margin-bottom: 10;
 	}
 
-  .card {
+	.card {
 		display: flex;
 		flex-direction: column;
 		background-color: var(--color-blue-200);
