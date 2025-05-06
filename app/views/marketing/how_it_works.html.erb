@@ -5,30 +5,33 @@
     How It Works
   </h1>
 
-  <div class="flex flex-col gap-5 bg-yellow-50 p-10 text-left">
+  <div class="flex flex-col gap-5 bg-blue-100 p-10 text-left rounded-2xl w-1/2 m-auto">
 
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4 justify-self-center">
       <h2 class="font-bold text-3xl">🧑‍🌾 GRAND TOUR</h2>
 
-      <div class="flex flex-col gap-4 pl-10">
+      <div class="flex flex-col gap-4 justify-self-center">
         <h3 class="font-semibold text-2xl">Welcome to Henventory!</h3>
         <p class="font-semibold mb-5">Let's take a look around.</p>
+        <hr class="border-dashed"/>
         <p class="font-semibold">If you've made it this far, you've probably seen the home page.</p>
         <%= image_tag("/ss/homepage.png",
           width: 450,
           class: 'rounded-2xl mb-5') %> 
-
-        <p class="font-semibold">First, you'll want to sign up for an account, if you haven't already. </p>
+        <hr class="border-dashed"/>
+        <p class="font-semibold">First things first, you'll want to sign up for an account, if you haven't already. </p>
         <p class="font-semibold">Just fill out the form under the <%= link_to "sign up", new_user_path, class: 'font-bold hover:text-blue-700' %> tab.</p>
-        <p class="font-semibold text-xs px-5">❗IMPORTANT: If someone has invited you to join their household on Henventory, use their referral link to sign up!</p>
+        <p class="font-semibold text-xs">❗IMPORTANT: If someone has invited you to join their household on Henventory, use their referral link to sign up!</p>
         <%= image_tag("/ss/signupform.png",
           width: 450,
           class: 'rounded-2xl mb-5') %>
 
+        <hr class="border-dashed"/>
         <p class="font-semibold">Alright, now that you're signed up, let's <%= link_to "log in", new_session_path, class: 'font-bold hover:text-blue-700' %>!</p>
         <%= image_tag("/ss/login.png",
             width: 450,
             class: 'rounded-2xl mb-5') %>
+        <hr class="border-dashed"/>
 
         <p class="font-semibold">Once you're logged in, you'll see a summary of your flock's day so far.</p>
         <%= image_tag("/ss/landing.png",
@@ -40,15 +43,16 @@
         <p class="font-bold text-xl">Before we look at <i>how</i> to track your eggs, let's go through our menu options.</p>
         <hr class="mb-10"/>
 
-        <h4 class="font-semibold text-lg">Today's Entries</h4>
-        <p> This is where you'll see all of the eggs you've collected today. </p>
+        <h4 class="font-bold text-xl">📅 Today's Entries</h4>
+        <p class="font-semibold"> This is where you'll see all of the eggs you've collected today. </p>
         <%= image_tag("/ss/todaysentries.png",
             width: 450,
             class: 'rounded-2xl') %>
-        <p class="mb-5">And of course, we don't have anything logged yet. Don't worry: we'll fix that soon.</p>
+        <p class="font-semibold mb-5">And of course, we don't have anything logged yet. Don't worry: we'll fix that soon.</p>
+        <hr class="border-dashed"/>
 
-        <h4 class="font-semibold text-xl">All Entries</h4>
-        <p>Here, you'll find all of the egg entries you've made. You can view them from newest to oldest...</p>
+        <h4 class="font-bold text-xl">📒 All Entries</h4>
+        <p class="font-semibold">Here, you'll find all of the egg entries you've made. You can view them from newest to oldest...</p>
         <%= image_tag("/ss/cemrtolr.png",
             width: 450,
             class: 'rounded-2xl mb-5') %>
@@ -57,27 +61,30 @@
         <%= image_tag("/ss/cecalfil.png",
             width: 450,
             class: 'rounded-2xl mb-5') %>
+        <hr class="border-dashed"/>
 
-        <h4 class="font-semibold text-xl">My Flock*</h4>
+        <h4 class="font-bold text-xl">🐔 My Flock*</h4>
         <p class="font-semibold text-xs">*Layer Mode only</p>
-        <p>This is where you can keep track of all of your chickens.</p>
+        <p class="font-semibold">This is where you can keep track of all of your chickens.</p>
         <%= image_tag("/ss/myflock.png",
             width: 450,
             class: 'rounded-2xl') %>
-        <p>❗ We're currently expanding this feature, so if you have something specific you'd like to track with Henventory, <%= link_to "drop us a line!", 'mailto:henventory@gmail.com', class: 'font-bold hover:text-blue-700' %> We'd love to hear your ideas.</p>
+        <p class="font-semibold">❗ We're currently expanding this feature, so if you have something specific you'd like to track with Henventory, <%= link_to "drop us a line!", 'mailto:henventory@gmail.com', class: 'font-bold hover:text-blue-700' %> We'd love to hear your ideas.</p>
         <%= image_tag("/ss/chickenstats.png",
             width: 450,
             class: 'rounded-2xl mb-5') %>
+        <hr class="border-dashed"/>
 
-        <h4 class="font-semibold text-xl">Settings</h4>
-        <p>This is where you can change your display name and password.</p>
-        <p>You'll also find your referral link here, if you want to invite someone to help you track eggs for your flock.</p>
+        <h4 class="font-bold text-xl">️⚙️ Settings</h4>
+        <p class="font-semibold">This is where you can change your display name and password.</p>
+        <p class="font-semibold">You'll also find your referral link here, if you want to invite someone to help you track eggs for your flock.</p>
         <%= image_tag("/ss/settings.png",
             width: 450,
             class: 'rounded-2xl mb-5') %>
-
-        <h4 class="font-semibold text-xl">Log Out</h4>
-        <p>Okay, this one's pretty self-explanatory :)</p>
+        <hr class="border-dashed"/>
+        
+        <h4 class="font-bold text-xl">👋 Log Out</h4>
+        <p>Okay, this one's pretty self-explanatory 🙂</p>
       </div>
     </div>
 
@@ -85,20 +92,50 @@
     <p class="font-bold text-xl">Now that we've taken the grand tour, let's look at how to create egg entries!
     <hr class="mb-10"/>   
 
-    <hr/>
     <div class="flex flex-col gap-2">
-      <h2 class="font-bold text-2xl">🥚 FLOCK MODE</h2>
+      <h2 class="font-bold text-2xl mb-5">🥚 FLOCK MODE</h2>
 
-      <i>coming soon!</i>
+      <div class="flex flex-col gap-2">
+        <h3 class="font-semibold text-lg">How to Record a Collection Entry</h3>
+        <p class="mb-5">A collection entry is just what it sounds like: it's an entry that records the details of eggs you collected.</p>
+
+        <ol class="flex flex-col list-decimal pl-10 gap-5">
+          <li>Click or tap on the 'got some eggs?' button.</li>
+          <%= image_tag("/ss/gotsomeeggs.png",
+              width: 450,
+              class: 'rounded-2xl mb-3') %>
+
+          <li>You'll see a blank form.</li>
+          <%= image_tag("/ss/flockmode1.png",
+              width: 450,
+              class: 'rounded-2xl mb-3') %>
+
+          <li>Select your name from the dropdown menu.</li>
+          <%= image_tag("/ss/flockmode2.png",
+              width: 450,
+              class: 'rounded-2xl mb-3') %>
+
+          <li>Enter the number of eggs you collected.</li>
+          <%= image_tag("/ss/flockmode3.png",
+              width: 450,
+              class: 'rounded-2xl mb-3') %>
+
+          <li>You're done!</li>
+          <%= image_tag("/ss/flockmode4.png",
+              width: 450,
+              class: 'rounded-2xl') %>
+          <p>If you need to edit your entry (or delete it), use the options menu below the entry.</p>
+
+        </ol>
+      </div>
 
     </div>
 
-    <hr/>
+  <hr/>
 
-    <div>
-      <h2 class="font-bold text-2xl">🐔 LAYER MODE</h2>
+  <div class="flex flex-col gap-2">
+    <h2 class="font-bold text-2xl">🐔 LAYER MODE</h2>
 
-      <i>coming soon!</i>
-    </div>
-  </div>    
+    <i>coming soon</i>
+  </div> 
 </div>
