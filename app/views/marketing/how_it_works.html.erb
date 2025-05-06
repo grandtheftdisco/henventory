@@ -35,9 +35,11 @@
             width: 450,
             class: 'rounded-2xl') %>
         <p class="font-semibold">Here, we can see that we don't have any eggs logged for the day: not yet, anyway!</p>
+        
         <hr class="mt-10"/>
         <p class="font-bold text-xl">Before we look at <i>how</i> to track your eggs, let's go through our menu options.</p>
         <hr class="mb-10"/>
+
         <h4 class="font-semibold text-lg">Today's Entries</h4>
         <p> This is where you'll see all of the eggs you've collected today. </p>
         <%= image_tag("/ss/todaysentries.png",
@@ -59,35 +61,35 @@
         <h4 class="font-semibold text-xl">My Flock*</h4>
         <p class="font-semibold text-xs">*Layer Mode only</p>
         <p>This is where you can keep track of all of your chickens.</p>
-        <p>❗ We're in the process of expanding this feature, to show you a chicken's weekly average, the last time they laid an egg, and more!</p>
-        <%= image_tag("",
+        <%= image_tag("/ss/myflock.png",
+            width: 450,
+            class: 'rounded-2xl') %>
+        <p>❗ We're currently expanding this feature, so if you have something specific you'd like to track with Henventory, <%= link_to "drop us a line!", 'mailto:henventory@gmail.com', class: 'font-bold hover:text-blue-700' %> We'd love to hear your ideas.</p>
+        <%= image_tag("/ss/chickenstats.png",
             width: 450,
             class: 'rounded-2xl mb-5') %>
 
         <h4 class="font-semibold text-xl">Settings</h4>
         <p>This is where you can change your display name and password.</p>
         <p>You'll also find your referral link here, if you want to invite someone to help you track eggs for your flock.</p>
-        <%= image_tag("",
+        <%= image_tag("/ss/settings.png",
             width: 450,
             class: 'rounded-2xl mb-5') %>
 
         <h4 class="font-semibold text-xl">Log Out</h4>
-        <p>This one's pretty self-explanatory :)</p>
-
-        <p>Okay, now that we've taken the grand tour, let's look at how to create egg entries!
+        <p>Okay, this one's pretty self-explanatory :)</p>
       </div>
     </div>
 
+    <hr class="mt-10"/>
+    <p class="font-bold text-xl">Now that we've taken the grand tour, let's look at how to create egg entries!
+    <hr class="mb-10"/>   
+
     <hr/>
-    
     <div class="flex flex-col gap-2">
       <h2 class="font-bold text-2xl">🥚 FLOCK MODE</h2>
 
-      <div class="flex flex-col gap-2 pl-10">
-        <p>In flock mode, things are nice and easy. All you have to do is... </p>
-
-        <h3 class="font-semibold text-lg">1. Create an egg entry</h3>
-      </div>
+      <i>coming soon!</i>
 
     </div>
 
@@ -96,12 +98,7 @@
     <div>
       <h2 class="font-bold text-2xl">🐔 LAYER MODE</h2>
 
-      <div class="flex flex-col gap-2 pl-10">
-        <h3 class="font-semibold text-lg">1. add a chicken to your flock</h3>
-          
-        <h3 class="font-semibold text-lg">2. add an egg entry</h3>
-        <h4 class="font-semibold pl-4">❓but what if i have more than 1 egg to enter?</h4>
-      </div>
+      <i>coming soon!</i>
     </div>
   </div>    
 </div>
