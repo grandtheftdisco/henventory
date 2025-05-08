@@ -78,7 +78,7 @@
 
         <h4 class="font-bold text-xl">️⚙️ Settings</h4>
         <p class="font-semibold">This is where you can change your display name and password.</p>
-        <p class="font-semibold">You'll also find your referral link here, if you want to invite someone to help you track eggs for your flock.</p>
+        <p class="font-semibold">If you want to invite someone to help you track eggs for your flock, use the referral link on this page.</p>
         <%= image_tag("/ss/settings.png",
             width: 450,
             class: 'rounded-2xl mb-5') %>
@@ -100,26 +100,30 @@
         <h3 class="font-semibold text-lg">How to Record a Collection Entry</h3>
         <p class="mb-5">Collection entries are the way Henventory tracks how many eggs you collect, and when they're collected.</p>
 
-        <ol class="flex flex-col list-decimal pl-10 gap-5">
+        <ol class="flex flex-col list-decimal pl-3 gap-5 font-semibold">
           <li>Click or tap on the 'got some eggs?' button.</li>
           <%= image_tag("/ss/flockmode1.png",
               width: 450,
               class: 'rounded-2xl mb-3') %>
+          <hr class="border-dashed"/>
 
           <li>You'll see a blank form.</li>
           <%= image_tag("/ss/flockmode2.png",
               width: 450,
               class: 'rounded-2xl mb-3') %>
+          <hr class="border-dashed"/>
 
           <li>Select your name from the dropdown menu.</li>
           <%= image_tag("/ss/flockmode3.png",
               width: 450,
               class: 'rounded-2xl mb-3') %>
+          <hr class="border-dashed"/>
 
           <li>Enter the number of eggs you collected.</li>
           <%= image_tag("/ss/flockmode4.png",
               width: 450,
               class: 'rounded-2xl mb-3') %>
+          <hr class="border-dashed"/>
 
           <li>Click or tap 'Submit', and you're all done!</li>
           <%= image_tag("/ss/flockmode5.png",
@@ -132,50 +136,84 @@
 
     </div>
 
-  <hr/>
+  <hr class="border-2 my-10"/>
 
   <div class="flex flex-col gap-2">
     <h2 class="font-bold text-2xl">🐔 LAYER MODE</h2>
 
     <div class="flex flex-col gap-2">
-      <h3 class="font-semibold text-lg">How to Add a Chicken to Your Flock</h3>
-      <i>coming soon!</i>
+      <h3 class="font-bold text-lg mb-5">How to Add a Chicken to Your Flock</h3>
+      <ol class="flex flex-col list-decimal pl-10 gap-5 font-semibold">
+        <li>From the My Flock tab, click the 'add new chicken' button.</li>
+        <%= image_tag("/ss/myflock.png",
+            width: 450,
+            class: 'rounded-2xl mb-5') %>
+        <hr class="border-dashed"/>
+        
+        <li>You'll see a new chicken form: go ahead and fill it out!</li>
+        <%= image_tag("/ss/addchicken1.png",
+            width: 450,
+            class: 'rounded-2xl') %>
+        <p class="text-sm">Remember that image URLs are optional.</p>
+        <p class="text-sm mb-5">🚧 The image-uploader is currently in development. 🚧</p>
+        <hr class="border-dashed"/>
+
+        <li>Once you've filled out the form, click 'Add Chicken'</li>
+        <%= image_tag("/ss/addchicken2.png",
+            width: 450,
+            class: 'rounded-2xl mb-5') %>
+        <hr class="border-dashed"/>
+
+        <li>You're all set! </li>
+        <%= image_tag("/ss/addchicken3.png",
+            width: 450,
+            class: 'rounded-2xl') %>
+        <p class="text-sm">❗ New chickens won't have all the available stats on their cards: you'll see these appear after you've collected a few weeks' worth of data.</p>
+        <hr class="border-dashed"/>
+
+      </ol>
     </div>
-
+    <hr class="my-10"/>
     <div class="flex flex-col gap-2">
-      <h3 class="font-semibold text-lg">How to Record a Collection Entry</h3>
-      <p class="mb-5">Collection entries are the way Henventory tracks how many eggs you collect, and when they're collected.</p>
+      <h3 class="font-bold text-lg">How to Record a Collection Entry</h3>
+      <p class=" font-semibold mb-5">Collection entries are the way Henventory tracks how many eggs you collect, and when they're collected.</p>
 
-      <ol class="flex flex-col list-decimal pl-10 gap-5">
+      <ol class="flex flex-col list-decimal pl-10 gap-5 font-semibold">
           <li>Click or tap on the 'got some eggs?' button.</li>
           <%= image_tag("/ss/landing.png",
               width: 450,
-              class: 'rounded-2xl mb-3') %>
+              class: 'rounded-2xl mb-5') %>
+          <hr class="border-dashed"/>
 
           <li>You'll see a blank form.</li>
           <%= image_tag("/ss/layermode1.png",
               width: 450,
-              class: 'rounded-2xl mb-3') %>
+              class: 'rounded-2xl mb-5') %>
+          <hr class="border-dashed"/>
 
           <li>Select your name from the dropdown menu.</li>
           <%= image_tag("/ss/layermode2.png",
               width: 450,
-              class: 'rounded-2xl mb-3') %>
+              class: 'rounded-2xl mb-5') %>
+          <hr class="border-dashed"/>
 
           <li>Select the chicken who laid an egg.</li>
           <%= image_tag("/ss/layermode3.png",
               width: 450,
-              class: 'rounded-2xl mb-3') %>
+              class: 'rounded-2xl mb-5') %>
+          <hr class="border-dashed"/>
 
           <li>If you've got more than one egg, just click or tap the 'got another egg?' button.</li>
           <%= image_tag("/ss/layermode4.png",
               width: 450,
-              class: 'rounded-2xl mb-3') %>
+              class: 'rounded-2xl mb-5') %>
+          <hr class="border-dashed"/>
 
           <li>Then, select that chicken's name in the dropdown menu that appears.</li>
           <%= image_tag("/ss/layermode5.png",
               width: 450,
-              class: 'rounded-2xl mb-3') %>
+              class: 'rounded-2xl mb-5') %>
+          <hr class="border-dashed"/>
 
           <li>Click or tap 'Submit', and you're all done!</li>
           <%= image_tag("/ss/layermode6.png",
@@ -186,4 +224,9 @@
         </ol>
     </div>
   </div> 
+
+  <div class="flex flex-col gap-2">
+    <h2 class="font-bold text-2xl">📈 DATA ANALYSIS</h2>
+    <i>🚧 Under Construction: Coming Soon! 🚧</i>
+  </div>
 </div>
