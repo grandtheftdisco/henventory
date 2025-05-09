@@ -1,2 +1,88 @@
 @import "tailwindcss";
 @import "./pagy.css";
+
+@layer components {
+	.outer-container {
+		display: flex;
+		flex-direction: column;
+		justify-self: center;
+		gap: 20;
+	}
+
+	.collection-entries-container {
+		display: flex;
+		flex-direction: column;
+		justify-items: center;
+		justify-self: center;
+		width: 100%;
+		gap: 20;
+
+		@media screen and (min-width: 900px) {
+			width: 600px;
+		}
+	}
+
+	.calendar-filter-selection-container {
+		background-color: var(--color-blue-100);
+		justify-self: center;
+		justify-items: center;
+		border-radius: 25;
+		padding-right: 20px;
+		padding-left: 20px;
+		padding-top: 5px;
+	}
+
+	.no-calendar-info-container {
+		background-color: var(--color-amber-50);
+		border-width: thin;
+		border-color: var(--color-amber-100);
+		border-radius: 15;
+		justify-self: center;
+		justify-items: center;
+		padding: 5;
+		margin-bottom: 10;
+	}
+
+	.card {
+		display: flex;
+		flex-direction: column;
+		background-color: var(--color-blue-200);
+		padding: 20px;
+		border-style: solid;
+		border-width: thin;
+		border-color: var(--color-blue-300);
+		border-radius: 25;
+	}
+
+	.page-title {
+		font-weight: 900;
+		font-size: 2rem; 
+		padding-bottom: 20px;
+		text-transform: uppercase;
+	}
+
+	.link {
+		color: var(--color-blue-600);
+		justify-self: center;
+		font-weight: 600;
+	}
+
+	.link:hover {
+		color: var(--color-blue-800);
+	}
+
+	.btn-upcase {
+		color: white;
+		font-size: medium;
+		font-weight: 600;
+		border-radius: 15;
+		padding: 7;
+		padding-left: 10;
+		padding-right: 10;
+		margin: auto;
+	}
+
+	.btn-uppercase {
+
+	}
+}
