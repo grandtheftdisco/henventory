@@ -2,7 +2,7 @@
 - This is my first-ever web app: built in Ruby on Rails, styled with Tailwind, and lightly seasoned with Stimulus.js
 - If you're here for my portfolio, check out the Process section below for a look behind the scenes!
 
-## ⏲️ Elevator Pitch
+## ⏲️ What is Henventory?
 - Henventory helps chicken farmers keep track of egg production.
 - Whether you have a small backyard flock or several dozen hens, Henventory will answer questions like:
   - How many eggs do I get per day, on average? Does it change with the seasons?
@@ -33,6 +33,13 @@ Go check out [Henventory](https://www.henventory.com) in production!
 [^0]: I don't have all of the data-analysis tools up and running yet; we're growing a nice crop of data this spring so we've got something to work with in beta development!
 [^1]: I use git bash for Windows, so I'm not sure if this is different for, say, Powershell or CMD
 
+______________________________________________________________________________
+______________________________________________________________________________
+______________________________________________________________________________
+ # 📌 What have I been working on recently?
+ - as of 5/9/25
+   - Refactoring some of my Tailwind utilities into custom classes
+   - Expanding the analytics on individual chickens (*Layer Mode feature)
 ______________________________________________________________________________
 ______________________________________________________________________________
 ______________________________________________________________________________
