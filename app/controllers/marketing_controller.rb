@@ -1,12 +1,11 @@
 class MarketingController < ApplicationController
   allow_unauthenticated_access only: [ :hello, :faq, :how_it_works, :acknowledgements ]
   def home
+    set_local_time_zone
     @collection_entries = Current.household
       .collection_entries
       .includes(egg_entries: :chicken)
-      .where(
-        created_at: Time.current.localtime.beginning_of_day..Time.current.localtime.end_of_day
-      )
+      .where(created_at: household_time.beginning_of_day..household_time.end_of_day)
   end
 
   def how_it_works
@@ -19,5 +18,11 @@ class MarketingController < ApplicationController
   end
 
   def hello
+  end
+
+  private
+
+  def set_local_time_zone
+    @local_time_zone = Current.user.household.time_zone
   end
 end
