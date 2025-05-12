@@ -78,26 +78,27 @@ class CollectionEntriesController < ApplicationController
   end
 
   private
-    def set_collection_entry
-      @collection_entry = Current.household
-        .collection_entries
-        .find(params.expect(:id))
-    end
 
-    def collection_entry_params
-      params.require(:collection_entry)
-        .permit(:user_id, egg_entries_attributes: [
-          :id, :egg_count, :chicken_id, :collection_entry_id, :_destroy,
-        ]
-      )
-    end
+  def set_collection_entry
+    @collection_entry = Current.household
+      .collection_entries
+      .find(params.expect(:id))
+  end
 
-    def setup_form_data
-      @users = Current.household.users
-      @chickens = Current.household.chickens.where(status: :layer)
-    end
+  def collection_entry_params
+    params.require(:collection_entry)
+      .permit(:user_id, egg_entries_attributes: [
+        :id, :egg_count, :chicken_id, :collection_entry_id, :_destroy,
+      ]
+    )
+  end
 
-    def set_local_time_zone
-      @local_time_zone = Current.user.household.time_zone
-    end
+  def setup_form_data
+    @users = Current.household.users
+    @chickens = Current.household.chickens.where(status: :layer)
+  end
+
+  def set_local_time_zone
+    @local_time_zone = Current.user.household.time_zone
+  end
 end
