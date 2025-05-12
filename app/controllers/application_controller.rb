@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   def pagy_calendar_period(collection)
     starting = collection.minimum(:created_at) || Time.current
     ending   = collection.maximum(:created_at) || Time.current
-    [starting.in_time_zone, ending.in_time_zone]
+    [starting.in_time_zone(Current.user.household.time_zone), ending.in_time_zone(Current.user.household.time_zone)]
   end
 
   # return the collection filtered by a time period
@@ -16,4 +16,7 @@ class ApplicationController < ActionController::Base
     collection.where(created_at: from...to)
   end
 
+  def household_time
+    Time.current.in_time_zone(Current.household.time_zone)
+  end
 end

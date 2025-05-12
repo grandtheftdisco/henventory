@@ -11,7 +11,7 @@
     <%= yield :head %>
 
     <link rel="icon" href="/favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/favicon_lg.png">
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
@@ -20,7 +20,7 @@
   <body class="bg-blue-50 text-blue-950 flex flex-col min-h-screen">
     <header class="p-4 pb-6 text-center bg-blue-100">
       <h1 class="text-5xl font-extrabold text-blue-400 hover:text-amber-600">
-        <a href="/">🐔 Henventory 🥚</a>
+        <%= link_to "🐔 Henventory 🥚", Current.user ? landing_path : root_path %>
       </h1>
     </header> 
 
@@ -29,18 +29,18 @@
         <ul class="flex w:full items-center justify-center text-center">
           <% if Current.user %>
             <li class="p-4 font-semibold hover:text-blue-400">
-              <a href="/collection_entries/today">📅 Today's Entries</a>
+              <%= link_to "📅 Today's Entries", today_path %>
             </li>
             <li class="p-4 font-semibold hover:text-blue-400">
-              <a href="/collection_entries">All Entries</a>
+              <%= link_to "📒 All Entries", collection_entries_path %>
             </li>
             <% if Current.user.mode == "layer" %>
               <li class="p-4 font-semibold hover:text-blue-400">
-                <a href="/chickens">My Flock</a>
+                <%= link_to "🐔 My Flock", chickens_path %>
               </li>
             <% end %>
             <li class="p-4 font-semibold hover:text-blue-400">
-              <a href="/settings">Settings</a>
+              <%= link_to "⚙️ Settings", settings_path %>
             </li>
             <li class="p-4 font-semibold hover:text-red-700">
               <%= button_to "👋 Log out", session_path, method: :delete %>
@@ -71,10 +71,26 @@
     </main>
 
   </body>
-  <footer class="text-center bg-blue-100 py-15">
-    <p class="font-semibold my-4">©️ AJ <%= Time.now.year %></p>
-    <p class="font-semibold my-4 hover:text-amber-700">
-      <%= link_to "🥂 Acknowledgments 🥂", acknowledgements_path %>
+  <footer class="text-center bg-blue-100 py-5">
+    <div class="flex flex-row gap-5 justify-self-center">
+      <div>
+        <ul class="list-none p-2 text-sm">
+          <li class="hover:text-amber-700 hover:cursor-pointer">
+            <%= link_to "How it Works", how_it_works_path %>
+          </li>
+          <li class="hover:text-amber-700 hover:cursor-pointer">
+            <%= link_to "FAQ", faq_path %>
+          </li>
+          <li class="hover:text-amber-700">
+            <%= link_to "Acknowledgments", acknowledgements_path %>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <p class="font-semibold mt-4 text-xs">
+      ©️ AJ <%= Time.now.year %>
     </p>
+
   </footer>
 </html>

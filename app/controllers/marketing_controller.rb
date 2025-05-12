@@ -1,5 +1,5 @@
 class MarketingController < ApplicationController
-  allow_unauthenticated_access only: [ :faq, :how_it_works, :acknowledgements ]
+  allow_unauthenticated_access only: [ :hello, :faq, :how_it_works, :acknowledgements ]
   def home
     @collection_entries = Current.household
       .collection_entries
@@ -16,5 +16,8 @@ class MarketingController < ApplicationController
   end
 
   def faq
+  end
+
+  def hello
   end
 end

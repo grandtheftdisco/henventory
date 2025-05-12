@@ -5,14 +5,11 @@
   <h2 class="font-bold text-lime-700 text-2xl pb-2">
     Today's Egg Count:
   </h2>
-  <p class="font-semibold text-sm pb-3 ">
-    (for <%= local_time(Time.current, '%A, %B %e') %>)
-  </p>
   <%= render 'egg_emoji_tally' %>
 </div>
-
-<%= render "new_ce_button" %>
-
+<div class="my-10">
+  <%= render "new_ce_button" %>
+</div>
 <div id="collection_entries" 
   class="md:shrink-0 w-100 md:w-150 items-center justify-self-center">
   <% @collection_entries.each do |collection_entry| %>
