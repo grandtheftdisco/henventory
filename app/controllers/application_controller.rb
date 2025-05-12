@@ -19,10 +19,13 @@ class ApplicationController < ActionController::Base
   private
 
   def household_time
-    Time.current.in_time_zone(Current.household.time_zone)
+    Time.current
+        .in_time_zone(Current.household.time_zone)
   end
 
   def set_local_time_zone
-    @local_time_zone = Current.user.household.time_zone
+    @local_time_zone = Current.user
+                              .household
+                              .time_zone
   end
 end
