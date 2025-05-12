@@ -19,10 +19,4 @@ class MarketingController < ApplicationController
 
   def hello
   end
-
-  private
-
-  def set_local_time_zone
-    @local_time_zone = Current.user.household.time_zone
-  end
 end

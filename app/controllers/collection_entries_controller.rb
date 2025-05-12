@@ -97,8 +97,4 @@ class CollectionEntriesController < ApplicationController
     @users = Current.household.users
     @chickens = Current.household.chickens.where(status: :layer)
   end
-
-  def set_local_time_zone
-    @local_time_zone = Current.user.household.time_zone
-  end
 end
