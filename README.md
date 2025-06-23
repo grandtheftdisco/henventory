@@ -14,6 +14,15 @@ Go check out [Henventory](https://www.henventory.com) in production!
 - *-slaps hood-* She's in alpha[^0], folks, so go easy on her.
 
 ## 💻 How to Run Henventory Locally
+__________________
+🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
+### UPDATE: 6/13/25
+#### ❗I recently learned that I did not write complete/adequate instructions in this section, thanks to a helpful member of the community! 
+#### 👷‍♀️ Please [reach out to me](mailto:grandtheftdisco@gmail.com) if you want to run the app locally, or if you have similar issues. 
+#### 🛑 Stay tuned for updates to this section, but for now, proceed with caution.
+🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
+___________________
+
 1. `git clone` as per usual
 2. [Install Rails 8](https://guides.rubyonrails.org/install_ruby_on_rails.html) if you don't already have it
 3. Likewise, [install Stimulus](https://stimulus.hotwired.dev/handbook/installing) as needed

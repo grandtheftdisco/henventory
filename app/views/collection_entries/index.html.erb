@@ -45,17 +45,15 @@
   </button>
 <% end %>
 
-  <div id="collection_entries" 
-    class="collection-entries-container">
-    <% @collection_entries.each do |collection_entry| %>
-      <div class="card">
-        <%= render collection_entry %>
-        <p class="link">
-          <%= link_to "🗒️ Details", collection_entry %>
-        </p>
-      </div>
-    <% end %>
-  </div>
+<div id="collection_entries" 
+  class="md:shrink-0 w-100 md:w-150 items-center justify-self-center">
+  <% @collection_entries.each do |collection_entry| %>
+    <div class="flex flex-col py-6 mb-5 border border-blue-300 
+      rounded-2xl bg-blue-200">
+      <%= render collection_entry %>
+    </div>
+  <% end %>
+</div>
 
   <div class="justify-self-center justify-items-center pt-5">
     <%== pagy_nav(@pagy) %>
