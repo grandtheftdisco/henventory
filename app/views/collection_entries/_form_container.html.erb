@@ -21,6 +21,11 @@
         locals: { collection_entry_form: } %>
     <% end %>
 
+    <div class="bg-purple-200">
+      <%= collection_entry_form.label :notes %>
+      <%= collection_entry_form.text_area(:notes, placeholder: "default message") %>
+    </div>
+
     <div class="inline cursor-pointer">
       <%= collection_entry_form.submit "Submit", 
         class: 'bg-yellow-300 hover:bg-yellow-500 p-3 rounded-2xl' %>
