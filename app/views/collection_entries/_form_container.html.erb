@@ -21,6 +21,14 @@
         locals: { collection_entry_form: } %>
     <% end %>
 
+    <div class="flex flex-col">
+      <%= collection_entry_form.label :notes, class: 'font-bold' %>
+      <%= collection_entry_form.text_area(:notes,
+                                          size: '20x7',
+                                          placeholder: '[any notes to add?]',
+                                          class: 'bg-blue-50 p-3 rounded-2xl mb-5') %>
+    </div>
+
     <div class="inline cursor-pointer">
       <%= collection_entry_form.submit "Submit", 
         class: 'bg-yellow-300 hover:bg-yellow-500 p-3 rounded-2xl' %>

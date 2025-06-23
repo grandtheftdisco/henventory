@@ -26,6 +26,16 @@
     <%= pluralize(collection_entry.egg_entries.sum(:egg_count), 'egg') %>.
   </p>
 <% end %>
+
+<% if collection_entry.notes %>
+  <div class="flex flex-col justify-self-center items-center w-1/2">
+    <p>- - - - - - - - - - - - - - - - -</p>
+    <p class="font-bold text-2xl mb-2">Notes</p>
+    <div class="bg-blue-50 p-3 rounded-2xl mb-5">  
+      <%= collection_entry.notes %>
+    </div>
+  </div>
+<% end %>
 </div>
 <div class="inline-flex gap-5 justify-center text-sm mt-5">
   <%= link_to "✏️ edit entry", 
