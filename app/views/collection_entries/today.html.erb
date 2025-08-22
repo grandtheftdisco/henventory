@@ -3,9 +3,11 @@
 <div class="bg-blue-100 md:shrink-0 w-100 md:w-150 items-center 
   justify-self-center p-5 rounded-2xl mb-8">
   <h2 class="font-bold text-lime-700 text-2xl pb-2">
-    Today's Egg Count:
+    Today's Count:
   </h2>
-  <%= render 'egg_emoji_tally' %>
+  <p class="text-xl font-semibold">
+    <%= pluralize(@todays_egg_total, 'egg') %>
+  </p>
 </div>
 <div class="my-10">
   <%= render "new_ce_button" %>

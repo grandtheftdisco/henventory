@@ -24,6 +24,8 @@ class CollectionEntriesController < ApplicationController
     @collection_entries = Current.household.collection_entries.includes(egg_entries: :chicken)
     .where(created_at: household_time.beginning_of_day..household_time.end_of_day)
     .order("created_at desc")
+
+    @todays_egg_total = @collection_entries.joins(:egg_entries).sum('egg_entries.egg_count')
   end
 
   def new
