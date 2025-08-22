@@ -25,7 +25,7 @@ class CollectionEntriesController < ApplicationController
     .where(created_at: household_time.beginning_of_day..household_time.end_of_day)
     .order("created_at desc")
 
-    @todays_egg_total = @collection_entries.joins(:egg_entries).sum('egg_entries.egg_count')
+    @todays_egg_total = @collection_entries.sum { |entry| entry.egg_entries.sum(&:egg_count) }
   end
 
   def new
