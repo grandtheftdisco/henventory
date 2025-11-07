@@ -136,15 +136,12 @@ GEM
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
+    gem_bench (2.0.5)
+      bundler (>= 1.14)
+      version_gem (~> 1.1, >= 1.1.4)
     get_process_mem (1.0.0)
       bigdecimal (>= 2.0)
       ffi (~> 1.0)
-    gem_bench (2.0.5)
-      bundler (>= 1.14)
-      version_gem (~> 1.1, >= 1.1.4)
-    gem_bench (2.0.5)
-      bundler (>= 1.14)
-      version_gem (~> 1.1, >= 1.1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
     heapy (0.2.0)
@@ -407,6 +404,8 @@ DEPENDENCIES
   bullet
   capybara
   debug
+  derailed_benchmarks
+  gem_bench
   hotwire-spark (~> 0.1.13)
   importmap-rails
   jbuilder
