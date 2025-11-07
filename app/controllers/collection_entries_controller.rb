@@ -55,7 +55,7 @@ class CollectionEntriesController < ApplicationController
       @users = Current.household.users.all
 
       if @collection_entry.save
-        redirect_to @collection_entry, 
+        redirect_to today_path,
           notice: "Collection entry was successfully created."
       else
         render :new, status: :unprocessable_entity
@@ -65,7 +65,7 @@ class CollectionEntriesController < ApplicationController
 
   def update 
     if @collection_entry.update(collection_entry_params)
-      redirect_to @collection_entry, 
+      redirect_to today_path,
         notice: "Collection entry was successfully updated."
     else
       render :edit, status: :unprocessable_entity

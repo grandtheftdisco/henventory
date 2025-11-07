@@ -1,13 +1,11 @@
 <div id="<%= dom_id collection_entry %>" class="">
 
-  <a href="/collection_entries/<%= collection_entry.id %>">
-    <p class="text-xl font-bold hover:font-extrabold">
-      <%= collection_entry.created_at.in_time_zone(@local_time_zone).strftime("%A, %B %d") %>
-    </p>
-    <p class="text-sm mb-5">
-      <%= collection_entry.created_at.in_time_zone(@local_time_zone).strftime("%l:%M%P") %>
-    </p>
-  </a>
+  <p class="text-xl font-bold">
+    <%= collection_entry.created_at.in_time_zone(@local_time_zone).strftime("%A, %B %d") %>
+  </p>
+  <p class="text-sm mb-5">
+    <%= collection_entry.created_at.in_time_zone(@local_time_zone).strftime("%l:%M%P") %>
+  </p>
 
   <% if Current.user.mode == "layer" %>
     <p class="mb-5 text-xl font-semibold"><%= collection_entry.user.display_name %> collected 
