@@ -12,6 +12,22 @@
         <%= collection_entry_form.collection_select :user_id, @users, :id, 
           :display_name, prompt: 'select your name' %>
     </div>
+
+    <div>
+      <div>
+        <%= collection_entry_form.label :collected_at, "What time did you collect these eggs?",
+            class: '' %>
+      </div>
+        <%= collection_entry_form.text_field :collected_at,
+            data: {
+              controller: "flatpickr",
+              flatpickr_enable_time: true,
+              flatpickr_no_calendar: true,
+              flatpickr_date_format: "h:i K",
+              flatpickr_click_opens: true,
+              flatpickr_default_hour: 8,
+            } %>
+    </div>
   
     <% if Current.user.mode == "layer" %>
       <%= render partial: 'form_layer_mode', 

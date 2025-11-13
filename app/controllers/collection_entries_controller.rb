@@ -4,7 +4,7 @@ class CollectionEntriesController < ApplicationController
   def index
     collection_entries = Current.household
       .collection_entries
-      .includes(egg_entries: :chicken)
+      .includes(:user, egg_entries: :chicken)
       .order("created_at desc")
 
     @calendar, @pagy, @collection_entries = pagy_calendar(
@@ -21,7 +21,7 @@ class CollectionEntriesController < ApplicationController
 
   def today
     set_local_time_zone
-    @collection_entries = Current.household.collection_entries.includes(egg_entries: :chicken)
+    @collection_entries = Current.household.collection_entries.includes(:user, egg_entries: :chicken)
     .where(created_at: household_time.beginning_of_day..household_time.end_of_day)
     .order("created_at desc")
 
@@ -89,12 +89,13 @@ class CollectionEntriesController < ApplicationController
     def collection_entry_params
       params.require(:collection_entry)
         .permit(:user_id,
-                :notes, 
+                :notes,
+                :collected_at,
                 egg_entries_attributes: [
-                  :id, 
-                  :egg_count, 
-                  :chicken_id, 
-                  :collection_entry_id, 
+                  :id,
+                  :egg_count,
+                  :chicken_id,
+                  :collection_entry_id,
                   :_destroy,
         ]
       )
