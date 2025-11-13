@@ -89,12 +89,13 @@ class CollectionEntriesController < ApplicationController
     def collection_entry_params
       params.require(:collection_entry)
         .permit(:user_id,
-                :notes, 
+                :notes,
+                :collected_at,
                 egg_entries_attributes: [
-                  :id, 
-                  :egg_count, 
-                  :chicken_id, 
-                  :collection_entry_id, 
+                  :id,
+                  :egg_count,
+                  :chicken_id,
+                  :collection_entry_id,
                   :_destroy,
         ]
       )
