@@ -46,9 +46,24 @@ ______________________________________________________________________________
 ______________________________________________________________________________
 ______________________________________________________________________________
  # 📌 What have I been working on recently?
- - as of 5/9/25
-   - Refactoring some of my Tailwind utilities into custom classes
-   - Expanding the analytics on individual chickens (*Layer Mode feature)
+
+ ## Summer & Fall 2025
+
+ **Feature Work:**
+ - Added notes field to collection entries so users can record context like broken eggs or unusual laying locations (June)
+ - Improved readability by switching daily egg count display from emoji-based tallies to numeric values (August)
+
+ **Production Bug Fixes & Optimization:**
+ - **Memory Crisis Mitigation** (October): Tracked down intermittent 502 errors to RAM exhaustion
+   - Reduced Puma workers from 2 to 1 and removed unused Rails engines (Action Mailbox, Action Text)
+   - Dropped memory usage from 97% to 35% 🎉
+   - Installed profiling tools (bullet, rack-mini-profiler, memory_profiler) for future optimization work
+   - Currently evaluating PaaS migration options that won't break the bank
+ - **Redirect Hotfix** (November): Fixed deprecated redirect strategy causing 400 errors after collection entry edits
+
+ **What I'm Learning:**
+ Production debugging is a whole different beast from local development. Memory profiling and production monitoring are now firmly in my toolbox, and I'm getting comfortable with the trade-offs between performance optimization and infrastructure costs.
+
 ______________________________________________________________________________
 ______________________________________________________________________________
 ______________________________________________________________________________
