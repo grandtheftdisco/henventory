@@ -5,10 +5,7 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one)
     @household = households(:one)
     @collection_entry = collection_entries(:one)
-
-    # Simulate logged in user with Current
-    Current.user = @user
-    Current.household = @household
+    sign_in_as(@user)
   end
 
   test "should get index" do
