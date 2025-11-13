@@ -34,6 +34,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_13_153215) do
     t.integer "household_id"
     t.text "notes"
     t.datetime "collected_at"
+    t.index ["collected_at"], name: "index_collection_entries_on_collected_at"
   end
 
   create_table "egg_entries", force: :cascade do |t|
