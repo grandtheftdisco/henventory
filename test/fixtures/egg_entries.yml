@@ -1,11 +1,16 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  egg_count: 1
-  chicken_id: 1
-  collection_entry_id: 1
+  egg_count: 3
+  chicken: one
+  collection_entry: one
 
 two:
+  egg_count: 2
+  chicken: one
+  collection_entry: two
+
+three:
   egg_count: 1
-  chicken_id: 1
-  collection_entry_id: 1
+  chicken: one
+  collection_entry: without_collected_at

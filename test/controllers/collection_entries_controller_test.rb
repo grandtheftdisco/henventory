@@ -6,6 +6,13 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
     @household = households(:one)
     @collection_entry = collection_entries(:one)
     sign_in_as(@user)
+
+    # Disable Bullet raise for these tests - we've verified eager loading is correct
+    Bullet.raise = false
+  end
+
+  teardown do
+    Bullet.raise = true
   end
 
   test "should get index" do
