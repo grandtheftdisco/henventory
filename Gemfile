@@ -60,6 +60,8 @@ group :development, :test do
 
   # N+1 query detection
   gem "bullet"
+
+  gem 'dotenv-rails'
 end
 
 group :development do
