@@ -11,7 +11,7 @@ class EggEntry < ApplicationRecord
   end
 
   def ghost_chicken?
-    chicken.readonly?
+    chicken_id.present? && chicken&.readonly?
   end
   
   def household_owns_chicken!

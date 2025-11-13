@@ -4,13 +4,16 @@ one:
   egg_count: 3
   chicken: one
   collection_entry: one
+  created_at: <%= 2.days.ago %>
 
 two:
   egg_count: 2
   chicken: one
   collection_entry: two
+  created_at: <%= 2.days.ago %>
 
 three:
   egg_count: 1
   chicken: one
   collection_entry: without_collected_at
+  created_at: <%= 2.days.ago %>
