@@ -1,5 +1,6 @@
 class CollectionEntriesController < ApplicationController
   before_action :set_collection_entry, only: %i[ edit update destroy ]
+  before_action :set_local_time_zone
 
   def index
     collection_entries = Current.household
@@ -44,6 +45,10 @@ class CollectionEntriesController < ApplicationController
     if Current.user.mode == "layer"
       @collection_entry = Current.household.collection_entries.build(collection_entry_params)
 
+      if params[:collection_entry][:collected_at].present?
+        @collection_entry.collected_at = Time.zone.parse(params[:collection_entry][:collected_at])
+      end
+
       if @collection_entry.save
         redirect_to today_path, notice: "Collection entry was successfully created."
       else
@@ -53,6 +58,10 @@ class CollectionEntriesController < ApplicationController
     else
       @collection_entry = Current.household.collection_entries.build(collection_entry_params)
       @users = Current.household.users.all
+
+      if params[:collection_entry][:collected_at].present?
+        @collection_entry.collected_at = Time.zone.parse(params[:collection_entry][:collected_at])
+      end
 
       if @collection_entry.save
         redirect_to today_path,
@@ -108,5 +117,6 @@ class CollectionEntriesController < ApplicationController
 
     def set_local_time_zone
       @local_time_zone = Current.user.household.time_zone
+      Time.zone =  @local_time_zone
     end
 end
