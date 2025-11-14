@@ -19,6 +19,7 @@
             class: '' %>
       </div>
         <%= collection_entry_form.text_field :collected_at,
+            required: true,
             data: {
               controller: "flatpickr",
               flatpickr_enable_time: true,

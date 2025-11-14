@@ -3,4 +3,5 @@ class CollectionEntry < ApplicationRecord
   accepts_nested_attributes_for :egg_entries, allow_destroy: true
   belongs_to :household
   belongs_to :user
+  validates :collected_at, presence: true
 end
