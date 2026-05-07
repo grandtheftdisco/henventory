@@ -42,3 +42,6 @@
 
 # Work logs
 /work_log*.md
+
+# Design plan (local working doc, not committed)
+/DESIGN_PLAN.md
