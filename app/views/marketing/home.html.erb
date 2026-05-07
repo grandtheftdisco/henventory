@@ -1,24 +1,68 @@
 <% content_for :title, "Henventory - Home" %>
 
-<h1 class="font-extrabold text-blue-500 text-4xl pb-7">
-  Hi, <%= Current.user.display_name %>!
-</h1>
-<div class="bg-blue-100 mb-5 md:shrink-0 w-100 md:w-150 items-center 
-  justify-self-center p-5 rounded-2xl">
-  <h2 class="font-bold text-lime-700 text-2xl pb-7">
-    Eggs collected for <%= local_time(Time.current, '%A, %B %e') %>
-  </h2>
-  <%= render 'collection_entries/egg_emoji_tally' %>
-  <p class="pt-10">
-    (visit 
-      <a href="collection_entries/today" 
-        class="font-bold text-lime-700 hover:text-lime-900">
-        Today's Entries
-      </a> 
-    for more details!)
+<%#
+  Note: this is the interim logged-in home, which gets replaced wholesale
+  in Phase 1 by the redesigned dashboard (greeting + Quick-Log + stat
+  strip + calendar + leaderboard + Today's collections). This polish pass
+  just makes it feel like part of the Coop shell until that lands.
+%>
+<div class="mx-auto" style="max-width: 720px;">
+  <h1 style="font-family: var(--font-display);
+             font-size: clamp(32px, 6vw, 44px);
+             line-height: 1.05;
+             color: var(--color-coop-ink);
+             letter-spacing: -0.02em;
+             margin-bottom: 4px;">
+    Hi, <%= Current.user.display_name %>.
+  </h1>
+  <p style="font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--color-coop-ink-soft);
+            letter-spacing: 0.05em;
+            margin-bottom: 20px;">
+    <%= local_time(Time.current, '%A, %B %e') %>
   </p>
+
+  <div class="coop-card" style="padding: 22px 24px; margin-bottom: 20px;">
+    <div class="coop-kicker" style="margin-bottom: 8px;">Today's tally</div>
+
+    <% has_eggs = @collection_entries.exists? %>
+    <% if has_eggs %>
+      <p style="font-size: 28px; line-height: 1.2; word-break: break-word;">
+        <% @collection_entries.each do |collection_entry| %>
+          <% collection_entry.egg_entries.sum(:egg_count).times do %>🥚<% end %>
+        <% end %>
+      </p>
+    <% else %>
+      <p style="font-family: var(--font-body);
+                font-size: 14px;
+                color: var(--color-coop-ink-soft);
+                font-style: italic;">
+        Uh oh — none logged yet.
+      </p>
+    <% end %>
+
+    <p style="margin-top: 14px;
+              font-family: var(--font-body);
+              font-size: 13px;
+              color: var(--color-coop-ink-soft);">
+      Visit
+      <%= link_to "today's entries", today_path,
+            style: "color: var(--color-coop-primary); text-decoration: none; font-weight: 700;" %>
+      for more details.
+    </p>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-3" style="margin-bottom: 12px;">
+    <%= link_to "Got some eggs?", new_collection_entry_path,
+          class: "coop-button-primary",
+          style: "text-decoration: none;" %>
+    <p style="font-family: var(--font-body);
+              font-size: 14px;
+              color: var(--color-coop-ink-soft);
+              font-style: italic;
+              margin: 0;">
+      Hope you're having an egg-cellent day. 🐣
+    </p>
+  </div>
 </div>
-<div class="my-10">
-  <%= render 'collection_entries/new_ce_button' %>
-</div>
-<p>Hope you're having an egg-cellent day 🐣</p>

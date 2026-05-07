@@ -1,23 +1,43 @@
 <% content_for :title, @is_today ? "Today's Entries" : "Entries for #{@viewing_date.strftime('%b %-d, %Y')}" %>
 
-<div class="bg-blue-100 md:shrink-0 w-100 md:w-150 items-center
-  justify-self-center p-5 rounded-2xl mb-8">
-  <h2 class="font-bold text-lime-700 text-2xl pb-2">
-    <%= @is_today ? "Today's Count:" : "#{@viewing_date.strftime('%A, %b %-d')} Count:" %>
-  </h2>
-  <p class="text-xl font-semibold">
-    <%= pluralize(@todays_egg_total, 'egg') %>
-  </p>
-</div>
-<div class="my-10">
-  <%= render "new_ce_button" %>
-</div>
-<div id="collection_entries" 
-  class="md:shrink-0 w-100 md:w-150 items-center justify-self-center">
-  <% @collection_entries.each do |collection_entry| %>
-    <div class="flex flex-col mb-5 py-6 border border-blue-300 
-      rounded-2xl bg-blue-200">
-      <%= render collection_entry %>
+<div class="mx-auto" style="max-width: 720px;">
+  <%# Header: title + date kicker. %>
+  <div style="margin-bottom: 18px;">
+    <div class="coop-kicker" style="margin-bottom: 6px;">
+      <%= @is_today ? "Today" : @viewing_date.strftime("%A, %b %-d") %>
     </div>
-  <% end %>
+    <h1 style="font-family: var(--font-display);
+               font-size: clamp(32px, 6vw, 44px);
+               line-height: 1.05;
+               color: var(--color-coop-ink);
+               letter-spacing: -0.02em;">
+      <%= pluralize(@todays_egg_total, 'egg') %> collected.
+    </h1>
+  </div>
+
+  <%# Got some eggs? button. %>
+  <div style="margin-bottom: 24px;">
+    <%= render "new_ce_button" %>
+  </div>
+
+  <%# Entry list. %>
+  <div id="collection_entries" class="flex flex-col gap-4">
+    <% if @collection_entries.any? %>
+      <% @collection_entries.each do |collection_entry| %>
+        <div class="coop-card" style="padding: 22px 24px;">
+          <%= render collection_entry %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="coop-card"
+           style="padding: 28px 24px;
+                  text-align: center;
+                  color: var(--color-coop-ink-soft);
+                  font-style: italic;
+                  font-family: var(--font-body);
+                  font-size: 14px;">
+        No entries for <%= @is_today ? "today" : @viewing_date.strftime("%A, %b %-d") %> yet.
+      </div>
+    <% end %>
+  </div>
 </div>
