@@ -48,3 +48,6 @@
 
 # Running list of flagged issues, bugs, and TODOs (local working doc)
 /FLAGS.md
+
+# Code review notes (local working doc)
+/CODE_REVIEW.md
