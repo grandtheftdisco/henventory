@@ -2,6 +2,14 @@ class Chicken < ApplicationRecord
   has_many :egg_entries, dependent: :destroy
   belongs_to :household
 
+  enum :status, {
+    pullet: "pullet",
+    layer: "layer",
+    molting: "molting",
+    retired: "retired",
+    expired: "expired"
+  }, validate: { allow_nil: true }
+
   validates :name, :breed, presence: true
   validates :dob, presence: { message: '(date of birth) can\'t be blank' }
 
@@ -11,12 +19,12 @@ class Chicken < ApplicationRecord
   }
 
   NULL_CHICKEN = new(
-    id: nil, 
-    name: '[flock mode]', 
-    breed: 'ghost', 
-    tell: 'not really a chicken', 
-    dob: Time.now, 
-    status: 'layer', 
+    id: nil,
+    name: '[flock mode]',
+    breed: 'ghost',
+    tell: 'not really a chicken',
+    dob: Time.now,
+    status: 'layer',
     image_url: 'https://tinyurl.com/pt9b974e',
-  ).tap { |record | record.readonly! }
+  ).tap { |record| record.readonly! }
 end
