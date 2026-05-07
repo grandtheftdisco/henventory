@@ -1,12 +1,173 @@
 @import "tailwindcss";
 @import "./pagy.css";
 
+/* ============================================================
+   Coop design tokens — palette + type stack for the redesign.
+   Exposed both as @theme (so utilities like bg-coop-cream work)
+   and as plain CSS vars (so component classes can compose them).
+   ============================================================ */
+@theme {
+	--color-coop-cream:        #fbf5e9;  /* page background */
+	--color-coop-bg-alt:       #f4ead4;  /* alt panel / inactive button bg */
+	--color-coop-surface:      #ffffff;  /* cards */
+	--color-coop-line:         #e6d8b8;  /* hairline borders, dividers */
+	--color-coop-ink:          #2d1f10;  /* primary text */
+	--color-coop-ink-soft:     #6e5a3e;  /* secondary text, kickers */
+	--color-coop-primary:      #c4622d;  /* terracotta — buttons, accents, headlines */
+	--color-coop-primary-soft: #f4d4b8;  /* tinted bg for active nav, soft fills */
+	--color-coop-accent:       #7a8c4a;  /* olive — secondary accent (rare) */
+	--color-coop-warn:         #d4a548;  /* mustard — warnings */
+	--color-coop-danger:       #a13c2c;  /* deep red — destructive */
+
+	/* Status pill foreground/background — keyed by lifecycle value */
+	--color-coop-pullet-bg:   #f5e9c8;
+	--color-coop-pullet-fg:   #7a5a18;
+	--color-coop-layer-bg:    #e2d2a4;
+	--color-coop-layer-fg:    #5a4515;
+	--color-coop-molting-bg:  #f0c79a;
+	--color-coop-molting-fg:  #7a3f15;
+	--color-coop-retired-bg:  #d8c8df;
+	--color-coop-retired-fg:  #4a2f5a;
+	--color-coop-expired-bg:  #d8d4cc;
+	--color-coop-expired-fg:  #5a544c;
+
+	/* Type stack */
+	--font-display: "Caprasimo", "Fraunces", Georgia, serif;
+	--font-body:    "Nunito", "Inter", system-ui, sans-serif;
+	--font-mono:    "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* ============================================================
+   Component patterns. Use these when a piece reappears across
+   multiple views; otherwise prefer raw Tailwind utilities. The
+   prototypes use 18px card radii — Tailwind's nearest is rounded-2xl
+   (16px); we expose .coop-card so we don't fight the framework.
+   ============================================================ */
 @layer components {
+	/* Surface card — white with a hairline border on cream. */
+	.coop-card {
+		background-color: var(--color-coop-surface);
+		border: 1px solid var(--color-coop-line);
+		border-radius: 18px;
+	}
+
+	/* Primary button — filled terracotta. */
+	.coop-button-primary {
+		background-color: var(--color-coop-primary);
+		color: var(--color-coop-cream);
+		border: 1px solid var(--color-coop-primary);
+		border-radius: 12px;
+		padding: 12px 22px;
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 13px;
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		transition: filter 120ms ease;
+	}
+	.coop-button-primary:hover { filter: brightness(0.94); }
+
+	/* Secondary button — outlined, cream-on-ink. */
+	.coop-button-secondary {
+		background-color: transparent;
+		color: var(--color-coop-ink-soft);
+		border: 1px solid var(--color-coop-line);
+		border-radius: 12px;
+		padding: 12px 18px;
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 13px;
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		transition: background-color 120ms ease;
+	}
+	.coop-button-secondary:hover { background-color: var(--color-coop-bg-alt); }
+
+	/* Field shell — used by the redesigned chicken/collection forms. */
+	.coop-input {
+		background-color: var(--color-coop-bg-alt);
+		border: 1px solid var(--color-coop-line);
+		border-radius: 12px;
+		padding: 10px 14px;
+		font-family: var(--font-body);
+		font-size: 15px;
+		font-weight: 600;
+		color: var(--color-coop-ink);
+		width: 100%;
+	}
+	.coop-input:focus {
+		outline: none;
+		border-color: var(--color-coop-primary);
+	}
+
+	/* Pill — for hen selectors, tags, etc. */
+	.coop-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 4px 10px;
+		border-radius: 999px;
+		border: 1px solid var(--color-coop-line);
+		background-color: var(--color-coop-bg-alt);
+		font-family: var(--font-body);
+		font-weight: 600;
+		font-size: 12px;
+		color: var(--color-coop-ink);
+	}
+
+	/* Uppercase mono kicker — used above section titles, stats, fields. */
+	.coop-kicker {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		font-weight: 400;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--color-coop-ink-soft);
+	}
+
+	/* Status pill — keyed by data-status so views just stamp the value.
+	   Usage: <span class="coop-status" data-status="layer">🐔 Layer</span>
+	   Falls back to a neutral chrome if data-status is missing or unknown. */
+	.coop-status {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 5px 12px;
+		border-radius: 999px;
+		font-family: var(--font-body);
+		font-size: 12px;
+		font-weight: 600;
+		background-color: var(--color-coop-bg-alt);
+		color: var(--color-coop-ink);
+	}
+	.coop-status[data-status="pullet"]  { background-color: var(--color-coop-pullet-bg);  color: var(--color-coop-pullet-fg); }
+	.coop-status[data-status="layer"]   { background-color: var(--color-coop-layer-bg);   color: var(--color-coop-layer-fg); }
+	.coop-status[data-status="molting"] { background-color: var(--color-coop-molting-bg); color: var(--color-coop-molting-fg); }
+	.coop-status[data-status="retired"] { background-color: var(--color-coop-retired-bg); color: var(--color-coop-retired-fg); }
+	.coop-status[data-status="expired"] { background-color: var(--color-coop-expired-bg); color: var(--color-coop-expired-fg); }
+
+	/* Page-level chrome that survives from the old design. */
+	.page-title {
+		font-weight: 900;
+		font-size: 2rem;
+		padding-bottom: 20px;
+		text-transform: uppercase;
+	}
+
+	/* ----------------------------------------------------------
+	   Deferred cleanup — these classes still drive
+	   collection_entries/index.html.erb (the old All Entries page).
+	   That view is being replaced in Phase 4 (full graphical calendar).
+	   When Phase 4 lands, delete this block. Until then they keep
+	   the legacy page rendering.
+	   ---------------------------------------------------------- */
 	.outer-container {
 		display: flex;
 		flex-direction: column;
 		justify-self: center;
-		gap: 20;
+		gap: 20px;
 	}
 
 	.collection-entries-container {
@@ -15,7 +176,7 @@
 		justify-items: center;
 		justify-self: center;
 		width: 100%;
-		gap: 20;
+		gap: 20px;
 
 		@media screen and (min-width: 900px) {
 			width: 600px;
@@ -26,7 +187,7 @@
 		background-color: var(--color-blue-100);
 		justify-self: center;
 		justify-items: center;
-		border-radius: 25;
+		border-radius: 25px;
 		padding-right: 20px;
 		padding-left: 20px;
 		padding-top: 5px;
@@ -36,53 +197,19 @@
 		background-color: var(--color-amber-50);
 		border-width: thin;
 		border-color: var(--color-amber-100);
-		border-radius: 15;
+		border-radius: 15px;
 		justify-self: center;
 		justify-items: center;
-		padding: 5;
-		margin-bottom: 10;
-	}
-
-	.card {
-		display: flex;
-		flex-direction: column;
-		background-color: var(--color-blue-200);
-		padding: 20px;
-		border-style: solid;
-		border-width: thin;
-		border-color: var(--color-blue-300);
-		border-radius: 25;
-	}
-
-	.page-title {
-		font-weight: 900;
-		font-size: 2rem; 
-		padding-bottom: 20px;
-		text-transform: uppercase;
-	}
-
-	.link {
-		color: var(--color-blue-600);
-		justify-self: center;
-		font-weight: 600;
-	}
-
-	.link:hover {
-		color: var(--color-blue-800);
+		padding: 5px;
+		margin-bottom: 10px;
 	}
 
 	.btn-upcase {
 		color: white;
 		font-size: medium;
 		font-weight: 600;
-		border-radius: 15;
-		padding: 7;
-		padding-left: 10;
-		padding-right: 10;
+		border-radius: 15px;
+		padding: 7px 10px;
 		margin: auto;
-	}
-
-	.btn-uppercase {
-
 	}
 }
