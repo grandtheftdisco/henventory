@@ -23,6 +23,28 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
   test "should get today" do
     get today_url
     assert_response :success
+    assert_match(/Today/, @response.body)
+  end
+
+  test "should get today with explicit date param" do
+    target = Date.current - 3.days
+    get today_url(date: target.iso8601)
+    assert_response :success
+    # When viewing a non-today date, the heading reflects the chosen day.
+    assert_match(target.strftime("%b"), @response.body)
+    assert_no_match(/Today's Count/, @response.body)
+  end
+
+  test "should fall back to today when date param is malformed" do
+    get today_url(date: "not-a-date")
+    assert_response :success
+    assert_match(/Today/, @response.body)
+  end
+
+  test "should fall back to today when date param is blank" do
+    get today_url(date: "")
+    assert_response :success
+    assert_match(/Today/, @response.body)
   end
 
   test "should get new" do

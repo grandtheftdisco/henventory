@@ -21,8 +21,14 @@ class CollectionEntriesController < ApplicationController
 
   def today
     set_local_time_zone
+    @viewing_date = parse_viewing_date(params[:date]) || household_time.to_date
+    @is_today = @viewing_date == household_time.to_date
+
+    day_start = @viewing_date.in_time_zone(@local_time_zone).beginning_of_day
+    day_end = day_start.end_of_day
+
     @collection_entries = Current.household.collection_entries.includes(:user, egg_entries: :chicken)
-    .where(created_at: household_time.beginning_of_day..household_time.end_of_day)
+    .where(created_at: day_start..day_end)
     .order("created_at desc")
 
     @todays_egg_total = @collection_entries.sum { |entry| entry.egg_entries.sum(&:egg_count) }
@@ -108,5 +114,15 @@ class CollectionEntriesController < ApplicationController
 
     def set_local_time_zone
       @local_time_zone = Current.user.household.time_zone
+    end
+
+    # Parses a YYYY-MM-DD param into a Date. Returns nil for blank or
+    # malformed input so the caller can fall back to "today" rather than
+    # 500ing on a bad query string.
+    def parse_viewing_date(raw)
+      return nil if raw.blank?
+      Date.iso8601(raw.to_s)
+    rescue ArgumentError, TypeError
+      nil
     end
 end

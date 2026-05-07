@@ -1,9 +1,9 @@
-<% content_for :title, "Today's Entries" %>
+<% content_for :title, @is_today ? "Today's Entries" : "Entries for #{@viewing_date.strftime('%b %-d, %Y')}" %>
 
-<div class="bg-blue-100 md:shrink-0 w-100 md:w-150 items-center 
+<div class="bg-blue-100 md:shrink-0 w-100 md:w-150 items-center
   justify-self-center p-5 rounded-2xl mb-8">
   <h2 class="font-bold text-lime-700 text-2xl pb-2">
-    Today's Count:
+    <%= @is_today ? "Today's Count:" : "#{@viewing_date.strftime('%A, %b %-d')} Count:" %>
   </h2>
   <p class="text-xl font-semibold">
     <%= pluralize(@todays_egg_total, 'egg') %>
