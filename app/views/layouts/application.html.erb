@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#c4622d">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -12,86 +13,61 @@
 
     <link rel="icon" href="/favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="/favicon_lg.png">
+    <link rel="manifest" href="<%= pwa_manifest_path(format: :json) %>">
+
+    <%# Coop type stack — Caprasimo display, Nunito body, JetBrains Mono. %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-blue-50 text-blue-950 flex flex-col min-h-screen">
-    <header class="p-4 pb-6 text-center bg-blue-100">
-      <h1 class="text-5xl font-extrabold text-blue-400 hover:text-amber-600">
-        <%= link_to "🐔 Henventory 🥚", Current.user ? landing_path : root_path %>
-      </h1>
-    </header> 
+  <body class="flex flex-col min-h-screen"
+        style="background-color: var(--color-coop-cream);
+               color: var(--color-coop-ink);
+               font-family: var(--font-body);">
+    <%= render "shared/top_bar" %>
 
-    <section>
-      <nav class="flex justify-center bg-blue-200 ">
-        <ul class="flex w:full items-center justify-center text-center">
-          <% if Current.user %>
-            <li class="p-4 font-semibold hover:text-blue-400">
-              <%= link_to "📅 Today's Entries", today_path %>
-            </li>
-            <li class="p-4 font-semibold hover:text-blue-400">
-              <%= link_to "📒 All Entries", collection_entries_path %>
-            </li>
-            <% if Current.user.mode == "layer" %>
-              <li class="p-4 font-semibold hover:text-blue-400">
-                <%= link_to "🐔 My Flock", chickens_path %>
-              </li>
-            <% end %>
-            <li class="p-4 font-semibold hover:text-blue-400">
-              <%= link_to "⚙️ Settings", settings_path %>
-            </li>
-            <li class="p-4 font-semibold hover:text-red-700">
-              <%= button_to "👋 Log out", session_path, method: :delete %>
-            </li>
-          <% else %>
-            <li class="p-4 font-bold hover:text-blue-800">
-              <%= link_to ' ➡️ Login', new_session_path %>
-            </li>
-            <li class="p-4 font-bold hover:text-blue-800">
-              <%= link_to '✍️ Sign up', new_user_path %>
-            </li>
-            <li class="p-4 font-bold hover:text-blue-800">
-              <%= link_to '✴️ FAQ', faq_path %>
-            </li>
-          <% end %>
-        </ul>
-      </nav>
-    </section>
+    <main class="flex-grow" style="padding: 24px 16px;">
+      <% if notice.present? %>
+        <div role="status"
+             class="mx-auto mb-5 inline-block"
+             style="max-width: 1280px;
+                    padding: 10px 14px;
+                    border-radius: 12px;
+                    background-color: var(--color-coop-primary-soft);
+                    color: var(--color-coop-ink);
+                    font-family: var(--font-body);
+                    font-weight: 600;
+                    font-size: 14px;"
+             id="notice">
+          <%= notice %>
+        </div>
+      <% end %>
 
-    <main class="p-6 text-center flex-grow">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium 
-        rounded-md inline-block" id="notice">
-        <%= notice %>
-      </p>
-    <% end %>
-    <%= yield %>
+      <div class="mx-auto" style="max-width: 1280px;">
+        <%= yield %>
+      </div>
     </main>
 
+    <footer class="mx-auto"
+            style="max-width: 1280px;
+                   padding: 32px 20px 24px;
+                   border-top: 1px solid var(--color-coop-line);
+                   color: var(--color-coop-ink-soft);
+                   font-size: 13px;
+                   text-align: center;">
+      <ul class="flex flex-wrap justify-center gap-5 list-none mb-3" style="font-family: var(--font-body); font-weight: 600;">
+        <li><%= link_to "How it works", how_it_works_path, style: "color: inherit; text-decoration: none;" %></li>
+        <li><%= link_to "FAQ", faq_path, style: "color: inherit; text-decoration: none;" %></li>
+        <li><%= link_to "Acknowledgments", acknowledgements_path, style: "color: inherit; text-decoration: none;" %></li>
+      </ul>
+      <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em;">
+        © AJ <%= Time.now.year %>
+      </p>
+    </footer>
   </body>
-  <footer class="text-center bg-blue-100 py-5">
-    <div class="flex flex-row gap-5 justify-self-center">
-      <div>
-        <ul class="list-none p-2 text-sm">
-          <li class="hover:text-amber-700 hover:cursor-pointer">
-            <%= link_to "How it Works", how_it_works_path %>
-          </li>
-          <li class="hover:text-amber-700 hover:cursor-pointer">
-            <%= link_to "FAQ", faq_path %>
-          </li>
-          <li class="hover:text-amber-700">
-            <%= link_to "Acknowledgments", acknowledgements_path %>
-          </li>
-        </ul>
-      </div>
-    </div>
-    
-    <p class="font-semibold mt-4 text-xs">
-      ©️ AJ <%= Time.now.year %>
-    </p>
-
-  </footer>
 </html>
