@@ -24,6 +24,7 @@ class Chicken < ApplicationRecord
     { name: "Lavender Orpington",   tint: "#bdb6c4" },
     { name: "Barred Rock",          tint: "#5a5550", secondary: "#e6e2d8" },
     { name: "Plymouth Rock",        tint: "#5a5550", secondary: "#e6e2d8" },
+    { name: "Production Blue",      tint: "#7a7a85" },
     { name: "Black Australorp",     tint: "#1f1c18" },
     { name: "Black Copper Maran",   tint: "#3a2a20" },
     { name: "Cuckoo Maran",         tint: "#6b6660", secondary: "#d8d4ca" },
