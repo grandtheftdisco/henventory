@@ -1,40 +1,56 @@
-<% content_for :title, "Change Password" %>
+<% content_for :title, "Update password" %>
 
-<h1 class="font-extrabold text-3xl text-amber-700 pb-5">
-  Update your password
-</h1>
-
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-<div class="border-1 rounded-2xl bg-blue-200 text-l text-left 
-  justify-self-center md:shrink-0 w-100 md:w-150 py-5 px-3 
-  justify-items-center">
-  <%= form_with url: password_path(params[:token]), method: :put do |form| %>
-    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
-      <%= form.password_field :password, 
-        required: true, 
-        autocomplete: "new-password", 
-        placeholder: "Enter new password", 
-        size: 40,
-        maxlength: 72 %>
+<div class="coop-card mx-auto" style="max-width: 440px; padding: 36px 32px;">
+  <% if flash[:alert] %>
+    <div role="alert"
+         style="padding: 10px 14px;
+                margin-bottom: 16px;
+                border-radius: 12px;
+                background-color: rgba(161, 60, 44, 0.08);
+                border: 1px solid var(--color-coop-danger);
+                color: var(--color-coop-danger);
+                font-size: 13px;
+                font-weight: 600;">
+      <%= flash[:alert] %>
     </div>
-
-    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
-      <%= form.password_field :password_confirmation, 
-        required: true, 
-        autocomplete: "new-password", 
-        placeholder: "Repeat new password",
-        size: 40,
-        maxlength: 72 %>
-    </div>
-  <div class="flex flex-col justify-self-center">
-    <%= form.submit "Save",
-      class: 'mt-5 rounded-2xl px-3.5 py-2.5 font-bold text-white bg-amber-600 
-        hover:bg-amber-700 cursor-pointer' %>
-  </div>
   <% end %>
-</div>
 
-<div class="py-6 border border-blue-200 rounded-2xl bg-blue-100 text-lg my-4 
-  w-110 md:w-150 justify-self-center">
-  <%= link_to "⬅️ Back to settings", settings_path %>
+  <div class="coop-kicker" style="margin-bottom: 6px;">Almost there</div>
+  <h1 style="font-family: var(--font-display);
+             font-size: 32px;
+             line-height: 1.1;
+             color: var(--color-coop-ink);
+             letter-spacing: -0.01em;
+             margin-bottom: 22px;">
+    Update your password.
+  </h1>
+
+  <%= form_with url: password_path(params[:token]), method: :put, class: "flex flex-col" do |form| %>
+    <div style="margin-bottom: 14px;">
+      <%= form.label :password, "New password", class: "coop-kicker block", style: "margin-bottom: 6px;" %>
+      <%= form.password_field :password,
+            required: true,
+            autocomplete: "new-password",
+            placeholder: "Enter new password",
+            maxlength: 72,
+            class: "coop-input" %>
+    </div>
+
+    <div style="margin-bottom: 22px;">
+      <%= form.label :password_confirmation, "Confirm new password", class: "coop-kicker block", style: "margin-bottom: 6px;" %>
+      <%= form.password_field :password_confirmation,
+            required: true,
+            autocomplete: "new-password",
+            placeholder: "Repeat new password",
+            maxlength: 72,
+            class: "coop-input" %>
+    </div>
+
+    <%= form.submit "Save", class: "coop-button-primary", style: "justify-content: center; width: 100%;" %>
+  <% end %>
+
+  <div style="margin-top: 20px; text-align: center; font-size: 13px;">
+    <%= link_to "← Back to settings", settings_path,
+          style: "color: var(--color-coop-ink-soft); text-decoration: none; font-weight: 600;" %>
+  </div>
 </div>

@@ -1,68 +1,149 @@
-<% content_for :title, "Sign Up" %>
+<% content_for :title, "Sign up" %>
 
-<h1 class="font-extrabold text-3xl text-lime-700">Sign Up</h1>
-<p class="pb-5">(We're egg-cited to meet you.)</p>
+<div class="coop-card mx-auto" style="max-width: 480px; padding: 36px 32px;">
+  <div class="coop-kicker" style="margin-bottom: 6px;">Welcome to the coop</div>
+  <h1 style="font-family: var(--font-display);
+             font-size: 36px;
+             line-height: 1.1;
+             color: var(--color-coop-ink);
+             letter-spacing: -0.01em;
+             margin-bottom: 8px;">
+    Sign up.
+  </h1>
+  <p style="font-family: var(--font-body);
+            font-size: 14px;
+            color: var(--color-coop-ink-soft);
+            font-style: italic;
+            margin-bottom: 24px;">
+    We're egg-cited to meet you.
+  </p>
 
-<% if @household %>
-  <div class="p-10 mb-5 bg-green-50 rounded-2xl border-1 border-green-100 w-1/2 justify-self-center text-xl font-bold">
-    <p>You've been invited to join the <%= @household.name %> household!</p>
-  </div>
-<% end %>
-
-<div class="border-1 rounded-2xl bg-blue-200 text-l text-left justify-self-center md:shrink-0 w-100 md:w-150 pt-5 px-3 pb-5 justify-items-center">
-  <%= form_for :user, url: '/users' do |form| %>
-    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
-      <%= form.label :display_name, "Name: ", class: 'font-bold' %>
-      <%= form.text_field :display_name, class: 'font-semibold w-65' %>
+  <% if @household %>
+    <div role="status"
+         style="padding: 14px 16px;
+                margin-bottom: 20px;
+                border-radius: 12px;
+                background-color: var(--color-coop-primary-soft);
+                color: var(--color-coop-ink);
+                font-size: 14px;
+                font-weight: 600;
+                line-height: 1.4;">
+      You've been invited to join the <strong><%= @household.name %></strong> household!
     </div>
+  <% end %>
 
-    <div>
-      <% if @household %>
-        <%= hidden_field_tag 'household[invite_token]', @household.invite_token %>
-        <%= hidden_field_tag 'user[skip_account_seed]' %>
-      <% end %>
-    </div>
-
-    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
-      <%= form.label :mode, "Mode: ", class: 'font-bold pr-2' %>
-      <%= form.radio_button :mode, "flock" %>
-      <%= form.label :mode_flock, "Flock", class: 'pr-2' %>   
-      <%= form.radio_button :mode, "layer" %>
-      <%= form.label :mode_layer, "Layer" %>
-      <p class="inline mx-2 px-2 bg-blue-200 rounded-2xl opacity-50 hover:opacity-90 w-fit"><a href="/faq#anchor-one" target="_blank">🤔 What's this?</a></p>
+  <%= form_for :user, url: '/users', html: { class: "flex flex-col" } do |form| %>
+    <div style="margin-bottom: 14px;">
+      <%= form.label :display_name, "Name", class: "coop-kicker block", style: "margin-bottom: 6px;" %>
+      <%= form.text_field :display_name, class: "coop-input" %>
     </div>
 
     <% if @household %>
-      <div class="text-xs w-80 px-2 text-justify">
-        <p>(If you've read the 'What's This?' link above and you're still not sure which mode to choose, ask the person who invited you.)</p>
-      </div>
+      <%= hidden_field_tag 'household[invite_token]', @household.invite_token %>
+      <%= hidden_field_tag 'user[skip_account_seed]' %>
     <% end %>
-    
-    <div class="bg-blue-100 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85"> 
-      <%= form.label :email_address, "Email: ", class: 'font-bold' %>
-      <%= form.text_field :email_address, class: 'font-semibold w-65' %>
+
+    <div style="margin-bottom: 14px;">
+      <div class="coop-kicker" style="margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+        <span>Mode</span>
+        <%= link_to "What's this?", "/faq#anchor-one", target: "_blank",
+              style: "color: var(--color-coop-primary); text-decoration: none; font-weight: 700; letter-spacing: 0;" %>
+      </div>
+      <div class="flex gap-2">
+        <label style="flex: 1; cursor: pointer;">
+          <%= form.radio_button :mode, "flock", style: "position: absolute; opacity: 0; pointer-events: none;",
+                class: "coop-mode-radio", data: { mode: "flock" } %>
+          <span class="coop-mode-option" style="display: block;
+                                                 padding: 10px 14px;
+                                                 border-radius: 12px;
+                                                 background-color: var(--color-coop-bg-alt);
+                                                 border: 1px solid var(--color-coop-line);
+                                                 font-family: var(--font-body);
+                                                 font-weight: 700;
+                                                 font-size: 13px;
+                                                 text-align: center;
+                                                 transition: background-color 120ms, color 120ms;">
+            Flock
+          </span>
+        </label>
+        <label style="flex: 1; cursor: pointer;">
+          <%= form.radio_button :mode, "layer", style: "position: absolute; opacity: 0; pointer-events: none;",
+                class: "coop-mode-radio", data: { mode: "layer" } %>
+          <span class="coop-mode-option" style="display: block;
+                                                 padding: 10px 14px;
+                                                 border-radius: 12px;
+                                                 background-color: var(--color-coop-bg-alt);
+                                                 border: 1px solid var(--color-coop-line);
+                                                 font-family: var(--font-body);
+                                                 font-weight: 700;
+                                                 font-size: 13px;
+                                                 text-align: center;
+                                                 transition: background-color 120ms, color 120ms;">
+            Layer
+          </span>
+        </label>
+      </div>
+      <% if @household %>
+        <p style="margin-top: 8px;
+                  font-size: 12px;
+                  color: var(--color-coop-ink-soft);
+                  font-style: italic;
+                  line-height: 1.4;">
+          If you've read the "What's this?" link above and you're still not sure which mode to choose, ask the person who invited you.
+        </p>
+      <% end %>
     </div>
 
-    <div class="bg-blue-50 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
-      <%= form.label :password, "Password: ", class: 'font-bold' %>
-      <%= form.password_field :password, class: 'font-semibold w-60' %>
+    <div style="margin-bottom: 14px;">
+      <%= form.label :email_address, "Email", class: "coop-kicker block", style: "margin-bottom: 6px;" %>
+      <%= form.text_field :email_address, class: "coop-input" %>
     </div>
 
-    <div class="bg-blue-100 rounded-2xl text-left mt-3 pl-2 py-1 mb-2 w-85">
-      <%= form.label :password_confirmation, "Confirm Password: ", class: 'font-bold' %>
-      <%= form.password_field :password_confirmation %>
+    <div style="margin-bottom: 14px;">
+      <%= form.label :password, "Password", class: "coop-kicker block", style: "margin-bottom: 6px;" %>
+      <%= form.password_field :password, class: "coop-input" %>
     </div>
-    <div>
-      <%= hidden_field_tag 'household[time_zone]', nil, id: 'user-time-zone' %>
+
+    <div style="margin-bottom: 22px;">
+      <%= form.label :password_confirmation, "Confirm password", class: "coop-kicker block", style: "margin-bottom: 6px;" %>
+      <%= form.password_field :password_confirmation, class: "coop-input" %>
     </div>
-    <div class="flex flex-col justify-self-center">
-      <%= form.submit "Submit",
-        class: 'mt-5 font-bold text-white bg-lime-600 hover:bg-lime-700 p-3 
-      rounded-2xl align-self-center justify-self-center' %>
-    </div>
+
+    <%= hidden_field_tag 'household[time_zone]', nil, id: 'user-time-zone' %>
+
+    <%= form.submit "Create account", class: "coop-button-primary", style: "justify-content: center; width: 100%;" %>
   <% end %>
+
+  <div style="margin-top: 20px; text-align: center; font-size: 13px; color: var(--color-coop-ink-soft);">
+    Already have an account?
+    <%= link_to "Log in", new_session_path,
+          style: "color: var(--color-coop-primary); text-decoration: none; font-weight: 700;" %>
+  </div>
 </div>
 
 <script>
   document.querySelector('#user-time-zone').value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  // Light-touch segmented control: hide the radio inputs visually,
+  // restyle the adjacent <span> when checked.
+  (function() {
+    const labels = document.querySelectorAll('label > input.coop-mode-radio');
+    function refresh() {
+      labels.forEach(input => {
+        const span = input.nextElementSibling;
+        if (!span) return;
+        if (input.checked) {
+          span.style.backgroundColor = 'var(--color-coop-primary)';
+          span.style.color = 'var(--color-coop-cream)';
+          span.style.borderColor = 'var(--color-coop-primary)';
+        } else {
+          span.style.backgroundColor = 'var(--color-coop-bg-alt)';
+          span.style.color = 'var(--color-coop-ink)';
+          span.style.borderColor = 'var(--color-coop-line)';
+        }
+      });
+    }
+    labels.forEach(input => input.addEventListener('change', refresh));
+    refresh();
+  })();
 </script>
