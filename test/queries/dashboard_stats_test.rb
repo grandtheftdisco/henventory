@@ -70,6 +70,28 @@ class DashboardStatsTest < ActiveSupport::TestCase
     assert_equal 0, stats.today_count
   end
 
+  test "today_count filters by parent CE's created_at, not the egg's" do
+    # Regression guard for Issue A from the Phase 0 review: stats must be
+    # internally consistent on a single dashboard render. If a CE was
+    # created today but contains an egg whose own created_at is yesterday
+    # (possible if the egg was added later via nested_attributes_for, or
+    # if anyone backfills timestamps), the egg should still count toward
+    # today's tally because the *collection* happened today.
+    chicken = make_chicken(@household, name: "Penelope")
+    entry = @household.collection_entries.create!(user: @user, created_at: @now - 1.hour)
+    EggEntry.insert!({
+      collection_entry_id: entry.id,
+      chicken_id: chicken.id,
+      egg_count: 2,
+      created_at: @now - 2.days,  # backdated egg timestamp
+      updated_at: @now - 2.days
+    })
+
+    stats = DashboardStats.new(@household, now: @now)
+    assert_equal 2, stats.today_count
+    assert_equal 1, stats.today_collections_count
+  end
+
   # ---- today_collections_count ----
 
   test "today_collections_count counts collection_entries today only" do

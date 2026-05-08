@@ -7,12 +7,19 @@
 # these become hot, wrap the call site in a Rails fragment cache keyed on
 # `[household, "dashboard", max(updated_at across egg_entries today)]`.
 #
-# Note on `created_at` vs `collected_at`: existing `EggEntry` records use
-# `created_at` for "when did the chicken lay this egg" because
-# `collection_entries.collected_at` was added recently and isn't yet
-# back-propagated to per-egg timestamps. This class uses `created_at` to
-# stay consistent with the existing `#today` action; revisit once the
-# data backfill catches up.
+# Timestamp semantics:
+#
+# All time-window filters use `collection_entries.created_at` — the parent
+# CollectionEntry's timestamp, NOT the per-egg `egg_entries.created_at`.
+# This matches the existing `#today` controller action and keeps stats
+# internally consistent (e.g., today_count and today_collections_count
+# always describe the same set of CEs). Per-egg timestamps can drift from
+# their parent when entries are edited or eggs are added via nested
+# attributes after the original CE was saved.
+#
+# Once `collection_entries.collected_at` is back-propagated to per-egg
+# timestamps, this class should switch all filters to `collected_at`. See
+# FLAGS.md "🐛 #today action filters by created_at, not collected_at".
 class DashboardStats
   def initialize(household, now: nil)
     @household = household
@@ -163,8 +170,12 @@ class DashboardStats
     egg_entries_in(today_range)
   end
 
+  # Filters egg_entries by their parent CollectionEntry's created_at.
+  # `@household.egg_entries` already joins through collection_entries
+  # (via `has_many :egg_entries, through: :collection_entries`), so this
+  # adds a where-clause on the joined table.
   def egg_entries_in(range)
-    @household.egg_entries.where(egg_entries: { created_at: range })
+    @household.egg_entries.where(collection_entries: { created_at: range })
   end
 
   def active_hens_scope
@@ -172,11 +183,14 @@ class DashboardStats
   end
 
   # Returns { "YYYY-MM-DD" => egg_count } for a time range, computing the
-  # date from the household-local TZ. We pull egg_entries with their
-  # created_at and group in Ruby — SQL DATE() functions vary across
-  # SQLite/Postgres and we want predictable TZ behavior either way.
+  # date from the household-local TZ.
+  #
+  # Plucks the *parent CollectionEntry*'s created_at to stay consistent
+  # with the rest of the class (see the timestamp-semantics note at the
+  # top). We group in Ruby rather than SQL because SQL DATE() functions
+  # vary across SQLite/Postgres and we want predictable TZ behavior.
   def daily_counts_for(range)
-    rows = egg_entries_in(range).pluck(:created_at, :egg_count)
+    rows = egg_entries_in(range).pluck("collection_entries.created_at", :egg_count)
     out = {}
     rows.each do |timestamp, count|
       key = timestamp.in_time_zone(household_time_zone).to_date.iso8601
