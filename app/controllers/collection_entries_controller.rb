@@ -47,24 +47,33 @@ class CollectionEntriesController < ApplicationController
   end
 
   def create
-    if Current.user.mode == "layer"
-      @collection_entry = Current.household.collection_entries.build(collection_entry_params)
+    @collection_entry = Current.household.collection_entries.build(collection_entry_params)
+    saved = @collection_entry.save
 
-      if @collection_entry.save
-        redirect_to today_path, notice: "Collection entry was successfully created."
+    respond_to do |format|
+      if saved
+        format.turbo_stream do
+          @stats = DashboardStats.new(Current.household)
+          @now = household_time
+          @quick_log = @stats.quick_log_eligibility
+          @no_chickens = Current.household.chickens.none?
+          render :create
+        end
+        format.html do
+          redirect_to today_path, notice: "Collection entry was successfully created."
+        end
       else
-        setup_form_data
-        render :new, status: :unprocessable_entity
-      end
-    else
-      @collection_entry = Current.household.collection_entries.build(collection_entry_params)
-      @users = Current.household.users.all
-
-      if @collection_entry.save
-        redirect_to today_path,
-          notice: "Collection entry was successfully created."
-      else
-        render :new, status: :unprocessable_entity
+        format.turbo_stream do
+          @stats = DashboardStats.new(Current.household)
+          @quick_log = @stats.quick_log_eligibility
+          @no_chickens = Current.household.chickens.none?
+          render :create_error, status: :unprocessable_entity
+        end
+        format.html do
+          setup_form_data unless Current.user.mode == "flock"
+          @users = Current.household.users.all if Current.user.mode == "flock"
+          render :new, status: :unprocessable_entity
+        end
       end
     end
   end

@@ -1,0 +1,39 @@
+<%# Successful Quick-Log submit. Replace both Quick-Log frames with fresh
+    eligibility data, refresh the Today/This-Week/etc. stats tile, and
+    close the bottom sheet on mobile. %>
+
+<%= turbo_stream.replace "quick_log_inline" do %>
+  <%= render "dashboards/sections/quick_log",
+        frame_id: "quick_log_inline",
+        chickens: @quick_log[:top],
+        other_chickens: @quick_log[:other],
+        user: Current.user,
+        no_chickens: @no_chickens %>
+<% end %>
+
+<%= turbo_stream.replace "quick_log_sheet" do %>
+  <%= render "dashboards/sections/quick_log",
+        frame_id: "quick_log_sheet",
+        chickens: @quick_log[:top],
+        other_chickens: @quick_log[:other],
+        user: Current.user,
+        no_chickens: @no_chickens %>
+<% end %>
+
+<%= turbo_stream.replace "dashboard_stats" do %>
+  <%= render "dashboards/sections/stats", stats: @stats, now: @now %>
+<% end %>
+
+<%# Close the mobile bottom sheet by removing the body class. We can't
+    target Stimulus directly from a Turbo Stream, but we can ship a
+    one-shot script tag — Turbo executes inline scripts in stream
+    responses. %>
+<%= turbo_stream.append "body" do %>
+  <script>
+    (function () {
+      document.body.classList.remove("has-bottom-sheet-open")
+      document.querySelectorAll('[data-bottom-sheet-target="sheet"], [data-bottom-sheet-target="backdrop"]')
+        .forEach((el) => { el.dataset.open = "false" })
+    })()
+  </script>
+<% end %>

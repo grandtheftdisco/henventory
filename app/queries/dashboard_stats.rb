@@ -127,6 +127,49 @@ class DashboardStats
     daily_counts_for(range)
   end
 
+  # ---- Quick-Log eligibility ----
+
+  # Returns hens eligible to log eggs against right now, partitioned into
+  # `top` (visible by default) and `other` (revealed via the "Other" pill).
+  # Each row: { chicken: <Chicken>, eggs_today: <Integer> }.
+  #
+  # Eligibility rules (Q1 first pass — refine after dogfooding):
+  #   - status in (pullet, layer, molting); retired/expired are excluded
+  #   - hens with 2 egg entries already today are excluded entirely
+  #     (validation will reject the third anyway)
+  #   - top is sorted by last-7-day egg count DESC, then by name as a stable
+  #     tiebreaker; other holds the rest, sorted alphabetically
+  def quick_log_eligibility(top_n: 4)
+    last_7_counts = egg_entries_in(last_7_days_range)
+      .where.not(chicken_id: nil)
+      .group(:chicken_id)
+      .sum(:egg_count)
+
+    today_counts = today_egg_entries
+      .where.not(chicken_id: nil)
+      .group(:chicken_id)
+      .sum(:egg_count)
+
+    eligible = active_hens_scope.to_a.reject { |c| today_counts[c.id].to_i >= 2 }
+
+    rows = eligible.map do |c|
+      {
+        chicken: c,
+        eggs_today: today_counts[c.id].to_i,
+        score: last_7_counts[c.id].to_i,
+      }
+    end
+
+    rows.sort_by! { |r| [-r[:score], r[:chicken].name.to_s.downcase] }
+    top, others = rows.first(top_n), rows.drop(top_n)
+    others.sort_by! { |r| r[:chicken].name.to_s.downcase }
+
+    {
+      top: top.map { |r| r.except(:score) },
+      other: others.map { |r| r.except(:score) },
+    }
+  end
+
   # ---- Today's collections strip ----
 
   # Today's CollectionEntry records ordered most-recent first, with
@@ -159,6 +202,10 @@ class DashboardStats
 
   def this_month_range
     @now.beginning_of_month..@now.end_of_month
+  end
+
+  def last_7_days_range
+    (@now - 7.days)..@now
   end
 
   def month_range(year, month)

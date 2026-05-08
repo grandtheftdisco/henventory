@@ -153,4 +153,56 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to today_path
   end
+
+  # ---- Turbo Stream submissions from Quick-Log ----
+
+  test "Quick-Log submit responds with a stream replacing both quick_log frames" do
+    @user.update!(mode: "layer")
+
+    assert_difference("CollectionEntry.count") do
+      post collection_entries_url,
+        params: {
+          collection_entry: {
+            user_id: @user.id,
+            egg_entries_attributes: {
+              "0" => { egg_count: 1, chicken_id: chickens(:one).id }
+            }
+          }
+        },
+        headers: { "Accept" => "text/vnd.turbo-stream.html" }
+    end
+
+    assert_response :success
+    assert_match %r{turbo-stream}, @response.media_type
+    assert_match %r{turbo-stream action="replace" target="quick_log_inline"}, @response.body
+    assert_match %r{turbo-stream action="replace" target="quick_log_sheet"}, @response.body
+    assert_match %r{turbo-stream action="replace" target="dashboard_stats"}, @response.body
+  end
+
+  test "Quick-Log submit with invalid payload returns 422 stream and does not create" do
+    @user.update!(mode: "layer")
+    chicken = chickens(:one)
+    # Two prior entries today already — third should be rejected by the
+    # only_2_eggs_max_per_day_per_chicken validation.
+    2.times do
+      ce = @household.collection_entries.create!(user: @user, created_at: Time.current)
+      ce.egg_entries.create!(chicken: chicken, egg_count: 1)
+    end
+
+    assert_no_difference("CollectionEntry.count") do
+      post collection_entries_url,
+        params: {
+          collection_entry: {
+            user_id: @user.id,
+            egg_entries_attributes: {
+              "0" => { egg_count: 1, chicken_id: chicken.id }
+            }
+          }
+        },
+        headers: { "Accept" => "text/vnd.turbo-stream.html" }
+    end
+
+    assert_response :unprocessable_entity
+    assert_match %r{turbo-stream action="replace" target="quick_log_inline"}, @response.body
+  end
 end

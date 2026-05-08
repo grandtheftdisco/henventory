@@ -383,6 +383,199 @@
 	}
 
 	/* ----------------------------------------------------------
+	   Quick-Log panel (mobile-first).
+
+	   The Quick-Log is rendered twice: once inline in section 2
+	   (visible at >= 1024px) and once inside the bottom sheet
+	   (visible at < 768px). Between 768px and 1024px the inline
+	   version stays hidden — the FAB is still the entry point.
+	   ---------------------------------------------------------- */
+	.quick-log-pills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+
+	.quick-log-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 6px 10px 6px 6px;
+		border-radius: 9999px;
+		border: 1px solid rgba(255, 255, 255, 0.35);
+		background-color: rgba(255, 255, 255, 0.12);
+		color: var(--color-coop-cream);
+		font-family: var(--font-body);
+		font-size: 13px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 120ms ease, border-color 120ms ease;
+	}
+
+	.quick-log-pill:hover { background-color: rgba(255, 255, 255, 0.22); }
+
+	.quick-log-pill.is-selected {
+		background-color: var(--color-coop-cream);
+		color: var(--color-coop-primary);
+		border-color: var(--color-coop-cream);
+	}
+
+	.quick-log-pill.is-other {
+		padding: 6px 12px;
+		font-style: italic;
+		opacity: 0.85;
+	}
+
+	.quick-log-pill-swatch {
+		width: 22px;
+		height: 22px;
+		border-radius: 9999px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-family: var(--font-display);
+		font-size: 12px;
+		color: var(--color-coop-ink);
+		flex-shrink: 0;
+	}
+
+	.quick-log-pill-tally {
+		font-size: 11px;
+		line-height: 1;
+		opacity: 0.9;
+	}
+
+	.quick-log-actions {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 8px;
+	}
+
+	.quick-log-action {
+		min-height: 52px;
+		border-radius: 12px;
+		background-color: var(--color-coop-cream);
+		color: var(--color-coop-primary);
+		border: 1px solid var(--color-coop-cream);
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 15px;
+		cursor: pointer;
+		transition: opacity 120ms ease, filter 120ms ease;
+	}
+
+	.quick-log-action:hover:not([disabled]) { filter: brightness(0.96); }
+
+	.quick-log-action[disabled] {
+		opacity: 0.55;
+		cursor: not-allowed;
+	}
+
+	.quick-log-action-note {
+		background-color: transparent;
+		color: var(--color-coop-cream);
+		border-color: rgba(255, 255, 255, 0.45);
+	}
+
+	.quick-log-note-input {
+		width: 100%;
+		min-height: 60px;
+		padding: 10px 12px;
+		border-radius: 8px;
+		border: 1px solid rgba(255, 255, 255, 0.35);
+		background-color: rgba(255, 255, 255, 0.92);
+		color: var(--color-coop-ink);
+		font-family: var(--font-body);
+		font-size: 14px;
+		resize: vertical;
+	}
+
+	/* Visibility split: inline (desktop) vs bottom sheet (mobile).
+	   Below 1024px the inline section is hidden — the FAB is the entry
+	   point. >= 1024px the inline section is visible and the FAB hidden
+	   (the FAB rule above already does this at >= 768px, so the inline
+	   visibility rule kicks in slightly later). */
+	.dashboard-section-quick-log { display: none; }
+
+	@media (min-width: 1024px) {
+		.dashboard-section-quick-log { display: flex; }
+	}
+
+	/* ----------------------------------------------------------
+	   Bottom sheet — mobile only (< 768px). Hidden at md+.
+	   ---------------------------------------------------------- */
+	.coop-bottom-sheet-backdrop {
+		position: fixed;
+		inset: 0;
+		background-color: rgba(45, 31, 16, 0.45);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 200ms ease;
+		z-index: 40;
+	}
+
+	.coop-bottom-sheet-backdrop[data-open="true"] {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.coop-bottom-sheet {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		max-height: 88vh;
+		background-color: var(--color-coop-cream);
+		border-top-left-radius: 18px;
+		border-top-right-radius: 18px;
+		box-shadow: 0 -8px 24px rgba(45, 31, 16, 0.18);
+		transform: translateY(100%);
+		transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+		z-index: 41;
+		overflow-y: auto;
+		padding: 0 14px 24px;
+	}
+
+	.coop-bottom-sheet[data-open="true"] { transform: translateY(0); }
+
+	.coop-bottom-sheet-header {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		padding: 10px 0 6px;
+	}
+
+	.coop-bottom-sheet-handle {
+		width: 36px;
+		height: 4px;
+		border-radius: 9999px;
+		background-color: var(--color-coop-line);
+	}
+
+	.coop-bottom-sheet-close {
+		position: absolute;
+		right: 4px;
+		top: 4px;
+		width: 32px;
+		height: 32px;
+		border-radius: 9999px;
+		background: transparent;
+		border: none;
+		color: var(--color-coop-ink-soft);
+		font-size: 22px;
+		line-height: 1;
+		cursor: pointer;
+	}
+
+	.coop-bottom-sheet-body { padding-top: 4px; }
+
+	@media (min-width: 768px) {
+		.coop-bottom-sheet,
+		.coop-bottom-sheet-backdrop { display: none; }
+	}
+
+	/* ----------------------------------------------------------
 	   Deferred cleanup — these classes still drive
 	   collection_entries/index.html.erb (the old All Entries page).
 	   That view is being replaced in Phase 4 (full graphical calendar).

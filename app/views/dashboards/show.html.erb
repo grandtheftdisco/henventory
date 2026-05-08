@@ -20,14 +20,21 @@
     <%= render "dashboards/sections/greeting", now: @now, user: Current.user, stats: @stats %>
   </section>
 
-  <section class="dashboard-section" data-section="quick-log" aria-label="Quick log">
-    <div class="coop-card" style="padding: 24px;">
-      <p style="color: var(--color-coop-ink-soft); font-style: italic;">Quick-Log — task #6</p>
-    </div>
+  <section class="dashboard-section dashboard-section-quick-log"
+           data-section="quick-log"
+           aria-label="Quick log">
+    <%= render "dashboards/sections/quick_log",
+          frame_id: "quick_log_inline",
+          chickens: @quick_log[:top],
+          other_chickens: @quick_log[:other],
+          user: Current.user,
+          no_chickens: @no_chickens %>
   </section>
 
   <section class="dashboard-section" data-section="stats" aria-label="Stat strip">
-    <%= render "dashboards/sections/stats", stats: @stats, now: @now %>
+    <turbo-frame id="dashboard_stats">
+      <%= render "dashboards/sections/stats", stats: @stats, now: @now %>
+    </turbo-frame>
   </section>
 
   <section class="dashboard-section" data-section="calendar" aria-label="Month calendar">
@@ -47,6 +54,46 @@
   </section>
 </div>
 
-<%# Floating chrome — mobile only via CSS. Empty in this slice. %>
+<%# Floating chrome — mobile only via CSS. The scroll hint is wired in
+    task #8; in this slice it's a static element. The FAB opens the
+    bottom-sheet variant of Quick-Log. %>
 <div class="coop-scroll-hint" aria-hidden="true" data-visible="true">↓</div>
-<button class="coop-fab" type="button" aria-label="Open quick log" disabled>+</button>
+
+<div data-controller="bottom-sheet">
+  <button class="coop-fab"
+          type="button"
+          aria-label="Open quick log"
+          data-action="click->bottom-sheet#open"
+          <%= "disabled" if @no_chickens %>>
+    +
+  </button>
+
+  <div class="coop-bottom-sheet-backdrop"
+       data-bottom-sheet-target="backdrop"
+       data-action="click->bottom-sheet#close"
+       data-open="false"
+       aria-hidden="true"></div>
+
+  <div class="coop-bottom-sheet"
+       data-bottom-sheet-target="sheet"
+       data-open="false"
+       role="dialog"
+       aria-modal="true"
+       aria-label="Quick log">
+    <div class="coop-bottom-sheet-header">
+      <span class="coop-bottom-sheet-handle" aria-hidden="true"></span>
+      <button type="button"
+              class="coop-bottom-sheet-close"
+              aria-label="Close"
+              data-action="click->bottom-sheet#close">×</button>
+    </div>
+    <div class="coop-bottom-sheet-body">
+      <%= render "dashboards/sections/quick_log",
+            frame_id: "quick_log_sheet",
+            chickens: @quick_log[:top],
+            other_chickens: @quick_log[:other],
+            user: Current.user,
+            no_chickens: @no_chickens %>
+    </div>
+  </div>
+</div>

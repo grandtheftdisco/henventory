@@ -262,6 +262,75 @@ class DashboardStatsTest < ActiveSupport::TestCase
     assert_nil data["2026-04-01"]
   end
 
+  # ---- quick_log_eligibility ----
+
+  test "quick_log_eligibility ranks top hens by last-7-day eggs and pushes the rest to other" do
+    a = make_chicken(@household, name: "Alpha")
+    b = make_chicken(@household, name: "Bravo")
+    c = make_chicken(@household, name: "Charlie")
+    d = make_chicken(@household, name: "Delta")
+    e = make_chicken(@household, name: "Echo")
+
+    log_eggs(@household, @user, a, count: 2, at: @now - 1.day)
+    log_eggs(@household, @user, a, count: 2, at: @now - 2.days)  # alpha: 4
+    log_eggs(@household, @user, b, count: 2, at: @now - 1.day)   # bravo: 2
+    log_eggs(@household, @user, c, count: 1, at: @now - 1.day)   # charlie: 1
+    # delta + echo: 0
+
+    stats = DashboardStats.new(@household, now: @now)
+    result = stats.quick_log_eligibility(top_n: 4)
+
+    top_names = result[:top].map { |r| r[:chicken].name }
+    other_names = result[:other].map { |r| r[:chicken].name }
+
+    # Alpha then Bravo by score; Charlie + one zero-score in the top-4 by tiebreak;
+    # the remaining zero-score hen goes to other.
+    assert_equal "Alpha", top_names.first
+    assert_equal "Bravo", top_names[1]
+    assert_includes top_names, "Charlie"
+    assert_equal 4, result[:top].length
+    assert_equal 1, result[:other].length
+    # Other is sorted alphabetically; both delta and echo are zero so whichever
+    # tiebreaker put one in top-4, the other lands here.
+    assert_includes %w[Delta Echo], other_names.first
+  end
+
+  test "quick_log_eligibility excludes hens with 2 entries today" do
+    a = make_chicken(@household, name: "Alpha")
+    b = make_chicken(@household, name: "Bravo")
+    log_eggs(@household, @user, a, count: 1, at: @now - 1.hour)
+    log_eggs(@household, @user, a, count: 1, at: @now - 30.minutes)
+    log_eggs(@household, @user, b, count: 1, at: @now - 1.hour)
+
+    stats = DashboardStats.new(@household, now: @now)
+    result = stats.quick_log_eligibility
+
+    names = (result[:top] + result[:other]).map { |r| r[:chicken].name }
+    refute_includes names, "Alpha"
+    assert_includes names, "Bravo"
+  end
+
+  test "quick_log_eligibility excludes retired and expired hens" do
+    make_chicken(@household, name: "Alive", status: "layer")
+    make_chicken(@household, name: "Retired", status: "retired")
+    make_chicken(@household, name: "Expired", status: "expired")
+
+    stats = DashboardStats.new(@household, now: @now)
+    result = stats.quick_log_eligibility
+
+    names = (result[:top] + result[:other]).map { |r| r[:chicken].name }
+    assert_equal ["Alive"], names
+  end
+
+  test "quick_log_eligibility carries each hen's eggs_today count" do
+    a = make_chicken(@household, name: "Alpha")
+    log_eggs(@household, @user, a, count: 1, at: @now - 1.hour)
+
+    stats = DashboardStats.new(@household, now: @now)
+    row = stats.quick_log_eligibility[:top].find { |r| r[:chicken].id == a.id }
+    assert_equal 1, row[:eggs_today]
+  end
+
   # ---- timezone correctness ----
 
   test "today_count respects the household's time zone at the UTC day boundary" do

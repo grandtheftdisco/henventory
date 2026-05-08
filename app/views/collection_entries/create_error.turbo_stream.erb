@@ -1,0 +1,31 @@
+<%# Quick-Log validation failure (e.g. third egg of the day from one hen).
+    Replace the Quick-Log frames so the user sees the rejected state, but
+    leave everything else alone. The errors are surfaced via flash since
+    the Quick-Log UI doesn't have an inline error region in this slice. %>
+
+<%= turbo_stream.replace "quick_log_inline" do %>
+  <%= render "dashboards/sections/quick_log",
+        frame_id: "quick_log_inline",
+        chickens: @quick_log[:top],
+        other_chickens: @quick_log[:other],
+        user: Current.user,
+        no_chickens: @no_chickens %>
+<% end %>
+
+<%= turbo_stream.replace "quick_log_sheet" do %>
+  <%= render "dashboards/sections/quick_log",
+        frame_id: "quick_log_sheet",
+        chickens: @quick_log[:top],
+        other_chickens: @quick_log[:other],
+        user: Current.user,
+        no_chickens: @no_chickens %>
+<% end %>
+
+<%= turbo_stream.append "body" do %>
+  <script>
+    (function () {
+      const msg = <%= raw @collection_entry.errors.full_messages.first.to_json %>
+      if (msg && window.alert) window.alert(msg)
+    })()
+  </script>
+<% end %>

@@ -3,6 +3,8 @@ class DashboardsController < ApplicationController
     if Current.user.mode == "layer"
       @stats = DashboardStats.new(Current.household)
       @now = household_time
+      @quick_log = @stats.quick_log_eligibility
+      @no_chickens = Current.household.chickens.none?
       render "dashboards/show"
     else
       @collection_entries = Current.household
