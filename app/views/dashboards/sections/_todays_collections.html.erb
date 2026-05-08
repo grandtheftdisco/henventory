@@ -1,0 +1,44 @@
+<%#
+  locals:
+    stats: DashboardStats — for todays_collections
+
+  Today's CollectionEntry records as horizontally-scrolling mini-cards.
+  Wrapped in a turbo-frame so Quick-Log submissions can prepend new
+  entries via Turbo Stream without a full page render.
+
+  Each mini-card shows: time, who logged it, eggs (emoji or count chip),
+  optional note. Tap → today_path?date=… for the same-day deep link
+  (which is just today's view since these are today's entries).
+
+  Empty state: a single quiet-coop card with a "log some eggs" nudge.
+%>
+<turbo-frame id="todays_collections">
+  <div class="coop-card dashboard-todays" style="padding: 16px 14px;">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px;">
+      <p class="coop-kicker" style="margin: 0;">Today's collections</p>
+      <%= link_to "All →", today_path,
+            style: "font-family: var(--font-body);
+                    font-size: 12px;
+                    font-weight: 700;
+                    color: var(--color-coop-primary);
+                    text-decoration: none;" %>
+    </div>
+
+    <% entries = stats.todays_collections %>
+    <% if entries.empty? %>
+      <p style="font-family: var(--font-body);
+                font-size: 14px;
+                font-style: italic;
+                color: var(--color-coop-ink-soft);
+                margin: 0;">
+        Nothing logged yet today — the coop is waiting on you.
+      </p>
+    <% else %>
+      <div class="dashboard-todays-strip" role="list">
+        <% entries.each do |entry| %>
+          <%= render "dashboards/sections/todays_entry_card", entry: entry %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</turbo-frame>

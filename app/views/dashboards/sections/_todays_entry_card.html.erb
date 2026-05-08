@@ -1,0 +1,51 @@
+<%#
+  locals:
+    entry: a CollectionEntry, with eager-loaded egg_entries + chickens + user
+
+  Mini-card for the Today's Collections strip. Shows time, total eggs,
+  hen swatches (one per unique chicken in the entry), the logger, and
+  the note if present.
+%>
+<%
+  total = entry.egg_entries.sum(&:egg_count)
+  chickens_in_entry = entry.egg_entries.map(&:chicken).uniq
+  display_time = (entry.collected_at || entry.created_at)
+                  .in_time_zone(Current.user.household.time_zone.presence || Time.zone.name)
+%>
+<article class="dashboard-todays-card" role="listitem">
+  <div class="dashboard-todays-card-time">
+    <%= display_time.strftime("%-l:%M %p").downcase %>
+  </div>
+
+  <div class="dashboard-todays-card-eggs">
+    <span class="dashboard-todays-card-count"><%= total %></span>
+    <span class="dashboard-todays-card-egglabel"><%= "egg".pluralize(total) %></span>
+  </div>
+
+  <% if chickens_in_entry.any? %>
+    <div class="dashboard-todays-card-swatches" aria-hidden="true">
+      <% chickens_in_entry.first(4).each do |c| %>
+        <% swatch = c.accent_color.presence || "var(--color-coop-bg-alt)" %>
+        <span class="dashboard-todays-card-swatch"
+              style="background-color: <%= swatch %>;"
+              title="<%= c.name %>"></span>
+      <% end %>
+      <% if chickens_in_entry.length > 4 %>
+        <span class="dashboard-todays-card-swatch is-overflow"
+              title="<%= chickens_in_entry.length - 4 %> more">
+          +<%= chickens_in_entry.length - 4 %>
+        </span>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if entry.notes.present? %>
+    <p class="dashboard-todays-card-note" title="<%= entry.notes %>">
+      <%= truncate(entry.notes, length: 60) %>
+    </p>
+  <% end %>
+
+  <p class="dashboard-todays-card-by">
+    by <%= entry.user.display_name.presence || entry.user.email_address.split("@").first %>
+  </p>
+</article>

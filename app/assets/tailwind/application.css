@@ -576,6 +576,190 @@
 	}
 
 	/* ----------------------------------------------------------
+	   Leaderboard (Employee of the Month).
+	   ---------------------------------------------------------- */
+	.dashboard-leaderboard {
+		padding: 16px 18px;
+	}
+
+	.dashboard-leaderboard-rows {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.dashboard-leaderboard-row {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 8px 10px;
+		background-color: var(--color-coop-bg-alt);
+		border-radius: 10px;
+	}
+
+	.dashboard-leaderboard-rank {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		font-weight: 700;
+		color: var(--color-coop-ink-soft);
+		min-width: 28px;
+		flex-shrink: 0;
+	}
+
+	.dashboard-leaderboard-swatch {
+		width: 32px;
+		height: 32px;
+		border-radius: 9999px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-family: var(--font-display);
+		font-size: 14px;
+		color: var(--color-coop-ink);
+		flex-shrink: 0;
+		border: 1px solid var(--color-coop-line);
+	}
+
+	.dashboard-leaderboard-name {
+		font-family: var(--font-display);
+		font-size: 16px;
+		line-height: 1.1;
+		color: var(--color-coop-ink);
+		margin: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.dashboard-leaderboard-breed {
+		font-family: var(--font-body);
+		font-size: 11px;
+		color: var(--color-coop-ink-soft);
+		margin: 1px 0 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.dashboard-leaderboard-count {
+		font-family: var(--font-display);
+		font-size: 18px;
+		color: var(--color-coop-primary);
+		flex-shrink: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		line-height: 1;
+		gap: 2px;
+	}
+
+	/* ----------------------------------------------------------
+	   Today's Collections — horizontal scroll strip.
+	   ---------------------------------------------------------- */
+	.dashboard-todays-strip {
+		display: flex;
+		gap: 10px;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scroll-padding: 6px;
+		padding-bottom: 4px;
+		margin: 0 -4px;
+		scrollbar-width: thin;
+	}
+
+	.dashboard-todays-card {
+		flex: 0 0 200px;
+		scroll-snap-align: start;
+		background-color: var(--color-coop-bg-alt);
+		border: 1px solid var(--color-coop-line);
+		border-radius: 12px;
+		padding: 12px 14px;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		min-height: 132px;
+	}
+
+	.dashboard-todays-card-time {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--color-coop-ink-soft);
+	}
+
+	.dashboard-todays-card-eggs {
+		display: flex;
+		align-items: baseline;
+		gap: 6px;
+	}
+
+	.dashboard-todays-card-count {
+		font-family: var(--font-display);
+		font-size: 28px;
+		line-height: 1;
+		color: var(--color-coop-ink);
+		letter-spacing: -0.01em;
+	}
+
+	.dashboard-todays-card-egglabel {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		color: var(--color-coop-ink-soft);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.dashboard-todays-card-swatches {
+		display: flex;
+		gap: 4px;
+		margin-top: 2px;
+	}
+
+	.dashboard-todays-card-swatch {
+		width: 18px;
+		height: 18px;
+		border-radius: 9999px;
+		border: 1px solid var(--color-coop-line);
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-family: var(--font-mono);
+		font-size: 9px;
+		font-weight: 700;
+		color: var(--color-coop-ink-soft);
+	}
+
+	.dashboard-todays-card-swatch.is-overflow {
+		background-color: var(--color-coop-cream);
+	}
+
+	.dashboard-todays-card-note {
+		font-family: var(--font-body);
+		font-size: 12px;
+		font-style: italic;
+		color: var(--color-coop-ink-soft);
+		margin: 4px 0 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+	}
+
+	.dashboard-todays-card-by {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		color: var(--color-coop-ink-soft);
+		margin: auto 0 0;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	/* ----------------------------------------------------------
 	   Deferred cleanup — these classes still drive
 	   collection_entries/index.html.erb (the old All Entries page).
 	   That view is being replaced in Phase 4 (full graphical calendar).

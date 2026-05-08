@@ -94,4 +94,34 @@ class DashboardsControllerTest < ActionDispatch::IntegrationTest
     # At least 28 in-month day links should exist (Feb is the smallest month).
     assert_select "section[data-section=calendar] a.dashboard-calendar-day", minimum: 28
   end
+
+  test "leaderboard renders the kicker label" do
+    @user.update!(mode: "layer")
+    get landing_url
+    assert_response :success
+    assert_select "section[data-section=leaderboard] .coop-kicker", text: "Employee of the Month"
+  end
+
+  test "leaderboard renders empty state when no eggs this month" do
+    @user.update!(mode: "layer")
+    @user.household.collection_entries.destroy_all
+    get landing_url
+    assert_response :success
+    assert_select "section[data-section=leaderboard]", /No eggs logged this month/i
+  end
+
+  test "todays_collections is wrapped in a turbo-frame" do
+    @user.update!(mode: "layer")
+    get landing_url
+    assert_response :success
+    assert_select "turbo-frame#todays_collections"
+  end
+
+  test "todays_collections empty state renders when no entries today" do
+    @user.update!(mode: "layer")
+    @user.household.collection_entries.destroy_all
+    get landing_url
+    assert_response :success
+    assert_select "section[data-section=todays-collections]", /Nothing logged yet today/i
+  end
 end

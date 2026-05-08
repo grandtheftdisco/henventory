@@ -24,6 +24,10 @@
   <%= render "dashboards/sections/stats", stats: @stats, now: @now %>
 <% end %>
 
+<%= turbo_stream.replace "todays_collections" do %>
+  <%= render "dashboards/sections/todays_collections", stats: @stats %>
+<% end %>
+
 <%# Close the mobile bottom sheet by removing the body class. We can't
     target Stimulus directly from a Turbo Stream, but we can ship a
     one-shot script tag — Turbo executes inline scripts in stream
