@@ -1,6 +1,8 @@
 class DashboardsController < ApplicationController
   def show
     if Current.user.mode == "layer"
+      @stats = DashboardStats.new(Current.household)
+      @now = household_time
       render "dashboards/show"
     else
       @collection_entries = Current.household

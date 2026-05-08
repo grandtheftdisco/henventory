@@ -1,0 +1,41 @@
+<%#
+  locals:
+    points: array of egg counts (one per day in the week, oldest first)
+
+  Inline SVG polyline. Width fills the tile; height is fixed. The polyline
+  is normalized so the max value sits at the top and zero sits at the
+  bottom, with a small padding so the stroke doesn't clip.
+
+  We render a polyline + a small dot on the most recent (last) point so
+  "today" reads at a glance.
+%>
+<%
+  width = 120
+  height = 28
+  padding = 2
+  max = points.max.to_f
+  max = 1.0 if max.zero?
+  step = points.length > 1 ? (width - padding * 2).fdiv(points.length - 1) : 0
+
+  coords = points.each_with_index.map do |value, i|
+    x = padding + (step * i)
+    # SVG y-axis runs top-to-bottom, so invert.
+    y = padding + (height - padding * 2) * (1 - (value / max))
+    [x.round(2), y.round(2)]
+  end
+
+  polyline = coords.map { |x, y| "#{x},#{y}" }.join(" ")
+  last_x, last_y = coords.last
+%>
+<svg viewBox="0 0 <%= width %> <%= height %>"
+     preserveAspectRatio="none"
+     style="width: 100%; height: 28px; margin-top: 6px; display: block;"
+     aria-hidden="true">
+  <polyline points="<%= polyline %>"
+            fill="none"
+            stroke="var(--color-coop-primary)"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+  <circle cx="<%= last_x %>" cy="<%= last_y %>" r="2" fill="var(--color-coop-primary)" />
+</svg>

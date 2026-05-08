@@ -1,0 +1,81 @@
+<%#
+  locals:
+    stats: DashboardStats
+    now:   household-zone Time (for "this week" labeling)
+
+  Four tiles in a 2×2 grid: Today, This Week, Active Hens, Best in Flock.
+  At md+ breakpoint this expands to 4-col on desktop (handled in task #8;
+  the grid here is mobile shape).
+
+  Each tile has:
+    - kicker (uppercase mono label)
+    - 36px display-font value
+    - small subtitle line (units, change pct, etc.)
+
+  Only the This Week tile gets a sparkline (space-constrained on mobile).
+%>
+<%
+  this_week = stats.this_week_count
+  change_pct = stats.this_week_change_pct
+  sparkline_points = stats.this_week_sparkline_data.values
+
+  active = stats.active_hens_count
+  breakdown = stats.active_hens_breakdown
+
+  best = stats.best_in_flock_this_month
+%>
+<div class="dashboard-stat-grid">
+  <div class="coop-card dashboard-stat-tile">
+    <p class="coop-kicker">Today</p>
+    <p class="dashboard-stat-value"><%= stats.today_count %></p>
+    <p class="dashboard-stat-sub">
+      <%= "egg".pluralize(stats.today_count) %> ·
+      <%= stats.today_collections_count %>
+      <%= "collection".pluralize(stats.today_collections_count) %>
+    </p>
+  </div>
+
+  <div class="coop-card dashboard-stat-tile">
+    <p class="coop-kicker">This Week</p>
+    <p class="dashboard-stat-value"><%= this_week %></p>
+    <p class="dashboard-stat-sub">
+      <% if change_pct.nil? %>
+        no prior week to compare
+      <% elsif change_pct.positive? %>
+        +<%= change_pct %>% vs. last week
+      <% elsif change_pct.negative? %>
+        <%= change_pct %>% vs. last week
+      <% else %>
+        flat vs. last week
+      <% end %>
+    </p>
+    <%= render "dashboards/sections/sparkline", points: sparkline_points if sparkline_points.any? %>
+  </div>
+
+  <div class="coop-card dashboard-stat-tile">
+    <p class="coop-kicker">Active Hens</p>
+    <p class="dashboard-stat-value"><%= active %></p>
+    <p class="dashboard-stat-sub">
+      <% if breakdown.present? %>
+        <%= breakdown %>
+      <% else %>
+        all laying
+      <% end %>
+    </p>
+  </div>
+
+  <div class="coop-card dashboard-stat-tile">
+    <p class="coop-kicker">Best in Flock</p>
+    <% if best %>
+      <p class="dashboard-stat-name" title="<%= best[:chicken].name %>">
+        <%= best[:chicken].name %>
+      </p>
+      <p class="dashboard-stat-sub">
+        <%= best[:egg_count] %> <%= "egg".pluralize(best[:egg_count]) %> this month
+      </p>
+    <% else %>
+      <p class="dashboard-stat-value" style="color: var(--color-coop-ink-soft);">—</p>
+      <p class="dashboard-stat-sub">no eggs this month</p>
+    <% end %>
+  </div>
+</div>

@@ -17,9 +17,7 @@
 %>
 <div class="dashboard-shell" data-dashboard>
   <section class="dashboard-section" data-section="greeting" aria-label="Greeting">
-    <div class="coop-card" style="padding: 24px;">
-      <p style="color: var(--color-coop-ink-soft); font-style: italic;">Greeting — task #4</p>
-    </div>
+    <%= render "dashboards/sections/greeting", now: @now, user: Current.user, stats: @stats %>
   </section>
 
   <section class="dashboard-section" data-section="quick-log" aria-label="Quick log">
@@ -29,9 +27,7 @@
   </section>
 
   <section class="dashboard-section" data-section="stats" aria-label="Stat strip">
-    <div class="coop-card" style="padding: 24px;">
-      <p style="color: var(--color-coop-ink-soft); font-style: italic;">Stat strip 2×2 — task #4</p>
-    </div>
+    <%= render "dashboards/sections/stats", stats: @stats, now: @now %>
   </section>
 
   <section class="dashboard-section" data-section="calendar" aria-label="Month calendar">
