@@ -1,0 +1,28 @@
+<%#
+  Henventory wordmark. Used in the top bar, footer, and marketing pages.
+
+  Locals:
+    size: :sm | :md | :lg  (default :md)
+
+  Renders the word "Henventory" in display type, with "ventory" colored
+  in the Coop primary terracotta, followed by a small egg-shaped mark.
+  The two-tone split mirrors the brand direction's wordmark.
+%>
+<% size = local_assigns.fetch(:size, :md) %>
+<% font_size_class = { sm: "text-xl", md: "text-2xl", lg: "text-4xl" }.fetch(size) %>
+<% egg_size_px = { sm: 7, md: 9, lg: 13 }.fetch(size) %>
+<% egg_h_px = (egg_size_px * 1.45).round %>
+
+<span class="inline-flex items-baseline gap-1.5"
+      style="font-family: var(--font-display); line-height: 1;">
+  <span class="<%= font_size_class %> font-normal" style="color: var(--color-coop-ink); letter-spacing: -0.01em;">
+    Hen<span style="color: var(--color-coop-primary);">ventory</span>
+  </span>
+  <span aria-hidden="true"
+        style="display: inline-block;
+               width: <%= egg_size_px %>px;
+               height: <%= egg_h_px %>px;
+               background: var(--color-coop-primary);
+               border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+               transform: rotate(-8deg) translateY(-2px);"></span>
+</span>

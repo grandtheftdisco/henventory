@@ -1,22 +1,54 @@
-<% content_for :title, "Password Reset" %>
+<% content_for :title, "Reset password" %>
 
-<h1 class="font-extrabold text-amber-800 text-4xl pb-7 mb-5">
-  Forgot your password?
-</h1>
+<div class="coop-card mx-auto" style="max-width: 440px; padding: 36px 32px;">
+  <% if flash[:alert] %>
+    <div role="alert"
+         style="padding: 10px 14px;
+                margin-bottom: 16px;
+                border-radius: 12px;
+                background-color: rgba(161, 60, 44, 0.08);
+                border: 1px solid var(--color-coop-danger);
+                color: var(--color-coop-danger);
+                font-size: 13px;
+                font-weight: 600;">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
 
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+  <div class="coop-kicker" style="margin-bottom: 6px;">Locked out?</div>
+  <h1 style="font-family: var(--font-display);
+             font-size: 32px;
+             line-height: 1.1;
+             color: var(--color-coop-ink);
+             letter-spacing: -0.01em;
+             margin-bottom: 8px;">
+    Forgot your password?
+  </h1>
+  <p style="font-family: var(--font-body);
+            font-size: 14px;
+            color: var(--color-coop-ink-soft);
+            margin-bottom: 22px;
+            line-height: 1.5;">
+    Pop in your email and we'll send you a reset link.
+  </p>
 
-<%= form_with url: passwords_path do |form| %>
-  <%= form.email_field :email_address, 
-    required: true, 
-    autofocus: true, 
-    autocomplete: "username", 
-    placeholder: "Enter your email address", 
-    value: params[:email_address], 
-    class: 'border-1 border-blue-300 focus:bg-blue-50 rounded-lg p-1 mb-5' %>
-  <div>
-    <%= form.submit "Email reset instructions",
-      class: 'text-lg text-white font-semibold hover:bg-lime-700 
-        bg-lime-600 py-2 px-3 rounded-lg' %>
+  <%= form_with url: passwords_path, class: "flex flex-col" do |form| %>
+    <div style="margin-bottom: 18px;">
+      <%= form.label :email_address, "Email", class: "coop-kicker block", style: "margin-bottom: 6px;" %>
+      <%= form.email_field :email_address,
+            required: true,
+            autofocus: true,
+            autocomplete: "username",
+            placeholder: "you@example.com",
+            value: params[:email_address],
+            class: "coop-input" %>
+    </div>
+
+    <%= form.submit "Email reset instructions", class: "coop-button-primary", style: "justify-content: center; width: 100%;" %>
+  <% end %>
+
+  <div style="margin-top: 20px; text-align: center; font-size: 13px;">
+    <%= link_to "← Back to log in", new_session_path,
+          style: "color: var(--color-coop-ink-soft); text-decoration: none; font-weight: 600;" %>
   </div>
-<% end %>
+</div>

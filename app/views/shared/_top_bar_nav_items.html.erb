@@ -1,0 +1,21 @@
+<%#
+  Renders the nav <li> pill items inside a <ul>. Used by both the
+  inline (md+) and mobile (md-) nav rows in the top bar.
+
+  Locals:
+    items: Array of { label:, path:, active: } hashes.
+%>
+<% items.each do |item| %>
+  <li class="shrink-0">
+    <%= link_to item[:label], item[:path],
+          class: "inline-block whitespace-nowrap",
+          style: "padding: 8px 14px;
+                  border-radius: 10px;
+                  font-family: var(--font-body);
+                  font-size: 13px;
+                  font-weight: 600;
+                  color: #{item[:active] ? 'var(--color-coop-ink)' : 'var(--color-coop-ink-soft)'};
+                  background-color: #{item[:active] ? 'var(--color-coop-primary-soft)' : 'transparent'};
+                  text-decoration: none;" %>
+  </li>
+<% end %>

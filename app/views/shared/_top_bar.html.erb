@@ -1,0 +1,82 @@
+<%#
+  Coop top bar. Sits above page content. Two states:
+
+    - Logged in: wordmark left, primary nav center (pill buttons),
+      user avatar + log-out right.
+    - Logged out: wordmark left, marketing nav center, auth buttons right.
+
+  Layout: at >= md (768px+) everything is one row. Below that, the nav
+  drops to its own row underneath the wordmark+actions row, so the
+  primary controls (avatar, log out) never get pushed off-screen by
+  long nav labels. The nav row itself horizontally scrolls if the labels
+  overflow — visible scroll is suppressed; the snap/FAB pattern from
+  Phase 1 will replace this with proper mobile chrome.
+
+  Active nav state is driven by `current_page?`. Inactive items use
+  --coop-ink-soft on transparent; active uses --coop-primary-soft bg
+  with --coop-ink text.
+%>
+<%
+  # Build nav_items up front so both the inline (md+) row and the mobile
+  # (md-) row reference the same value. Previously this was defined inside
+  # an if/else, which worked because ERB shares scope but silently 500'd
+  # if anyone removed a branch. Issue C from the Phase 0 code review.
+  nav_items =
+    if Current.user
+      layer_mode = Current.user.mode == "layer"
+      [
+        { label: "Today",       path: today_path,              active: current_page?(today_path) },
+        { label: "All Entries", path: collection_entries_path, active: current_page?(collection_entries_path) },
+        ({ label: "My Flock",   path: chickens_path,           active: current_page?(chickens_path) } if layer_mode),
+        { label: "Settings",    path: settings_path,           active: current_page?(settings_path) }
+      ].compact
+    else
+      [
+        { label: "How It Works", path: how_it_works_path, active: current_page?(how_it_works_path) },
+        { label: "FAQ",          path: faq_path,          active: current_page?(faq_path) }
+      ]
+    end
+%>
+<header class="coop-card mx-auto"
+        style="max-width: 1280px; margin: 16px 12px 0; padding: 14px 16px;">
+  <%# Row 1: wordmark + right cluster. Nav joins this row at md+. %>
+  <div class="flex items-center justify-between gap-3">
+    <%= link_to (Current.user ? landing_path : root_path), class: "shrink-0", "aria-label": "Henventory home" do %>
+      <%= render "shared/wordmark", size: :md %>
+    <% end %>
+
+    <%# Inline nav slot — visible only at md+. Mobile uses the row below. %>
+    <nav aria-label="Primary" class="hidden md:block min-w-0">
+      <ul class="flex items-center gap-1 overflow-x-auto" style="scrollbar-width: none;">
+        <%= render "shared/top_bar_nav_items", items: nav_items %>
+      </ul>
+    </nav>
+
+    <%# Right cluster: avatar+logout when authed, auth buttons otherwise. %>
+    <% if Current.user %>
+      <div class="flex items-center gap-2 shrink-0">
+        <%= render "shared/user_avatar", user: Current.user, size: 36 %>
+        <%= button_to "Log out", session_path,
+              method: :delete,
+              class: "coop-button-secondary",
+              style: "padding: 8px 14px; font-size: 12px;" %>
+      </div>
+    <% else %>
+      <div class="flex items-center gap-2 shrink-0">
+        <%= link_to "Log in", new_session_path,
+              class: "coop-button-secondary",
+              style: "padding: 8px 14px; font-size: 12px; text-decoration: none;" %>
+        <%= link_to "Sign up", new_user_path,
+              class: "coop-button-primary",
+              style: "padding: 8px 14px; font-size: 12px; text-decoration: none;" %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Row 2: nav, mobile only. Hidden at md+ since it appears inline above. %>
+  <nav aria-label="Primary (mobile)" class="md:hidden mt-3 min-w-0">
+    <ul class="flex items-center gap-1 overflow-x-auto" style="scrollbar-width: none; -webkit-overflow-scrolling: touch;">
+      <%= render "shared/top_bar_nav_items", items: nav_items %>
+    </ul>
+  </nav>
+</header>

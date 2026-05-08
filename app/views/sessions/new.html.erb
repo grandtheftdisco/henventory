@@ -1,34 +1,76 @@
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+<% content_for :title, "Log in" %>
 
-<h1 class="font-extrabold text-blue-500 text-4xl pb-7">Login</h1>
+<div class="coop-card mx-auto" style="max-width: 440px; padding: 36px 32px;">
+  <% if flash[:alert] %>
+    <div role="alert"
+         style="padding: 10px 14px;
+                margin-bottom: 16px;
+                border-radius: 12px;
+                background-color: rgba(161, 60, 44, 0.08);
+                border: 1px solid var(--color-coop-danger);
+                color: var(--color-coop-danger);
+                font-size: 13px;
+                font-weight: 600;">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
 
-<div class="mb-10" >
-<%= form_with url: session_path do |form| %>
-  <div class="justify-self-center mb-10 flex flex-col">
-    <%= form.email_field :email_address, 
-      required: true, 
-      autofocus: true, 
-      autocomplete: "username", 
-      placeholder: "Enter your email address", 
-      value: params[:email_address], 
-      class: 'border-1 border-blue-300 focus:bg-blue-50 rounded-lg p-1 mt-1 
-        mb-5' %>
-    <%= form.password_field :password, 
-      required: true, 
-      autocomplete: "current-password", 
-      placeholder: "Enter your password", 
-      maxlength: 72, :size=>"20", 
-      class: 'border-1 border-blue-300 focus:bg-blue-50 rounded-lg p-1' %>
+  <% if flash[:notice] %>
+    <div role="status"
+         style="padding: 10px 14px;
+                margin-bottom: 16px;
+                border-radius: 12px;
+                background-color: var(--color-coop-primary-soft);
+                color: var(--color-coop-ink);
+                font-size: 13px;
+                font-weight: 600;">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <div class="coop-kicker" style="margin-bottom: 6px;">Welcome back</div>
+  <h1 style="font-family: var(--font-display);
+             font-size: 36px;
+             line-height: 1.1;
+             color: var(--color-coop-ink);
+             letter-spacing: -0.01em;
+             margin-bottom: 24px;">
+    Log in.
+  </h1>
+
+  <%= form_with url: session_path, class: "flex flex-col" do |form| %>
+    <div style="margin-bottom: 14px;">
+      <%= form.label :email_address, "Email", class: "coop-kicker block", style: "margin-bottom: 6px;" %>
+      <%= form.email_field :email_address,
+            required: true,
+            autofocus: true,
+            autocomplete: "username",
+            placeholder: "you@example.com",
+            value: params[:email_address],
+            class: "coop-input" %>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <%= form.label :password, "Password", class: "coop-kicker block", style: "margin-bottom: 6px;" %>
+      <%= form.password_field :password,
+            required: true,
+            autocomplete: "current-password",
+            placeholder: "••••••••",
+            maxlength: 72,
+            class: "coop-input" %>
+    </div>
+
+    <%= form.submit "Sign in", class: "coop-button-primary", style: "justify-content: center; width: 100%;" %>
+  <% end %>
+
+  <div style="margin-top: 20px; text-align: center; font-size: 13px;">
+    <%= link_to "Forgot your password?", new_password_path,
+          style: "color: var(--color-coop-ink-soft); text-decoration: none; font-weight: 600;" %>
   </div>
-  <div>
-    <%= form.submit "Sign in",
-      class: 'text-2xl text-white font-semibold hover:font-bold 
-        hover:bg-lime-700 bg-lime-600 py-2 px-3 rounded-lg 
-        justify-self-center' %>
+
+  <div style="margin-top: 8px; text-align: center; font-size: 13px; color: var(--color-coop-ink-soft);">
+    New here?
+    <%= link_to "Sign up", new_user_path,
+          style: "color: var(--color-coop-primary); text-decoration: none; font-weight: 700;" %>
   </div>
-<% end %>
 </div>
-
-<%= link_to "Forgot password?", new_password_path, 
-  class: 'text-blue-900 hover:font-bold' %>

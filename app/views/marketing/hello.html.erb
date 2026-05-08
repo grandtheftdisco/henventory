@@ -1,17 +1,37 @@
-<h1 class="font-extrabold text-lime-700 text-4xl">Welcome to</h1>
-<h2 class="font-extrabold text-lime-800 text-7xl pb-7">Henventory</h2>
+<div class="coop-card mx-auto" style="max-width: 720px; padding: 40px 32px; text-align: center;">
+  <div class="coop-kicker mb-3">A backyard egg tracker</div>
 
-<div class>
-  <p class="font-bold text-lime-800 text-lg">The egg-tracking app for chicken owners:</p>
-  <p class="font-semibold text-lime-800 italic">from backyard broods to small-scale farms.</p>
-</div>
+  <h1 style="font-family: var(--font-display);
+             font-size: clamp(40px, 6vw, 64px);
+             line-height: 1.05;
+             color: var(--color-coop-ink);
+             letter-spacing: -0.02em;
+             margin-bottom: 8px;">
+    Welcome to <span style="color: var(--color-coop-primary);">Henventory</span>.
+  </h1>
 
-<div class="m-10">
-  <div class="bg-blue-100 hover:bg-blue-200 border border-blue-200 rounded-xl justify-self-center p-5 m-5 font-semibold hover:text-blue-800">
-    <p>👀 see <%= link_to "how it works", how_it_works_path %></p>
+  <p style="font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.55;
+            color: var(--color-coop-ink-soft);
+            font-style: italic;
+            max-width: 520px;
+            margin: 0 auto 28px;">
+    The egg-tracking app for chicken owners — from backyard broods to small-scale farms.
+  </p>
+
+  <div class="flex flex-wrap justify-center gap-3" style="margin-top: 16px;">
+    <%= link_to "Sign up", new_user_path,
+          class: "coop-button-primary",
+          style: "text-decoration: none;" %>
+    <%= link_to "Log in", new_session_path,
+          class: "coop-button-secondary",
+          style: "text-decoration: none;" %>
   </div>
 
-  <div class="bg-blue-100 hover:bg-blue-200 border border-blue-200 rounded-xl justify-self-center p-5 m-5 font-semibold hover:text-blue-800">
-    <%= link_to "🤔 got questions?", faq_path %>
+  <div class="flex flex-wrap justify-center gap-4 mt-8"
+       style="font-family: var(--font-body); font-size: 13px; color: var(--color-coop-ink-soft);">
+    <%= link_to "See how it works →", how_it_works_path, style: "color: var(--color-coop-primary); text-decoration: none; font-weight: 700;" %>
+    <%= link_to "Got questions?", faq_path, style: "color: var(--color-coop-ink-soft); text-decoration: none; font-weight: 600;" %>
   </div>
 </div>
