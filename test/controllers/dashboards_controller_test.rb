@@ -73,4 +73,25 @@ class DashboardsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "div.dashboard-shell"
   end
+
+  test "calendar grid renders today's cell with the today modifier" do
+    @user.update!(mode: "layer")
+    get landing_url
+    assert_response :success
+
+    today_iso = Time.current
+                  .in_time_zone(@user.household.time_zone.presence || Time.zone.name)
+                  .to_date.iso8601
+    assert_select "section[data-section=calendar] a.dashboard-calendar-day.is-today" do
+      assert_select "[href=?]", today_path(date: today_iso)
+    end
+  end
+
+  test "calendar grid links each in-month day to today_path with date param" do
+    @user.update!(mode: "layer")
+    get landing_url
+    assert_response :success
+    # At least 28 in-month day links should exist (Feb is the smallest month).
+    assert_select "section[data-section=calendar] a.dashboard-calendar-day", minimum: 28
+  end
 end

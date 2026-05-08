@@ -1,0 +1,68 @@
+<%#
+  locals:
+    stats: DashboardStats — for month_calendar_data
+    now:   household-zone Time — current month + today's date are derived
+           from this so the grid always reflects the household's "now"
+
+  Real graphical 7-col month grid (Mon–Sun). Replaces pagy_calendar.
+
+  Each cell is a link to collection_entries#today?date=YYYY-MM-DD so the
+  calendar doubles as the navigation surface for picking a day. Today's
+  cell gets a thicker --coop-ink border so it's findable at a glance;
+  days with eggs show a small count chip.
+
+  Out-of-month days at the start/end of the grid are rendered as inert
+  spacers (not links, no aria) so screen readers and keyboards skip them.
+%>
+<%
+  today = now.to_date
+  month_first = today.beginning_of_month
+  month_last  = today.end_of_month
+
+  # Mon-first: align grid_start to the Monday on/before the 1st.
+  grid_start = month_first.beginning_of_week
+  grid_end   = month_last.end_of_week
+  total_days = (grid_end - grid_start).to_i + 1
+
+  data = stats.month_calendar_data(year: month_first.year, month: month_first.month)
+
+  weekday_labels = %w[Mon Tue Wed Thu Fri Sat Sun]
+%>
+<div class="coop-card dashboard-calendar" aria-label="Month calendar">
+  <div class="dashboard-calendar-header">
+    <p class="coop-kicker" style="margin: 0;">
+      <%= now.strftime("%B %Y") %>
+    </p>
+  </div>
+
+  <div class="dashboard-calendar-weekdays" aria-hidden="true">
+    <% weekday_labels.each do |label| %>
+      <span><%= label %></span>
+    <% end %>
+  </div>
+
+  <div class="dashboard-calendar-grid" role="grid">
+    <% total_days.times do |i| %>
+      <% day = grid_start + i %>
+      <% if day.month == month_first.month %>
+        <%
+          iso = day.iso8601
+          count = data[iso].to_i
+          is_today = day == today
+          aria = "#{day.strftime('%B %-d')}, #{count} #{'egg'.pluralize(count)}"
+        %>
+        <%= link_to today_path(date: iso),
+              class: ["dashboard-calendar-day", ("is-today" if is_today), ("has-eggs" if count.positive?)].compact.join(" "),
+              "aria-label": aria,
+              role: "gridcell" do %>
+          <span class="dashboard-calendar-daynum"><%= day.day %></span>
+          <% if count.positive? %>
+            <span class="dashboard-calendar-count"><%= count %></span>
+          <% end %>
+        <% end %>
+      <% else %>
+        <span class="dashboard-calendar-day is-spacer" aria-hidden="true" role="gridcell"></span>
+      <% end %>
+    <% end %>
+  </div>
+</div>

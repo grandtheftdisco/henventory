@@ -31,9 +31,7 @@
   </section>
 
   <section class="dashboard-section" data-section="calendar" aria-label="Month calendar">
-    <div class="coop-card" style="padding: 24px;">
-      <p style="color: var(--color-coop-ink-soft); font-style: italic;">Calendar grid — task #5</p>
-    </div>
+    <%= render "dashboards/sections/calendar", stats: @stats, now: @now %>
   </section>
 
   <section class="dashboard-section" data-section="leaderboard" aria-label="Employee of the Month">
