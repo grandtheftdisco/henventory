@@ -162,8 +162,8 @@ class DashboardStats
   end
 
   def month_range(year, month)
-    first = Time.zone.local(year, month, 1).in_time_zone(household_time_zone)
-    first.beginning_of_month..first.end_of_month
+    Time.use_zone(household_time_zone) { Time.zone.local(year, month, 1) }
+      .then { |t| t.beginning_of_month..t.end_of_month }
   end
 
   def today_egg_entries

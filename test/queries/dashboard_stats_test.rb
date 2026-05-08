@@ -262,6 +262,35 @@ class DashboardStatsTest < ActiveSupport::TestCase
     assert_nil data["2026-04-01"]
   end
 
+  # ---- timezone correctness ----
+
+  test "today_count respects the household's time zone at the UTC day boundary" do
+    # Regression guard for Issue D from the Phase 0 review: every other test
+    # in this file uses UTC, which would mask a TZ-math bug. An egg logged at
+    # 11pm Pacific is the *next day* in UTC, but should still count toward
+    # the *Pacific* day's tally — the household lives in Pacific time.
+    pacific = make_household(time_zone: "America/Los_Angeles")
+    user = make_user(pacific)
+    chicken = make_chicken(pacific, name: "TZ Hen")
+
+    # 23:30 Pacific on 2026-04-29 is 06:30 UTC on 2026-04-30. "Now" for the
+    # household is still 2026-04-29; the egg belongs to that day.
+    pacific_evening = Time.zone.parse("2026-04-29 23:30:00 -0700")
+    pacific_now = Time.zone.parse("2026-04-29 23:45:00 -0700")
+    log_eggs(pacific, user, chicken, count: 3, at: pacific_evening)
+
+    stats = DashboardStats.new(pacific, now: pacific_now)
+    assert_equal 3, stats.today_count, "egg logged at 11:30pm Pacific should count toward Pacific's today"
+    assert_equal 1, stats.today_collections_count
+
+    # Same data, but "now" is the next morning in Pacific — the late-night
+    # egg now belongs to *yesterday* and should NOT appear in today_count.
+    next_morning = Time.zone.parse("2026-04-30 08:00:00 -0700")
+    next_day_stats = DashboardStats.new(pacific, now: next_morning)
+    assert_equal 0, next_day_stats.today_count
+    assert_equal 0, next_day_stats.today_collections_count
+  end
+
   # ---- todays_collections ----
 
   test "todays_collections returns today's entries newest-first" do
