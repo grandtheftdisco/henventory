@@ -50,30 +50,35 @@ class CollectionEntriesController < ApplicationController
     @collection_entry = Current.household.collection_entries.build(collection_entry_params)
     saved = @collection_entry.save
 
-    respond_to do |format|
-      if saved
-        format.turbo_stream do
-          @stats = DashboardStats.new(Current.household)
-          @now = household_time
-          @quick_log = @stats.quick_log_eligibility
-          @no_chickens = Current.household.chickens.none?
-          render :create
-        end
-        format.html do
-          redirect_to today_path, notice: "Collection entry was successfully created."
-        end
+    # Quick-Log (dashboard) submits opt in to a Turbo Stream response by
+    # sending a `quick_log=1` marker. Every other path — the legacy
+    # /collection_entries/new form, curl, etc. — falls through to the
+    # original HTML redirect/re-render flow. Without this gate, Turbo's
+    # default Accept includes text/vnd.turbo-stream.html and our stream
+    # response would target dashboard frames that don't exist on the
+    # legacy form, producing a silent 422 with no UI feedback.
+    quick_log = params[:quick_log].present?
+
+    if saved
+      if quick_log
+        @stats = DashboardStats.new(Current.household)
+        @now = household_time
+        @quick_log = @stats.quick_log_eligibility
+        @no_chickens = Current.household.chickens.none?
+        render :create
       else
-        format.turbo_stream do
-          @stats = DashboardStats.new(Current.household)
-          @quick_log = @stats.quick_log_eligibility
-          @no_chickens = Current.household.chickens.none?
-          render :create_error, status: :unprocessable_entity
-        end
-        format.html do
-          setup_form_data unless Current.user.mode == "flock"
-          @users = Current.household.users.all if Current.user.mode == "flock"
-          render :new, status: :unprocessable_entity
-        end
+        redirect_to today_path, notice: "Collection entry was successfully created."
+      end
+    else
+      if quick_log
+        @stats = DashboardStats.new(Current.household)
+        @quick_log = @stats.quick_log_eligibility
+        @no_chickens = Current.household.chickens.none?
+        render :create_error, status: :unprocessable_entity
+      else
+        setup_form_data unless Current.user.mode == "flock"
+        @users = Current.household.users.all if Current.user.mode == "flock"
+        render :new, status: :unprocessable_entity
       end
     end
   end

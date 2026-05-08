@@ -162,6 +162,7 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
     assert_difference("CollectionEntry.count") do
       post collection_entries_url,
         params: {
+          quick_log: "1",
           collection_entry: {
             user_id: @user.id,
             egg_entries_attributes: {
@@ -192,6 +193,7 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference("CollectionEntry.count") do
       post collection_entries_url,
         params: {
+          quick_log: "1",
           collection_entry: {
             user_id: @user.id,
             egg_entries_attributes: {
@@ -204,5 +206,27 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
     assert_match %r{turbo-stream action="replace" target="quick_log_inline"}, @response.body
+  end
+
+  test "legacy form submit still gets HTML redirect, not turbo stream" do
+    # Regression guard: the legacy /collection_entries/new form must NOT
+    # receive a turbo-stream response, because the dashboard frames it
+    # targets don't exist on that page. Without the quick_log marker it
+    # should fall through to the redirect-to-today HTML path.
+    @user.update!(mode: "layer")
+
+    post collection_entries_url,
+      params: {
+        collection_entry: {
+          user_id: @user.id,
+          collected_at: "10:00",
+          egg_entries_attributes: {
+            "0" => { egg_count: 1, chicken_id: chickens(:one).id }
+          }
+        }
+      },
+      headers: { "Accept" => "text/vnd.turbo-stream.html, text/html, application/xhtml+xml" }
+
+    assert_redirected_to today_path
   end
 end

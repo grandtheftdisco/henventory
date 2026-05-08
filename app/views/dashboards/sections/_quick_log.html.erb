@@ -61,6 +61,7 @@
                           display: flex;
                           flex-direction: column;
                           gap: 14px;" do |f| %>
+      <%= hidden_field_tag :quick_log, "1" %>
       <%= hidden_field_tag "collection_entry[user_id]", user.id %>
       <%= hidden_field_tag "collection_entry[egg_entries_attributes][0][chicken_id]",
                             "",
