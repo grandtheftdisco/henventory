@@ -191,6 +191,37 @@
 		.dashboard-section { min-height: 0; scroll-snap-align: none; }
 	}
 
+	/* Desktop composition (>= 1024px). The shell becomes a 2-col grid
+	   (1.5fr / 1fr per the design plan). Sections claim grid-areas by
+	   name; full-width sections (stats, todays) span both columns. */
+	@media (min-width: 1024px) {
+		.dashboard-shell {
+			display: grid;
+			grid-template-columns: 1.5fr 1fr;
+			grid-template-areas:
+				"greeting  quicklog"
+				"stats     stats"
+				"calendar  leader"
+				"todays    todays";
+			gap: 16px;
+		}
+
+		.dashboard-section[data-section="greeting"]            { grid-area: greeting; }
+		.dashboard-section[data-section="quick-log"]           { grid-area: quicklog; }
+		.dashboard-section[data-section="stats"]               { grid-area: stats; }
+		.dashboard-section[data-section="calendar"]            { grid-area: calendar; }
+		.dashboard-section[data-section="leaderboard"]         { grid-area: leader; }
+		.dashboard-section[data-section="todays-collections"]  { grid-area: todays; }
+
+		/* On desktop the section's flex centering from mobile becomes
+		   stretchy column behavior so cards fill their grid cell height
+		   when paired (calendar + leaderboard most importantly). */
+		.dashboard-section {
+			justify-content: flex-start;
+		}
+		.dashboard-section > * { flex: 1 1 auto; }
+	}
+
 	/* Floating bottom FAB — mobile only. Empty in this slice; the
 	   Quick-Log task wires up its content + open behavior. */
 	.coop-fab {
