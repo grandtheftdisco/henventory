@@ -50,10 +50,13 @@
   </section>
 </div>
 
-<%# Floating chrome — mobile only via CSS. The scroll hint is wired in
-    task #8; in this slice it's a static element. The FAB opens the
-    bottom-sheet variant of Quick-Log. %>
-<div class="coop-scroll-hint" aria-hidden="true" data-visible="true">↓</div>
+<%# Floating chrome — mobile only via CSS. The scroll hint fades when
+    the last section enters the viewport. The FAB opens the bottom-sheet
+    variant of Quick-Log. %>
+<div class="coop-scroll-hint"
+     aria-hidden="true"
+     data-visible="true"
+     data-controller="scroll-hint">↓</div>
 
 <div data-controller="bottom-sheet">
   <button class="coop-fab"

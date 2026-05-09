@@ -251,13 +251,12 @@
 	}
 
 	/* Floating scroll-down hint — mobile only, sits above the FAB.
-	   Empty/static in this slice; scroll_hint_controller in task #8
-	   toggles `data-visible` based on IntersectionObserver. */
+	   Tap scrolls the next dashboard section into view; the bounce
+	   animation reinforces the "scroll" affordance. */
 	.coop-scroll-hint {
 		position: fixed;
 		bottom: 88px;
 		left: 50%;
-		transform: translateX(-50%);
 		width: 36px;
 		height: 36px;
 		border-radius: 9999px;
@@ -269,10 +268,31 @@
 		justify-content: center;
 		opacity: 0.85;
 		z-index: 29;
-		pointer-events: none;
+		cursor: pointer;
+		font-family: var(--font-body);
+		font-size: 16px;
+		line-height: 1;
 		transition: opacity 200ms ease;
+		animation: coop-scroll-hint-bounce 1.8s ease-in-out infinite;
 	}
-	.coop-scroll-hint[data-visible="false"] { opacity: 0; }
+	.coop-scroll-hint[data-visible="false"] {
+		opacity: 0;
+		pointer-events: none;
+		animation-play-state: paused;
+	}
+	.coop-scroll-hint:focus-visible {
+		outline: 2px solid var(--color-coop-primary);
+		outline-offset: 2px;
+	}
+
+	@keyframes coop-scroll-hint-bounce {
+		0%, 100% { transform: translate(-50%, 0); }
+		50%      { transform: translate(-50%, 4px); }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.coop-scroll-hint { animation: none; }
+	}
 
 	@media (min-width: 768px) {
 		.coop-scroll-hint { display: none; }
