@@ -11,17 +11,11 @@
  
 ## 👀 See It in Action!
 Go check out [Henventory](https://www.henventory.com) in production!
-- *-slaps hood-* She's in alpha[^0], folks, so go easy on her.
+
+## 📸 Screenshots
+*Screenshots of the Coop redesign coming soon — finalizing wireframes this week.*
 
 ## 💻 How to Run Henventory Locally
-__________________
-🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
-### UPDATE: 6/13/25
-#### ❗I recently learned that I did not write complete/adequate instructions in this section, thanks to a helpful member of the community! 
-#### 👷‍♀️ Please [reach out to me](mailto:grandtheftdisco@gmail.com) if you want to run the app locally, or if you have similar issues. 
-#### 🛑 Stay tuned for updates to this section, but for now, proceed with caution.
-🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
-___________________
 
 1. `git clone` as per usual
 2. [Install Rails 8](https://guides.rubyonrails.org/install_ruby_on_rails.html) if you don't already have it
@@ -39,7 +33,6 @@ ___________________
 - *full how-to guide coming soon!*
 - Run into any snags? [Gimme a shout](mailto:grandtheftdisco@gmail.com) or submit an [Issue](https://github.com/grandtheftdisco/henventory/issues)
 
-[^0]: I don't have all of the data-analysis tools up and running yet; we're growing a nice crop of data this spring so we've got something to work with in beta development!
 [^1]: I use git bash for Windows, so I'm not sure if this is different for, say, Powershell or CMD
 
 ______________________________________________________________________________
@@ -47,22 +40,33 @@ ______________________________________________________________________________
 ______________________________________________________________________________
  # 📌 What have I been working on recently?
 
- ## Summer & Fall 2025
+ ## The 2026 Rebrand (in flight — May 2026)
 
- **Feature Work:**
- - Added notes field to collection entries so users can record context like broken eggs or unusual laying locations (June)
- - Improved readability by switching daily egg count display from emoji-based tallies to numeric values (August)
+ Henventory is mid-rebrand from its original blue Tailwind palette to **Coop** — a warmer, storybook-tone direction (cream + terracotta, Caprasimo + Nunito). The redesign is mobile-first; desktop is a wider expression of the same system. I broke the work into four independently shippable phases so the live app never sits in a half-redesigned state.
 
- **Production Bug Fixes & Optimization:**
- - **Memory Crisis Mitigation** (October): Tracked down intermittent 502 errors to RAM exhaustion
-   - Reduced Puma workers from 2 to 1 and removed unused Rails engines (Action Mailbox, Action Text)
-   - Dropped memory usage from 97% to 35% 🎉
-   - Installed profiling tools (bullet, rack-mini-profiler, memory_profiler) for future optimization work
-   - Currently evaluating PaaS migration options that won't break the bank
- - **Redirect Hotfix** (November): Fixed deprecated redirect strategy causing 400 errors after collection entry edits
+ - **Phase 0 — Foundations (shipped, [PR #166](https://github.com/grandtheftdisco/henventory/pull/166)):** design tokens, new top bar shell, PWA manifest with Coop branding, `chickens.status` converted to a Rails enum, `accent_color`/`accent_secondary` columns + `BREED_TINTS` backfill, a new `DashboardStats` query object, and DB indexes for its query patterns. Zero user-visible feature regression — the foundations went live under the old UI.
+ - **Phase 1 — Layer dashboard (in PR, ~2,100 LOC):** replaces the old marketing home for Layer-mode users with a snap-scrolled mobile dashboard: greeting card, 2×2 stat strip, month calendar grid, Quick-Log bottom sheet driven by a FAB, leaderboard ("Employee of the Month"), and a horizontal Today's-Collections strip. Quick-Log submits over Turbo Streams; desktop (≥1024px) collapses the mobile-first source order into a 2-column grid via CSS grid areas. Includes a TZ-boundary test for `DashboardStats` (household in Pacific, egg logged at 11pm local = next-day UTC — the kind of bug you only catch if you write the test).
+ - **Phase 2 — New Chicken form redesign:** next up. Includes client-side fuzzy breed matching via fuse.js (36-item list, no Algolia needed) and the CSP/inline-script cleanup tracked in `FLAGS.md`.
+ - **Phases 3 & 4 — Flock-mode dashboard + Today's-view redesign:** queued behind Phase 2.
 
- **What I'm Learning:**
- Production debugging is a whole different beast from local development. Memory profiling and production monitoring are now firmly in my toolbox, and I'm getting comfortable with the trade-offs between performance optimization and infrastructure costs.
+ ## Late 2025: `collected_at` + phased deployment (November)
+
+ Users had been asking to backdate entries when they collected eggs in the morning but didn't log them until evening. Shipping this meant a schema change on a production table without a maintenance window, so I ran a phased rollout:
+
+ 1. Deploy nullable `collected_at` column + index
+ 2. Backfill from `created_at` in the Render console
+ 3. Switch views to read `collected_at` with a `created_at` fallback
+ 4. Deploy `NOT NULL` constraint
+ 5. Layer in validations and the 24-hour edit window
+
+ Also wired up Flatpickr (via `stimulus-flatpickr`) for the timepicker UI and untangled some genuinely interesting time zone handling — parsing the user's local timepicker selection into UTC before storage, then sorting by user-zone-aware timestamps on the way back out.
+
+ ## The gap: late November 2025 → early May 2026
+
+ Henventory was paused during this stretch while I was on a full-time client engagement. Picked back up in May with the rebrand work above.
+
+ **What I'm taking away from this stretch:**
+ Phase 0/1 was the first time I planned a multi-phase redesign upfront (see `DESIGN_PLAN.md` and `PHASE_1_PLAN.md` in the repo) instead of diving in — a direct response to the "I'd do more planning upfront" lesson from the alpha. Locking decisions and pinning open questions before writing code made every individual slice shippable on its own, which is the property I actually wanted.
 
 ______________________________________________________________________________
 ______________________________________________________________________________
