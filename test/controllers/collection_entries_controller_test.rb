@@ -30,8 +30,11 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
     target = Date.current - 3.days
     get today_url(date: target.iso8601)
     assert_response :success
-    # When viewing a non-today date, the heading reflects the chosen day.
-    assert_match(target.strftime("%b"), @response.body)
+    # When viewing a non-today date, the heading reflects the chosen day
+    # exactly. Match the day-of-month too so an off-by-one TZ bug in
+    # parse_viewing_date / the household-tz conversion can't slip past
+    # a loose month-only match.
+    assert_match(target.strftime("%A, %b %-d"), @response.body)
     assert_no_match(/Today's Count/, @response.body)
   end
 
