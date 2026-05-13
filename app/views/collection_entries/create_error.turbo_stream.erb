@@ -1,0 +1,24 @@
+<%# Quick-Log validation failure (e.g. third egg of the day from one hen).
+    Replace both Quick-Log frames with a version that renders an inline
+    error banner above the form. On the next successful submit the frames
+    are replaced again, clearing the banner. %>
+
+<%= turbo_stream.replace "quick_log_inline" do %>
+  <%= render "dashboards/sections/quick_log",
+        frame_id: "quick_log_inline",
+        chickens: @quick_log[:top],
+        other_chickens: @quick_log[:other],
+        user: Current.user,
+        no_chickens: @no_chickens,
+        errors: @collection_entry.errors %>
+<% end %>
+
+<%= turbo_stream.replace "quick_log_sheet" do %>
+  <%= render "dashboards/sections/quick_log",
+        frame_id: "quick_log_sheet",
+        chickens: @quick_log[:top],
+        other_chickens: @quick_log[:other],
+        user: Current.user,
+        no_chickens: @no_chickens,
+        errors: @collection_entry.errors %>
+<% end %>

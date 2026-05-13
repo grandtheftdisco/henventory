@@ -1,0 +1,9 @@
+<%# Inline error region for Quick-Log Turbo Stream responses.
+    Renders only when `errors` is a non-empty ActiveModel::Errors (passed
+    from create_error.turbo_stream.erb). On the success path the frame is
+    replaced wholesale, naturally clearing the banner. %>
+<% if local_assigns[:errors].present? && errors.any? %>
+  <div class="quick-log-flash" role="alert" aria-live="polite">
+    <%= errors.full_messages.first %>
+  </div>
+<% end %>

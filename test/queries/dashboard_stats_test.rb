@@ -262,6 +262,170 @@ class DashboardStatsTest < ActiveSupport::TestCase
     assert_nil data["2026-04-01"]
   end
 
+  test "month_calendar_data uses household TZ for month boundaries" do
+    # Regression guard for the month_range refactor. The old version built
+    # the month boundary in the app's default TZ and *converted* it to the
+    # household TZ (same instant, possibly a different wall-clock date).
+    # The new version constructs the boundary inside the household TZ via
+    # Time.use_zone(household_tz) { Time.zone.local(...) }, so the range
+    # spans the household's wall-clock month.
+    #
+    # Scenario: app default TZ is UTC; household is in Los Angeles, which
+    # is UTC-7 during April (daylight time). Two egg entries straddle the
+    # April UTC/Los Angeles month boundaries — only the one whose Los
+    # Angeles wall-clock date falls in April should be in the result.
+    la_household = make_household(time_zone: "America/Los_Angeles")
+    la_user = make_user(la_household)
+    chicken = make_chicken(la_household, name: "Petunia")
+
+    # 2026-04-01 03:00 UTC == 2026-03-31 20:00 Los Angeles → March 31 locally,
+    # must NOT appear in April's calendar.
+    log_eggs(la_household, la_user, chicken,
+             count: 5, at: Time.utc(2026, 4, 1, 3, 0))
+
+    # 2026-05-01 03:00 UTC == 2026-04-30 20:00 Los Angeles → April 30 locally,
+    # MUST appear in April's calendar (even though it's already May in UTC).
+    log_eggs(la_household, la_user, chicken,
+             count: 7, at: Time.utc(2026, 5, 1, 3, 0))
+
+    Time.use_zone("UTC") do
+      stats = DashboardStats.new(la_household, now: @now)
+      data = stats.month_calendar_data(year: 2026, month: 4)
+
+      assert_equal 7, data["2026-04-30"],
+        "Apr 30 Los Angeles (May 1 03:00 UTC) should be in April's calendar"
+      assert_nil data["2026-03-31"],
+        "Mar 31 Los Angeles (Apr 1 03:00 UTC) leaked into April"
+    end
+  end
+
+  test "month_calendar_data handles a US DST start within the requested month" do
+    # In 2026, Los Angeles springs forward on Sunday, March 8 at 02:00 local
+    # (UTC-8 PST → UTC-7 PDT). The month_range for March must still span the
+    # full local month and bucket March 8 eggs under "2026-03-08" — i.e. the
+    # 23-hour day must not get lost or aliased to March 7 / March 9.
+    la_household = make_household(time_zone: "America/Los_Angeles")
+    la_user = make_user(la_household)
+    chicken = make_chicken(la_household, name: "Petunia")
+
+    # Pre-transition: 2026-03-08 01:30 PST == 2026-03-08 09:30 UTC.
+    log_eggs(la_household, la_user, chicken,
+             count: 3, at: Time.utc(2026, 3, 8, 9, 30))
+
+    # Post-transition: 2026-03-08 03:30 PDT == 2026-03-08 10:30 UTC.
+    # (02:00–02:59 local does not exist on this date.)
+    log_eggs(la_household, la_user, chicken,
+             count: 4, at: Time.utc(2026, 3, 8, 10, 30))
+
+    Time.use_zone("UTC") do
+      stats = DashboardStats.new(la_household, now: @now)
+      data = stats.month_calendar_data(year: 2026, month: 3)
+
+      assert_equal 7, data["2026-03-08"],
+        "Both entries on the DST-start day should be bucketed under March 8"
+      assert_nil data["2026-03-07"]
+      assert_nil data["2026-03-09"]
+    end
+  end
+
+  # ---- quick_log_eligibility ----
+
+  test "quick_log_eligibility ranks top hens by last-7-day eggs and pushes the rest to other" do
+    a = make_chicken(@household, name: "Alpha")
+    b = make_chicken(@household, name: "Bravo")
+    c = make_chicken(@household, name: "Charlie")
+    d = make_chicken(@household, name: "Delta")
+    e = make_chicken(@household, name: "Echo")
+
+    log_eggs(@household, @user, a, count: 2, at: @now - 1.day)
+    log_eggs(@household, @user, a, count: 2, at: @now - 2.days)  # alpha: 4
+    log_eggs(@household, @user, b, count: 2, at: @now - 1.day)   # bravo: 2
+    log_eggs(@household, @user, c, count: 1, at: @now - 1.day)   # charlie: 1
+    # delta + echo: 0
+
+    stats = DashboardStats.new(@household, now: @now)
+    result = stats.quick_log_eligibility(top_n: 4)
+
+    top_names = result[:top].map { |r| r[:chicken].name }
+    other_names = result[:other].map { |r| r[:chicken].name }
+
+    # Alpha then Bravo by score; Charlie + one zero-score in the top-4 by tiebreak;
+    # the remaining zero-score hen goes to other.
+    assert_equal "Alpha", top_names.first
+    assert_equal "Bravo", top_names[1]
+    assert_includes top_names, "Charlie"
+    assert_equal 4, result[:top].length
+    assert_equal 1, result[:other].length
+    # Other is sorted alphabetically; both delta and echo are zero so whichever
+    # tiebreaker put one in top-4, the other lands here.
+    assert_includes %w[Delta Echo], other_names.first
+  end
+
+  test "quick_log_eligibility excludes hens with 2 entries today" do
+    a = make_chicken(@household, name: "Alpha")
+    b = make_chicken(@household, name: "Bravo")
+    log_eggs(@household, @user, a, count: 1, at: @now - 1.hour)
+    log_eggs(@household, @user, a, count: 1, at: @now - 30.minutes)
+    log_eggs(@household, @user, b, count: 1, at: @now - 1.hour)
+
+    stats = DashboardStats.new(@household, now: @now)
+    result = stats.quick_log_eligibility
+
+    names = (result[:top] + result[:other]).map { |r| r[:chicken].name }
+    refute_includes names, "Alpha"
+    assert_includes names, "Bravo"
+  end
+
+  test "quick_log_eligibility excludes retired and expired hens" do
+    make_chicken(@household, name: "Alive", status: "layer")
+    make_chicken(@household, name: "Retired", status: "retired")
+    make_chicken(@household, name: "Expired", status: "expired")
+
+    stats = DashboardStats.new(@household, now: @now)
+    result = stats.quick_log_eligibility
+
+    names = (result[:top] + result[:other]).map { |r| r[:chicken].name }
+    assert_equal ["Alive"], names
+  end
+
+  test "quick_log_eligibility carries each hen's eggs_today count" do
+    a = make_chicken(@household, name: "Alpha")
+    log_eggs(@household, @user, a, count: 1, at: @now - 1.hour)
+
+    stats = DashboardStats.new(@household, now: @now)
+    row = stats.quick_log_eligibility[:top].find { |r| r[:chicken].id == a.id }
+    assert_equal 1, row[:eggs_today]
+  end
+
+  # ---- timezone correctness ----
+
+  test "today_count respects the household's time zone at the UTC day boundary" do
+    # Regression guard for Issue D from the Phase 0 review: every other test
+    # in this file uses UTC, which would mask a TZ-math bug. An egg logged at
+    # 11pm Pacific is the *next day* in UTC, but should still count toward
+    # the *Pacific* day's tally — the household lives in Pacific time.
+    pacific = make_household(time_zone: "America/Los_Angeles")
+    user = make_user(pacific)
+    chicken = make_chicken(pacific, name: "TZ Hen")
+
+    # 23:30 Pacific on 2026-04-29 is 06:30 UTC on 2026-04-30. "Now" for the
+    # household is still 2026-04-29; the egg belongs to that day.
+    pacific_evening = Time.zone.parse("2026-04-29 23:30:00 -0700")
+    pacific_now = Time.zone.parse("2026-04-29 23:45:00 -0700")
+    log_eggs(pacific, user, chicken, count: 3, at: pacific_evening)
+
+    stats = DashboardStats.new(pacific, now: pacific_now)
+    assert_equal 3, stats.today_count, "egg logged at 11:30pm Pacific should count toward Pacific's today"
+    assert_equal 1, stats.today_collections_count
+
+    # Same data, but "now" is the next morning in Pacific — the late-night
+    # egg now belongs to *yesterday* and should NOT appear in today_count.
+    next_morning = Time.zone.parse("2026-04-30 08:00:00 -0700")
+    next_day_stats = DashboardStats.new(pacific, now: next_morning)
+    assert_equal 0, next_day_stats.today_count
+    assert_equal 0, next_day_stats.today_collections_count
+  end
+
   # ---- todays_collections ----
 
   test "todays_collections returns today's entries newest-first" do

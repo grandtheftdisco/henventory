@@ -157,6 +157,675 @@
 	}
 
 	/* ----------------------------------------------------------
+	   Phase 1 dashboard shell.
+
+	   Mobile (< 768px): vertical snap-scroll, each section snaps to
+	   the top of the viewport. The body becomes the scrollport so
+	   we get natural mobile chrome (URL bar collapsing, etc.).
+	   Sections size to the dynamic viewport (svh), which accounts
+	   for the iOS bottom address bar without jumpiness.
+
+	   Desktop (>= 768px): no snap, sections flow naturally.
+	   ---------------------------------------------------------- */
+	body.dashboard-snap {
+		scroll-snap-type: y mandatory;
+	}
+
+	.dashboard-shell {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	.dashboard-section {
+		scroll-snap-align: start;
+		scroll-snap-stop: always;
+		min-height: calc(100svh - 32px);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	@media (min-width: 768px) {
+		body.dashboard-snap { scroll-snap-type: none; }
+		.dashboard-section { min-height: 0; scroll-snap-align: none; }
+	}
+
+	/* Desktop composition (>= 1024px). The shell becomes a 2-col grid
+	   (1.5fr / 1fr per the design plan). Sections claim grid-areas by
+	   name; full-width sections (stats, todays) span both columns. */
+	@media (min-width: 1024px) {
+		.dashboard-shell {
+			display: grid;
+			grid-template-columns: 1.5fr 1fr;
+			grid-template-areas:
+				"greeting  quicklog"
+				"stats     stats"
+				"calendar  leader"
+				"todays    todays";
+			gap: 16px;
+		}
+
+		.dashboard-section[data-section="greeting"]            { grid-area: greeting; }
+		.dashboard-section[data-section="quick-log"]           { grid-area: quicklog; }
+		.dashboard-section[data-section="stats"]               { grid-area: stats; }
+		.dashboard-section[data-section="calendar"]            { grid-area: calendar; }
+		.dashboard-section[data-section="leaderboard"]         { grid-area: leader; }
+		.dashboard-section[data-section="todays-collections"]  { grid-area: todays; }
+
+		/* On desktop the section's flex centering from mobile becomes
+		   stretchy column behavior so cards fill their grid cell height
+		   when paired (calendar + leaderboard most importantly). */
+		.dashboard-section {
+			justify-content: flex-start;
+		}
+		.dashboard-section > * { flex: 1 1 auto; }
+	}
+
+	/* Floating bottom FAB — mobile only. Empty in this slice; the
+	   Quick-Log task wires up its content + open behavior. */
+	.coop-fab {
+		position: fixed;
+		bottom: 20px;
+		right: 20px;
+		width: 56px;
+		height: 56px;
+		border-radius: 9999px;
+		background-color: var(--color-coop-primary);
+		color: var(--color-coop-cream);
+		border: none;
+		box-shadow: 0 6px 16px rgba(45, 31, 16, 0.18);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: var(--font-display);
+		font-size: 28px;
+		line-height: 1;
+		cursor: pointer;
+		z-index: 30;
+	}
+	.coop-fab:hover { filter: brightness(0.94); }
+
+	@media (min-width: 768px) {
+		.coop-fab { display: none; }
+	}
+
+	/* Floating scroll-down hint — mobile only, sits above the FAB.
+	   Tap scrolls the next dashboard section into view; the bounce
+	   animation reinforces the "scroll" affordance. */
+	.coop-scroll-hint {
+		position: fixed;
+		bottom: 88px;
+		left: 50%;
+		width: 36px;
+		height: 36px;
+		border-radius: 9999px;
+		background-color: var(--color-coop-surface);
+		border: 1px solid var(--color-coop-line);
+		color: var(--color-coop-ink-soft);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0.85;
+		z-index: 29;
+		cursor: pointer;
+		font-family: var(--font-body);
+		font-size: 16px;
+		line-height: 1;
+		transition: opacity 200ms ease;
+		animation: coop-scroll-hint-bounce 1.8s ease-in-out infinite;
+	}
+	.coop-scroll-hint[data-visible="false"] {
+		opacity: 0;
+		pointer-events: none;
+		animation-play-state: paused;
+	}
+	.coop-scroll-hint:focus-visible {
+		outline: 2px solid var(--color-coop-primary);
+		outline-offset: 2px;
+	}
+
+	@keyframes coop-scroll-hint-bounce {
+		0%, 100% { transform: translate(-50%, 0); }
+		50%      { transform: translate(-50%, 4px); }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.coop-scroll-hint { animation: none; }
+	}
+
+	@media (min-width: 768px) {
+		.coop-scroll-hint { display: none; }
+	}
+
+	/* Stat strip 2×2 (mobile). At md+ this becomes 4-col in task #8. */
+	.dashboard-stat-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 12px;
+	}
+
+	.dashboard-stat-tile {
+		padding: 16px 18px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		min-height: 110px;
+	}
+
+	.dashboard-stat-tile .coop-kicker {
+		margin: 0 0 6px;
+	}
+
+	.dashboard-stat-value {
+		font-family: var(--font-display);
+		font-size: 36px;
+		line-height: 1;
+		color: var(--color-coop-ink);
+		letter-spacing: -0.02em;
+		margin: 0;
+	}
+
+	.dashboard-stat-name {
+		font-family: var(--font-display);
+		font-size: 22px;
+		line-height: 1.1;
+		color: var(--color-coop-ink);
+		letter-spacing: -0.01em;
+		margin: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.dashboard-stat-sub {
+		font-family: var(--font-body);
+		font-size: 12px;
+		color: var(--color-coop-ink-soft);
+		margin: 4px 0 0;
+		line-height: 1.3;
+	}
+
+	@media (min-width: 1024px) {
+		.dashboard-stat-grid {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
+	}
+
+	/* Month calendar grid — full-width 7-col, mobile-first. */
+	.dashboard-calendar {
+		padding: 16px 14px 18px;
+	}
+
+	.dashboard-calendar-header {
+		margin-bottom: 10px;
+	}
+
+	.dashboard-calendar-weekdays {
+		display: grid;
+		grid-template-columns: repeat(7, minmax(0, 1fr));
+		gap: 4px;
+		font-family: var(--font-mono);
+		font-size: 10px;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--color-coop-ink-soft);
+		text-align: center;
+		margin-bottom: 6px;
+	}
+
+	.dashboard-calendar-grid {
+		display: grid;
+		grid-template-columns: repeat(7, minmax(0, 1fr));
+		gap: 4px;
+	}
+
+	.dashboard-calendar-day {
+		aspect-ratio: 1 / 1;
+		min-height: 44px;
+		border-radius: 8px;
+		background-color: var(--color-coop-bg-alt);
+		color: var(--color-coop-ink);
+		text-decoration: none;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 2px;
+		font-family: var(--font-body);
+		border: 1px solid transparent;
+		transition: background-color 120ms ease, border-color 120ms ease;
+	}
+
+	.dashboard-calendar-day:hover {
+		background-color: var(--color-coop-line);
+	}
+
+	.dashboard-calendar-day.is-today {
+		border-color: var(--color-coop-ink);
+		border-width: 2px;
+	}
+
+	.dashboard-calendar-day.has-eggs {
+		background-color: var(--color-coop-primary-soft);
+	}
+
+	.dashboard-calendar-day.has-eggs:hover {
+		filter: brightness(0.96);
+	}
+
+	.dashboard-calendar-day.is-spacer {
+		background-color: transparent;
+		pointer-events: none;
+	}
+
+	.dashboard-calendar-daynum {
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1;
+	}
+
+	.dashboard-calendar-count {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		font-weight: 600;
+		color: var(--color-coop-primary);
+		line-height: 1;
+	}
+
+	/* ----------------------------------------------------------
+	   Quick-Log panel (mobile-first).
+
+	   The Quick-Log is rendered twice: once inline in section 2
+	   (visible at >= 1024px) and once inside the bottom sheet
+	   (visible at < 768px). Between 768px and 1024px the inline
+	   version stays hidden — the FAB is still the entry point.
+	   ---------------------------------------------------------- */
+	.quick-log-pills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+
+	.quick-log-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 6px 10px 6px 6px;
+		border-radius: 9999px;
+		border: 1px solid rgba(255, 255, 255, 0.35);
+		background-color: rgba(255, 255, 255, 0.12);
+		color: var(--color-coop-cream);
+		font-family: var(--font-body);
+		font-size: 13px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 120ms ease, border-color 120ms ease;
+	}
+
+	.quick-log-pill:hover { background-color: rgba(255, 255, 255, 0.22); }
+
+	.quick-log-pill.is-selected {
+		background-color: var(--color-coop-cream);
+		color: var(--color-coop-primary);
+		border-color: var(--color-coop-cream);
+	}
+
+	.quick-log-pill.is-other {
+		padding: 6px 12px;
+		font-style: italic;
+		opacity: 0.85;
+	}
+
+	.quick-log-pill-swatch {
+		width: 22px;
+		height: 22px;
+		border-radius: 9999px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-family: var(--font-display);
+		font-size: 12px;
+		color: var(--color-coop-ink);
+		flex-shrink: 0;
+	}
+
+	.quick-log-pill-tally {
+		font-size: 11px;
+		line-height: 1;
+		opacity: 0.9;
+	}
+
+	.quick-log-actions {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 8px;
+	}
+
+	.quick-log-action {
+		min-height: 52px;
+		border-radius: 12px;
+		background-color: var(--color-coop-cream);
+		color: var(--color-coop-primary);
+		border: 1px solid var(--color-coop-cream);
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 15px;
+		cursor: pointer;
+		transition: opacity 120ms ease, filter 120ms ease;
+	}
+
+	.quick-log-action:hover:not([disabled]) { filter: brightness(0.96); }
+
+	.quick-log-action[disabled] {
+		opacity: 0.55;
+		cursor: not-allowed;
+	}
+
+	.quick-log-action-note {
+		background-color: transparent;
+		color: var(--color-coop-cream);
+		border-color: rgba(255, 255, 255, 0.45);
+	}
+
+	.quick-log-note-input {
+		width: 100%;
+		min-height: 60px;
+		padding: 10px 12px;
+		border-radius: 8px;
+		border: 1px solid rgba(255, 255, 255, 0.35);
+		background-color: rgba(255, 255, 255, 0.92);
+		color: var(--color-coop-ink);
+		font-family: var(--font-body);
+		font-size: 14px;
+		resize: vertical;
+	}
+
+	/* Inline error banner for Quick-Log validation failures. Sits inside
+	   the turbo-frame, above the form, and gets swapped in/out with the
+	   rest of the frame on each create response. */
+	.quick-log-flash {
+		background-color: var(--color-coop-cream);
+		color: var(--color-coop-primary);
+		border-radius: 8px;
+		padding: 8px 12px;
+		margin-bottom: 10px;
+		font-family: var(--font-body);
+		font-size: 13px;
+		line-height: 1.4;
+		font-weight: 600;
+	}
+
+	/* Visibility split: inline (desktop) vs bottom sheet (mobile).
+	   Below 1024px the inline section is hidden — the FAB is the entry
+	   point. >= 1024px the inline section is visible and the FAB hidden
+	   (the FAB rule above already does this at >= 768px, so the inline
+	   visibility rule kicks in slightly later). */
+	.dashboard-section-quick-log { display: none; }
+
+	@media (min-width: 1024px) {
+		.dashboard-section-quick-log { display: flex; }
+	}
+
+	/* ----------------------------------------------------------
+	   Bottom sheet — mobile only (< 768px). Hidden at md+.
+	   ---------------------------------------------------------- */
+	.coop-bottom-sheet-backdrop {
+		position: fixed;
+		inset: 0;
+		background-color: rgba(45, 31, 16, 0.45);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 200ms ease;
+		z-index: 40;
+	}
+
+	.coop-bottom-sheet-backdrop[data-open="true"] {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.coop-bottom-sheet {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		max-height: 88vh;
+		background-color: var(--color-coop-cream);
+		border-top-left-radius: 18px;
+		border-top-right-radius: 18px;
+		box-shadow: 0 -8px 24px rgba(45, 31, 16, 0.18);
+		transform: translateY(100%);
+		transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+		z-index: 41;
+		overflow-y: auto;
+		padding: 0 14px 24px;
+	}
+
+	.coop-bottom-sheet[data-open="true"] { transform: translateY(0); }
+
+	.coop-bottom-sheet-header {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		padding: 10px 0 6px;
+	}
+
+	.coop-bottom-sheet-handle {
+		width: 36px;
+		height: 4px;
+		border-radius: 9999px;
+		background-color: var(--color-coop-line);
+	}
+
+	.coop-bottom-sheet-close {
+		position: absolute;
+		right: 4px;
+		top: 4px;
+		width: 32px;
+		height: 32px;
+		border-radius: 9999px;
+		background: transparent;
+		border: none;
+		color: var(--color-coop-ink-soft);
+		font-size: 22px;
+		line-height: 1;
+		cursor: pointer;
+	}
+
+	.coop-bottom-sheet-body { padding-top: 4px; }
+
+	@media (min-width: 768px) {
+		.coop-bottom-sheet,
+		.coop-bottom-sheet-backdrop { display: none; }
+	}
+
+	/* ----------------------------------------------------------
+	   Leaderboard (Employee of the Month).
+	   ---------------------------------------------------------- */
+	.dashboard-leaderboard {
+		padding: 16px 18px;
+	}
+
+	.dashboard-leaderboard-rows {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.dashboard-leaderboard-row {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 8px 10px;
+		background-color: var(--color-coop-bg-alt);
+		border-radius: 10px;
+	}
+
+	.dashboard-leaderboard-rank {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		font-weight: 700;
+		color: var(--color-coop-ink-soft);
+		min-width: 28px;
+		flex-shrink: 0;
+	}
+
+	.dashboard-leaderboard-swatch {
+		width: 32px;
+		height: 32px;
+		border-radius: 9999px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-family: var(--font-display);
+		font-size: 14px;
+		color: var(--color-coop-ink);
+		flex-shrink: 0;
+		border: 1px solid var(--color-coop-line);
+	}
+
+	.dashboard-leaderboard-name {
+		font-family: var(--font-display);
+		font-size: 16px;
+		line-height: 1.1;
+		color: var(--color-coop-ink);
+		margin: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.dashboard-leaderboard-breed {
+		font-family: var(--font-body);
+		font-size: 11px;
+		color: var(--color-coop-ink-soft);
+		margin: 1px 0 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.dashboard-leaderboard-count {
+		font-family: var(--font-display);
+		font-size: 18px;
+		color: var(--color-coop-primary);
+		flex-shrink: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		line-height: 1;
+		gap: 2px;
+	}
+
+	/* ----------------------------------------------------------
+	   Today's Collections — horizontal scroll strip.
+	   ---------------------------------------------------------- */
+	.dashboard-todays-strip {
+		display: flex;
+		gap: 10px;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scroll-padding: 6px;
+		padding-bottom: 4px;
+		margin: 0 -4px;
+		scrollbar-width: thin;
+	}
+
+	.dashboard-todays-card {
+		flex: 0 0 200px;
+		scroll-snap-align: start;
+		background-color: var(--color-coop-bg-alt);
+		border: 1px solid var(--color-coop-line);
+		border-radius: 12px;
+		padding: 12px 14px;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		min-height: 132px;
+	}
+
+	.dashboard-todays-card-time {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--color-coop-ink-soft);
+	}
+
+	.dashboard-todays-card-eggs {
+		display: flex;
+		align-items: baseline;
+		gap: 6px;
+	}
+
+	.dashboard-todays-card-count {
+		font-family: var(--font-display);
+		font-size: 28px;
+		line-height: 1;
+		color: var(--color-coop-ink);
+		letter-spacing: -0.01em;
+	}
+
+	.dashboard-todays-card-egglabel {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		color: var(--color-coop-ink-soft);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.dashboard-todays-card-swatches {
+		display: flex;
+		gap: 4px;
+		margin-top: 2px;
+	}
+
+	.dashboard-todays-card-swatch {
+		width: 18px;
+		height: 18px;
+		border-radius: 9999px;
+		border: 1px solid var(--color-coop-line);
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-family: var(--font-mono);
+		font-size: 9px;
+		font-weight: 700;
+		color: var(--color-coop-ink-soft);
+	}
+
+	.dashboard-todays-card-swatch.is-overflow {
+		background-color: var(--color-coop-cream);
+	}
+
+	.dashboard-todays-card-note {
+		font-family: var(--font-body);
+		font-size: 12px;
+		font-style: italic;
+		color: var(--color-coop-ink-soft);
+		margin: 4px 0 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+	}
+
+	.dashboard-todays-card-by {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		color: var(--color-coop-ink-soft);
+		margin: auto 0 0;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	/* ----------------------------------------------------------
 	   Deferred cleanup — these classes still drive
 	   collection_entries/index.html.erb (the old All Entries page).
 	   That view is being replaced in Phase 4 (full graphical calendar).

@@ -1,0 +1,69 @@
+<%#
+  locals:
+    stats: DashboardStats — for employee_of_the_month
+
+  Top-4 hens by current-month egg count, rendered as ranked rows. Each
+  row: rank chip + breed-tinted swatch + name + breed + count.
+
+  Empty state: when no hens have laid this month, show a quiet copy line
+  rather than an empty card. The greeting blurb already covers the
+  "coop is quiet" message; here we keep it terse.
+
+  TODO(phase-2): the inline `style="..."` blocks below predate the
+  Phase 2 design-token pass. When the named classes / utility layer
+  settle, lift these inline rules into the stylesheet so a designer
+  can change them from one place. Non-blocking; flagged in the
+  Phase 1 code review as a deliberate next-pass cleanup.
+%>
+<%
+  rows = stats.employee_of_the_month
+%>
+<div class="coop-card dashboard-leaderboard">
+  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px;">
+    <p class="coop-kicker" style="margin: 0;">Employee of the Month</p>
+    <p style="font-family: var(--font-mono);
+              font-size: 11px;
+              color: var(--color-coop-ink-soft);
+              margin: 0;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;">
+      Top <%= rows.length %>
+    </p>
+  </div>
+
+  <% if rows.empty? %>
+    <p style="font-family: var(--font-body);
+              font-size: 14px;
+              font-style: italic;
+              color: var(--color-coop-ink-soft);
+              margin: 0;">
+      No eggs logged this month yet.
+    </p>
+  <% else %>
+    <ol class="dashboard-leaderboard-rows">
+      <% rows.each do |row| %>
+        <% c = row[:chicken] %>
+        <% swatch = c.accent_color.presence || "var(--color-coop-bg-alt)" %>
+        <% initial = c.name.to_s.strip[0]&.upcase || "?" %>
+        <li class="dashboard-leaderboard-row">
+          <span class="dashboard-leaderboard-rank">#<%= row[:rank] %></span>
+          <span class="dashboard-leaderboard-swatch"
+                style="background-color: <%= swatch %>;"
+                aria-hidden="true">
+            <%= initial %>
+          </span>
+          <div style="min-width: 0; flex: 1;">
+            <p class="dashboard-leaderboard-name"><%= c.name %></p>
+            <p class="dashboard-leaderboard-breed"><%= c.breed %></p>
+          </div>
+          <span class="dashboard-leaderboard-count">
+            <%= row[:egg_count] %>
+            <span style="font-family: var(--font-mono); font-size: 10px; color: var(--color-coop-ink-soft); text-transform: uppercase; letter-spacing: 0.05em;">
+              <%= "egg".pluralize(row[:egg_count]) %>
+            </span>
+          </span>
+        </li>
+      <% end %>
+    </ol>
+  <% end %>
+</div>

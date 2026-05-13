@@ -30,8 +30,11 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
     target = Date.current - 3.days
     get today_url(date: target.iso8601)
     assert_response :success
-    # When viewing a non-today date, the heading reflects the chosen day.
-    assert_match(target.strftime("%b"), @response.body)
+    # When viewing a non-today date, the heading reflects the chosen day
+    # exactly. Match the day-of-month too so an off-by-one TZ bug in
+    # parse_viewing_date / the household-tz conversion can't slip past
+    # a loose month-only match.
+    assert_match(target.strftime("%A, %b %-d"), @response.body)
     assert_no_match(/Today's Count/, @response.body)
   end
 
@@ -150,6 +153,87 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
     assert_difference("CollectionEntry.count", -1) do
       delete collection_entry_url(@collection_entry)
     end
+
+    assert_redirected_to today_path
+  end
+
+  # ---- Turbo Stream submissions from Quick-Log ----
+
+  test "Quick-Log submit responds with a stream replacing both quick_log frames" do
+    @user.update!(mode: "layer")
+
+    assert_difference("CollectionEntry.count") do
+      post collection_entries_url,
+        params: {
+          quick_log: "1",
+          collection_entry: {
+            user_id: @user.id,
+            egg_entries_attributes: {
+              "0" => { egg_count: 1, chicken_id: chickens(:one).id }
+            }
+          }
+        },
+        headers: { "Accept" => "text/vnd.turbo-stream.html" }
+    end
+
+    assert_response :success
+    assert_match %r{turbo-stream}, @response.media_type
+    assert_match %r{turbo-stream action="replace" target="quick_log_inline"}, @response.body
+    assert_match %r{turbo-stream action="replace" target="quick_log_sheet"}, @response.body
+    assert_match %r{turbo-stream action="replace" target="dashboard_stats"}, @response.body
+  end
+
+  test "Quick-Log submit with invalid payload returns 422 stream and does not create" do
+    @user.update!(mode: "layer")
+    chicken = chickens(:one)
+    # Two prior entries today already — third should be rejected by the
+    # only_2_eggs_max_per_day_per_chicken validation.
+    2.times do
+      ce = @household.collection_entries.create!(user: @user, created_at: Time.current)
+      ce.egg_entries.create!(chicken: chicken, egg_count: 1)
+    end
+
+    assert_no_difference("CollectionEntry.count") do
+      post collection_entries_url,
+        params: {
+          quick_log: "1",
+          collection_entry: {
+            user_id: @user.id,
+            egg_entries_attributes: {
+              "0" => { egg_count: 1, chicken_id: chicken.id }
+            }
+          }
+        },
+        headers: { "Accept" => "text/vnd.turbo-stream.html" }
+    end
+
+    assert_response :unprocessable_entity
+    assert_match %r{turbo-stream action="replace" target="quick_log_inline"}, @response.body
+    # The error must surface in the DOM via an inline banner, not as a
+    # blocking window.alert() injected from a <script> tag.
+    assert_match %r{class="quick-log-flash"}, @response.body
+    assert_no_match %r{window\.alert}, @response.body
+    assert_no_match %r{<script}, @response.body
+  end
+
+  test "legacy form submit still gets HTML redirect, not turbo stream" do
+    # Regression guard: the legacy /collection_entries/new form must NOT
+    # receive a turbo-stream response, because the dashboard frames it
+    # targets don't exist on that page. Without the quick_log marker it
+    # should fall through to the redirect-to-today HTML path.
+    @user.update!(mode: "layer")
+
+    post collection_entries_url,
+      params: {
+        collection_entry: {
+          user_id: @user.id,
+          collected_at: "10:00",
+          egg_entries_attributes: {
+            "0" => { egg_count: 1, chicken_id: chickens(:one).id }
+          }
+        }
+      },
+      headers: { "Accept" => "text/vnd.turbo-stream.html, text/html, application/xhtml+xml" }
 
     assert_redirected_to today_path
   end

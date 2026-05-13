@@ -1,0 +1,74 @@
+<%#
+  locals:
+    now:   Time in the household's TZ (used for greeting + date label)
+    user:  Current.user
+    stats: DashboardStats — used for the italic blurb (today's standout hen)
+
+  The greeting card has four stacked elements per the design plan:
+    - small display-font greeting ("Mornin', Nana.")
+    - mono date ("Wednesday, April 29")
+    - dashed divider
+    - italic blurb, with hen names tinted --coop-primary
+
+  TODO(phase-2): the inline `style="..."` blocks below predate the
+  Phase 2 design-token pass. When the named classes / utility layer
+  settle, lift these inline rules into the stylesheet so a designer
+  can change them from one place. Non-blocking; flagged in the
+  Phase 1 code review as a deliberate next-pass cleanup.
+%>
+<%
+  hour = now.hour
+  greeting_word =
+    case hour
+    when 0..4   then "Late night"
+    when 5..11  then "Mornin'"
+    when 12..16 then "Afternoon"
+    when 17..20 then "Evening"
+    else             "Howdy"
+    end
+
+  display_name = user.display_name.presence || user.email_address.split("@").first
+
+  # Pull the standout hen for today's blurb. Falls through to a generic
+  # message when no eggs have been logged yet today.
+  best = stats.best_in_flock_this_month
+%>
+<div class="coop-card" style="padding: 24px;">
+  <h1 style="font-family: var(--font-display);
+             font-size: 24px;
+             line-height: 1.1;
+             color: var(--color-coop-ink);
+             letter-spacing: -0.01em;
+             margin: 0 0 6px;">
+    <%= greeting_word %>, <%= display_name %>.
+  </h1>
+
+  <p style="font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            color: var(--color-coop-ink-soft);
+            text-transform: uppercase;
+            margin: 0;">
+    <%= now.strftime("%A, %B %-d") %>
+  </p>
+
+  <hr style="border: none;
+             border-top: 1px dashed var(--color-coop-line);
+             margin: 14px 0;">
+
+  <p style="font-family: var(--font-body);
+            font-size: 14px;
+            line-height: 1.5;
+            font-style: italic;
+            color: var(--color-coop-ink-soft);
+            margin: 0;">
+    <% if best %>
+      <%= tag.span best[:chicken].name,
+            style: "color: var(--color-coop-primary); font-weight: 700; font-style: normal;" %>
+      is leading the flock this month with <%= best[:egg_count] %>
+      <%= "egg".pluralize(best[:egg_count]) %>.
+    <% else %>
+      No eggs logged yet this month — the coop is quiet.
+    <% end %>
+  </p>
+</div>

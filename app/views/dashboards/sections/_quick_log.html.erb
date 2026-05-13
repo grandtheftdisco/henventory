@@ -1,0 +1,138 @@
+<%#
+  locals:
+    frame_id:    DOM id for the wrapping turbo-frame ("quick_log_inline" or
+                 "quick_log_sheet" — see show.html.erb for the dual render)
+    chickens:    array of {chicken: Chicken, eggs_today: Integer} sorted by
+                 last-7-day-eggs DESC, with maxed-out hens excluded
+    other_chickens: same shape, the rest of the eligible flock revealed by
+                 tapping "Other"
+    user:        Current.user — owns the CollectionEntry submission
+    no_chickens: true when the household has no chickens (CTA empty state)
+    errors:      optional ActiveModel::Errors from a failed submit; renders
+                 inline banner inside the frame so a turbo_stream.replace
+                 of the frame surfaces the validation message in the DOM
+
+  Submits a CollectionEntry + nested EggEntry to collection_entries#create.
+  The controller returns a Turbo Stream that replaces every quick_log_*
+  frame, updates the Today count tile, and prepends to Today's Collections.
+
+  "Other" expansion (Q1 first pass):
+    - default visible: top-4 by last-7-day egg count, excludes hens with
+      2 entries today
+    - tap "Other" → reveals other_chickens in the same pill row
+    - if all hens are maxed at 2: show empty-state copy, hide buttons
+    - if no chickens at all: show CTA to add a chicken
+%>
+<turbo-frame id="<%= frame_id %>">
+  <%= render "dashboards/sections/quick_log_flash", errors: local_assigns[:errors] %>
+  <% if no_chickens %>
+    <div class="coop-card quick-log" style="background-color: var(--color-coop-primary);
+                                            color: var(--color-coop-cream);
+                                            border-color: var(--color-coop-primary);">
+      <p class="coop-kicker" style="color: var(--color-coop-cream); opacity: 0.85;">Quick log</p>
+      <p style="font-family: var(--font-body); font-size: 14px; line-height: 1.4; margin: 8px 0 14px;">
+        Add a chicken to start logging eggs.
+      </p>
+      <%= link_to "Add a chicken", new_chicken_path,
+            class: "coop-button-secondary",
+            style: "background-color: var(--color-coop-cream);
+                    color: var(--color-coop-primary);
+                    border-color: var(--color-coop-cream);
+                    text-decoration: none;
+                    font-weight: 700;" %>
+    </div>
+  <% elsif chickens.empty? && other_chickens.empty? %>
+    <div class="coop-card quick-log" style="background-color: var(--color-coop-primary);
+                                            color: var(--color-coop-cream);
+                                            border-color: var(--color-coop-primary);">
+      <p class="coop-kicker" style="color: var(--color-coop-cream); opacity: 0.85;">Quick log</p>
+      <p style="font-family: var(--font-body); font-size: 14px; font-style: italic; margin: 8px 0 0;">
+        Everyone's done laying today 🥚
+      </p>
+    </div>
+  <% else %>
+    <%= form_with url: collection_entries_path,
+                  method: :post,
+                  data: {
+                    controller: "quick-log-layer",
+                    quick_log_layer_target: "form"
+                  },
+                  class: "coop-card quick-log",
+                  style: "background-color: var(--color-coop-primary);
+                          color: var(--color-coop-cream);
+                          border-color: var(--color-coop-primary);
+                          padding: 18px 18px 16px;
+                          display: flex;
+                          flex-direction: column;
+                          gap: 14px;" do |f| %>
+      <%= hidden_field_tag :quick_log, "1" %>
+      <%= hidden_field_tag "collection_entry[user_id]", user.id %>
+      <%= hidden_field_tag "collection_entry[egg_entries_attributes][0][chicken_id]",
+                            "",
+                            data: { quick_log_layer_target: "chickenIdField" } %>
+      <%= hidden_field_tag "collection_entry[egg_entries_attributes][0][egg_count]",
+                            1,
+                            data: { quick_log_layer_target: "eggCountField" } %>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <p class="coop-kicker" style="color: var(--color-coop-cream); opacity: 0.9; margin: 0;">Quick log</p>
+        <p style="margin: 0; font-family: var(--font-mono); font-size: 11px; opacity: 0.85;"
+           data-quick-log-layer-target="hint">Pick a hen</p>
+      </div>
+
+      <div class="quick-log-pills"
+           role="radiogroup"
+           aria-label="Choose chicken"
+           data-quick-log-layer-target="pillRow">
+        <% chickens.each do |row| %>
+          <%= render "dashboards/sections/quick_log_pill", row: row %>
+        <% end %>
+
+        <% if other_chickens.any? %>
+          <% other_chickens.each do |row| %>
+            <%= render "dashboards/sections/quick_log_pill", row: row, hidden: true %>
+          <% end %>
+          <button type="button"
+                  class="quick-log-pill is-other"
+                  data-action="click->quick-log-layer#expandOther"
+                  data-quick-log-layer-target="otherButton">
+            Other
+          </button>
+        <% end %>
+      </div>
+
+      <div class="quick-log-actions" data-quick-log-layer-target="actions">
+        <button type="button"
+                class="quick-log-action"
+                data-action="click->quick-log-layer#submitWithCount"
+                data-egg-count="1"
+                disabled
+                data-quick-log-layer-target="oneButton">
+          1 egg
+        </button>
+        <button type="button"
+                class="quick-log-action"
+                data-action="click->quick-log-layer#submitWithCount"
+                data-egg-count="2"
+                disabled
+                data-quick-log-layer-target="twoButton">
+          2 eggs
+        </button>
+        <button type="button"
+                class="quick-log-action quick-log-action-note"
+                data-action="click->quick-log-layer#toggleNote"
+                disabled
+                data-quick-log-layer-target="noteToggle">
+          + note
+        </button>
+      </div>
+
+      <div class="quick-log-note" data-quick-log-layer-target="noteWrap" hidden>
+        <textarea name="collection_entry[notes]"
+                  placeholder="Add a note (optional)"
+                  rows="2"
+                  class="quick-log-note-input"></textarea>
+      </div>
+    <% end %>
+  <% end %>
+</turbo-frame>

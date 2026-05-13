@@ -1,0 +1,30 @@
+<%#
+  locals:
+    row:    {chicken: Chicken, eggs_today: Integer}
+    hidden: true to render in the "Other" expansion (hidden by default)
+%>
+<%
+  c = row[:chicken]
+  eggs_today = row[:eggs_today]
+  swatch = c.accent_color.presence || "var(--color-coop-cream)"
+  hidden_attr = local_assigns[:hidden] ? "hidden" : nil
+  initial = c.name.to_s.strip[0]&.upcase || "?"
+%>
+<button type="button"
+        class="quick-log-pill"
+        data-action="click->quick-log-layer#selectChicken"
+        data-chicken-id="<%= c.id %>"
+        data-chicken-name="<%= c.name %>"
+        data-eggs-today="<%= eggs_today %>"
+        role="radio"
+        aria-checked="false"
+        <%= hidden_attr %>>
+  <span class="quick-log-pill-swatch" style="background-color: <%= swatch %>;"
+        aria-hidden="true"><%= initial %></span>
+  <span class="quick-log-pill-name"><%= c.name %></span>
+  <% if eggs_today.positive? %>
+    <span class="quick-log-pill-tally" aria-hidden="true">
+      <%= "🥚" * eggs_today %>
+    </span>
+  <% end %>
+</button>

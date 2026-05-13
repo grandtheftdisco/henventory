@@ -1,0 +1,98 @@
+<% content_for :title, "Henventory" %>
+<% content_for :body_class, "dashboard-snap" %>
+
+<%#
+  Layer-mode dashboard shell. Sections are placeholders — they get filled
+  in by subsequent Phase 1 slices:
+
+    Section 1 (greeting) + Section 3 (stat strip)  → task #4
+    Section 4 (calendar grid)                      → task #5
+    Section 2 (Quick-Log) + FAB + bottom sheet     → task #6
+    Section 5 (leaderboard) + Section 6 (today's)  → task #7
+    Desktop layout + scroll hint controller        → task #8
+
+  On mobile the body becomes the scrollport (scroll-snap-type: y mandatory
+  is on `body.dashboard-snap`), so each section snaps to the top as the
+  user scrolls. On desktop snap is disabled and sections flow naturally.
+%>
+<div class="dashboard-shell" data-dashboard>
+  <section class="dashboard-section" data-section="greeting" aria-label="Greeting">
+    <%= render "dashboards/sections/greeting", now: @now, user: Current.user, stats: @stats %>
+  </section>
+
+  <section class="dashboard-section dashboard-section-quick-log"
+           data-section="quick-log"
+           aria-label="Quick log">
+    <%= render "dashboards/sections/quick_log",
+          frame_id: "quick_log_inline",
+          chickens: @quick_log[:top],
+          other_chickens: @quick_log[:other],
+          user: Current.user,
+          no_chickens: @no_chickens %>
+  </section>
+
+  <section class="dashboard-section" data-section="stats" aria-label="Stat strip">
+    <turbo-frame id="dashboard_stats">
+      <%= render "dashboards/sections/stats", stats: @stats, now: @now %>
+    </turbo-frame>
+  </section>
+
+  <section class="dashboard-section" data-section="calendar" aria-label="Month calendar">
+    <%= render "dashboards/sections/calendar", stats: @stats, now: @now %>
+  </section>
+
+  <section class="dashboard-section" data-section="leaderboard" aria-label="Employee of the Month">
+    <%= render "dashboards/sections/leaderboard", stats: @stats %>
+  </section>
+
+  <section class="dashboard-section" data-section="todays-collections" aria-label="Today's collections">
+    <%= render "dashboards/sections/todays_collections", stats: @stats %>
+  </section>
+</div>
+
+<%# Floating chrome — mobile only via CSS. The scroll hint fades when
+    the last section enters the viewport. The FAB opens the bottom-sheet
+    variant of Quick-Log. %>
+<div class="coop-scroll-hint"
+     aria-hidden="true"
+     data-visible="true"
+     data-controller="scroll-hint">↓</div>
+
+<div data-controller="bottom-sheet">
+  <button class="coop-fab"
+          type="button"
+          aria-label="Open quick log"
+          data-action="click->bottom-sheet#open"
+          <%= "disabled" if @no_chickens %>>
+    +
+  </button>
+
+  <div class="coop-bottom-sheet-backdrop"
+       data-bottom-sheet-target="backdrop"
+       data-action="click->bottom-sheet#close"
+       data-open="false"
+       aria-hidden="true"></div>
+
+  <div class="coop-bottom-sheet"
+       data-bottom-sheet-target="sheet"
+       data-open="false"
+       role="dialog"
+       aria-modal="true"
+       aria-label="Quick log">
+    <div class="coop-bottom-sheet-header">
+      <span class="coop-bottom-sheet-handle" aria-hidden="true"></span>
+      <button type="button"
+              class="coop-bottom-sheet-close"
+              aria-label="Close"
+              data-action="click->bottom-sheet#close">×</button>
+    </div>
+    <div class="coop-bottom-sheet-body">
+      <%= render "dashboards/sections/quick_log",
+            frame_id: "quick_log_sheet",
+            chickens: @quick_log[:top],
+            other_chickens: @quick_log[:other],
+            user: Current.user,
+            no_chickens: @no_chickens %>
+    </div>
+  </div>
+</div>

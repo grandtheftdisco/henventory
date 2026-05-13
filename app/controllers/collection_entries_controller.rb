@@ -47,23 +47,37 @@ class CollectionEntriesController < ApplicationController
   end
 
   def create
-    if Current.user.mode == "layer"
-      @collection_entry = Current.household.collection_entries.build(collection_entry_params)
+    @collection_entry = Current.household.collection_entries.build(collection_entry_params)
+    saved = @collection_entry.save
 
-      if @collection_entry.save
-        redirect_to today_path, notice: "Collection entry was successfully created."
+    # Quick-Log (dashboard) submits opt in to a Turbo Stream response by
+    # sending a `quick_log=1` marker. Every other path — the legacy
+    # /collection_entries/new form, curl, etc. — falls through to the
+    # original HTML redirect/re-render flow. Without this gate, Turbo's
+    # default Accept includes text/vnd.turbo-stream.html and our stream
+    # response would target dashboard frames that don't exist on the
+    # legacy form, producing a silent 422 with no UI feedback.
+    quick_log = params[:quick_log].present?
+
+    if saved
+      if quick_log
+        @stats = DashboardStats.new(Current.household)
+        @now = household_time
+        @quick_log = @stats.quick_log_eligibility
+        @no_chickens = Current.household.chickens.none?
+        render :create
       else
-        setup_form_data
-        render :new, status: :unprocessable_entity
+        redirect_to today_path, notice: "Collection entry was successfully created."
       end
     else
-      @collection_entry = Current.household.collection_entries.build(collection_entry_params)
-      @users = Current.household.users.all
-
-      if @collection_entry.save
-        redirect_to today_path,
-          notice: "Collection entry was successfully created."
+      if quick_log
+        @stats = DashboardStats.new(Current.household)
+        @quick_log = @stats.quick_log_eligibility
+        @no_chickens = Current.household.chickens.none?
+        render :create_error, status: :unprocessable_entity
       else
+        setup_form_data unless Current.user.mode == "flock"
+        @users = Current.household.users.all if Current.user.mode == "flock"
         render :new, status: :unprocessable_entity
       end
     end
