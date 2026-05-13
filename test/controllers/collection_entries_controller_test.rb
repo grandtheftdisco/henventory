@@ -206,6 +206,11 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
     assert_match %r{turbo-stream action="replace" target="quick_log_inline"}, @response.body
+    # The error must surface in the DOM via an inline banner, not as a
+    # blocking window.alert() injected from a <script> tag.
+    assert_match %r{class="quick-log-flash"}, @response.body
+    assert_no_match %r{window\.alert}, @response.body
+    assert_no_match %r{<script}, @response.body
   end
 
   test "legacy form submit still gets HTML redirect, not turbo stream" do

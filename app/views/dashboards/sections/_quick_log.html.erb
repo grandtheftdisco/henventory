@@ -8,6 +8,9 @@
                  tapping "Other"
     user:        Current.user — owns the CollectionEntry submission
     no_chickens: true when the household has no chickens (CTA empty state)
+    errors:      optional ActiveModel::Errors from a failed submit; renders
+                 inline banner inside the frame so a turbo_stream.replace
+                 of the frame surfaces the validation message in the DOM
 
   Submits a CollectionEntry + nested EggEntry to collection_entries#create.
   The controller returns a Turbo Stream that replaces every quick_log_*
@@ -21,6 +24,7 @@
     - if no chickens at all: show CTA to add a chicken
 %>
 <turbo-frame id="<%= frame_id %>">
+  <%= render "dashboards/sections/quick_log_flash", errors: local_assigns[:errors] %>
   <% if no_chickens %>
     <div class="coop-card quick-log" style="background-color: var(--color-coop-primary);
                                             color: var(--color-coop-cream);

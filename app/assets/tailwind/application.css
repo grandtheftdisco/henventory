@@ -541,6 +541,21 @@
 		resize: vertical;
 	}
 
+	/* Inline error banner for Quick-Log validation failures. Sits inside
+	   the turbo-frame, above the form, and gets swapped in/out with the
+	   rest of the frame on each create response. */
+	.quick-log-flash {
+		background-color: var(--color-coop-cream);
+		color: var(--color-coop-primary);
+		border-radius: 8px;
+		padding: 8px 12px;
+		margin-bottom: 10px;
+		font-family: var(--font-body);
+		font-size: 13px;
+		line-height: 1.4;
+		font-weight: 600;
+	}
+
 	/* Visibility split: inline (desktop) vs bottom sheet (mobile).
 	   Below 1024px the inline section is hidden — the FAB is the entry
 	   point. >= 1024px the inline section is visible and the FAB hidden
