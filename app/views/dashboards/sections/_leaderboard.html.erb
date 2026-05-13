@@ -8,6 +8,12 @@
   Empty state: when no hens have laid this month, show a quiet copy line
   rather than an empty card. The greeting blurb already covers the
   "coop is quiet" message; here we keep it terse.
+
+  TODO(phase-2): the inline `style="..."` blocks below predate the
+  Phase 2 design-token pass. When the named classes / utility layer
+  settle, lift these inline rules into the stylesheet so a designer
+  can change them from one place. Non-blocking; flagged in the
+  Phase 1 code review as a deliberate next-pass cleanup.
 %>
 <%
   rows = stats.employee_of_the_month
