@@ -49,7 +49,7 @@ class CollectionEntriesController < ApplicationController
     @collection_entry = Current.household.collection_entries.build(collection_entry_params)
 
     if (raw_collected_at = params.dig(:collection_entry, :collected_at)).present?
-      @collection_entry.collected_at = Time.zone.parse(raw_collected_at)
+      @collection_entry.collected_at = Time.find_zone(@local_time_zone).parse(raw_collected_at)
     end
 
     @collection_entry.collected_at ||= Time.current if params[:quick_log].present?
@@ -96,7 +96,7 @@ class CollectionEntriesController < ApplicationController
   def update
     raw_collected_at = params.dig(:collection_entry, :collected_at)
     if raw_collected_at.present?
-      @collection_entry.collected_at = Time.zone.parse(raw_collected_at)
+      @collection_entry.collected_at = Time.find_zone(@local_time_zone).parse(raw_collected_at)
     elsif raw_collected_at == ""
       @collection_entry.collected_at = nil
     end
@@ -153,7 +153,6 @@ class CollectionEntriesController < ApplicationController
 
     def set_local_time_zone
       @local_time_zone = Current.user.household.time_zone
-      Time.zone = @local_time_zone
     end
 
     # Parses a YYYY-MM-DD param into a Date. Returns nil for blank or
