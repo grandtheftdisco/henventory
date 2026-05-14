@@ -3,6 +3,7 @@ require "test_helper"
 class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
+    @user.update!(mode: "layer") if @user.mode.blank?
     @household = households(:one)
     @collection_entry = collection_entries(:one)
     sign_in_as(@user)
@@ -78,8 +79,8 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Test collection with time", created_entry.notes
   end
 
-  test "should create collection_entry without collected_at" do
-    assert_difference("CollectionEntry.count") do
+  test "should reject create when collected_at is missing and not Quick-Log" do
+    assert_no_difference("CollectionEntry.count") do
       post collection_entries_url, params: {
         collection_entry: {
           user_id: @user.id,
@@ -94,9 +95,8 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to today_path
-    created_entry = CollectionEntry.last
-    assert_nil created_entry.collected_at
+    assert_response :unprocessable_entity
+    assert_match(/Collected at.*be blank/i, @response.body)
   end
 
   test "collected_at parameter is permitted" do
@@ -137,16 +137,18 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Updated with time", @collection_entry.notes
   end
 
-  test "should update collection_entry to remove collected_at" do
+  test "should reject update that clears collected_at" do
+    original_collected_at = @collection_entry.collected_at
+
     patch collection_entry_url(@collection_entry), params: {
       collection_entry: {
         collected_at: ""
       }
     }
 
-    assert_redirected_to today_path
-    # Empty string should result in nil
-    assert_nil @collection_entry.reload.collected_at
+    assert_response :unprocessable_entity
+    assert_match(/Collected at.*be blank/i, @response.body)
+    assert_equal original_collected_at, @collection_entry.reload.collected_at
   end
 
   test "should destroy collection_entry" do
@@ -189,7 +191,7 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
     # Two prior entries today already — third should be rejected by the
     # only_2_eggs_max_per_day_per_chicken validation.
     2.times do
-      ce = @household.collection_entries.create!(user: @user, created_at: Time.current)
+      ce = @household.collection_entries.create!(user: @user, created_at: Time.current, collected_at: Time.current)
       ce.egg_entries.create!(chicken: chicken, egg_count: 1)
     end
 

@@ -1,5 +1,6 @@
 class CollectionEntriesController < ApplicationController
   before_action :set_collection_entry, only: %i[ edit update destroy ]
+  before_action :set_local_time_zone, only: %i[ index today new edit create update ]
 
   def index
     collection_entries = Current.household
@@ -16,11 +17,9 @@ class CollectionEntriesController < ApplicationController
       pagy: {},
       active: params[:skip]
     )
-    set_local_time_zone
   end
 
   def today
-    set_local_time_zone
     @viewing_date = parse_viewing_date(params[:date]) || household_time.to_date
     @is_today = @viewing_date == household_time.to_date
 
@@ -48,6 +47,13 @@ class CollectionEntriesController < ApplicationController
 
   def create
     @collection_entry = Current.household.collection_entries.build(collection_entry_params)
+
+    if (raw_collected_at = params.dig(:collection_entry, :collected_at)).present?
+      @collection_entry.collected_at = Time.find_zone(@local_time_zone).parse(raw_collected_at)
+    end
+
+    @collection_entry.collected_at ||= Time.current if params[:quick_log].present?
+
     saved = @collection_entry.save
 
     # Quick-Log (dashboard) submits opt in to a Turbo Stream response by
@@ -76,18 +82,37 @@ class CollectionEntriesController < ApplicationController
         @no_chickens = Current.household.chickens.none?
         render :create_error, status: :unprocessable_entity
       else
-        setup_form_data unless Current.user.mode == "flock"
-        @users = Current.household.users.all if Current.user.mode == "flock"
+        mode = Current.user.mode
+        if mode == "flock"
+          @users = Current.household.users.all
+        elsif mode == "layer"
+          setup_form_data
+        end
         render :new, status: :unprocessable_entity
       end
     end
   end
 
-  def update 
-    if @collection_entry.update(collection_entry_params)
+  def update
+    raw_collected_at = params.dig(:collection_entry, :collected_at)
+    if raw_collected_at.present?
+      @collection_entry.collected_at = Time.find_zone(@local_time_zone).parse(raw_collected_at)
+    elsif raw_collected_at == ""
+      @collection_entry.collected_at = nil
+    end
+
+    # .except(:collected_at): we handled it above (parsed Time, explicit nil,
+    # or untouched if the key wasn't submitted). Mass-assigning would clobber.
+    if @collection_entry.update(collection_entry_params.except(:collected_at))
       redirect_to today_path,
         notice: "Collection entry was successfully updated."
     else
+      mode = Current.user.mode
+      if mode == "flock"
+        @users = Current.household.users.all
+      elsif mode == "layer"
+        setup_form_data
+      end
       render :edit, status: :unprocessable_entity
     end
   end

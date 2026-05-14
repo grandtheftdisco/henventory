@@ -78,7 +78,7 @@ class DashboardStatsTest < ActiveSupport::TestCase
     # if anyone backfills timestamps), the egg should still count toward
     # today's tally because the *collection* happened today.
     chicken = make_chicken(@household, name: "Penelope")
-    entry = @household.collection_entries.create!(user: @user, created_at: @now - 1.hour)
+    entry = @household.collection_entries.create!(user: @user, created_at: @now - 1.hour, collected_at: @now - 1.hour)
     EggEntry.insert!({
       collection_entry_id: entry.id,
       chicken_id: chicken.id,
@@ -226,7 +226,7 @@ class DashboardStatsTest < ActiveSupport::TestCase
     log_eggs(@household, @user, p, count: 2, at: @now)
     # Flock-mode entry has chicken_id: nil. The existing EggEntry model has
     # an unrelated bug where this fails validation; bypass via insert.
-    entry = @household.collection_entries.create!(user: @user, created_at: @now)
+    entry = @household.collection_entries.create!(user: @user, created_at: @now, collected_at: @now)
     EggEntry.insert!({
       collection_entry_id: entry.id,
       chicken_id: nil,
