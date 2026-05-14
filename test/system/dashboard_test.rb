@@ -72,7 +72,7 @@ class DashboardTest < ApplicationSystemTestCase
     chicken = @household.chickens.first
     # Pre-seed two entries today so the next submit will be rejected.
     2.times do
-      ce = @household.collection_entries.create!(user: @user, created_at: Time.current)
+      ce = @household.collection_entries.create!(user: @user, created_at: Time.current, collected_at: Time.current)
       ce.egg_entries.create!(chicken: chicken, egg_count: 1)
     end
 

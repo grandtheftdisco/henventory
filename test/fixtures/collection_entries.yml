@@ -11,9 +11,3 @@ two:
   household: one
   notes: "Evening collection"
   collected_at: <%= Time.zone.parse("2025-11-13 17:00:00") %>
-
-without_collected_at:
-  user: one
-  household: one
-  notes: "Collection without time"
-  collected_at: nil

@@ -6,10 +6,11 @@ class CollectionEntryTest < ActiveSupport::TestCase
     assert collection_entry.valid?
   end
 
-  test "should allow collected_at to be nil" do
+  test "should not allow collected_at to be nil" do
     collection_entry = collection_entries(:one)
     collection_entry.collected_at = nil
-    assert collection_entry.valid?
+    assert_not collection_entry.valid?
+    assert_includes collection_entry.errors[:collected_at], "can't be blank"
   end
 
   test "should allow collected_at to be set" do
