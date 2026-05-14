@@ -96,6 +96,7 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_entity
+    assert_match(/Collected at.*be blank/i, @response.body)
   end
 
   test "collected_at parameter is permitted" do
@@ -146,6 +147,7 @@ class CollectionEntriesControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_response :unprocessable_entity
+    assert_match(/Collected at.*be blank/i, @response.body)
     assert_equal original_collected_at, @collection_entry.reload.collected_at
   end
 
