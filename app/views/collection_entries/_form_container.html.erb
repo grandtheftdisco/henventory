@@ -19,6 +19,7 @@
             class: '' %>
       </div>
         <%= collection_entry_form.text_field :collected_at,
+            value: @collection_entry.collected_at&.in_time_zone(@local_time_zone)&.strftime("%I:%M %p"),
             data: {
               controller: "flatpickr",
               flatpickr_enable_time: true,
