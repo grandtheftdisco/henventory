@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_08_190113) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_15_160948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -35,7 +35,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_08_190113) do
     t.datetime "updated_at", null: false
     t.integer "household_id"
     t.text "notes"
-    t.datetime "collected_at"
+    t.datetime "collected_at", null: false
     t.index ["collected_at"], name: "index_collection_entries_on_collected_at"
     t.index ["household_id", "created_at"], name: "index_collection_entries_on_household_id_and_created_at"
   end
