@@ -60,3 +60,12 @@
 
 # Personal notes / reference docs (local working dir, not committed)
 /x_notes_x/
+
+# Design working material (local sketches, planning, references)
+/design/
+
+# Per-PR description drafts (local working docs)
+/PR_DESCRIPTION*.md
+
+# Per-phase review-response plans (local working docs)
+/PHASE_*_REVIEW_RESPONSE.md
