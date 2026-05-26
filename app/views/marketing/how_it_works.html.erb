@@ -1,293 +1,693 @@
 <% content_for :title, "How it Works" %>
 
-<div class="flex flex-col gap-5 justify-self-center">
-  <h1 class="font-extrabold text-lime-700 text-4xl pb-7">
-    How It Works
-  </h1>
+<%# Step data — drives the rail, the zigzag detail rows, and the
+    "coming soon" badging. shipped: false marks features that aren't
+    in the app yet, so the rail dots and visual slots get tinted
+    differently. %>
+<% zig_steps = [
+  { n: 1, kicker: "Step one", title: "Meet your flock.",
+    rail: "Meet your flock",
+    rail_caption: "~30 sec / hen",
+    blurb: "Add each of your hens with a name, breed, hatch date, and a 'how to tell apart' note. Pick a status (Pullet, Layer, Molting, Retired) and you're set.",
+    meta: ["Takes ~30 sec/hen", "Photos optional but adorable", "Edit anytime"],
+    mockup: "marketing/hiw_hen_grid",
+    footnote: "Just here for the eggs and not the hens? Switch to Flock mode in Settings — no hen assignment needed.",
+    shipped: true },
+  { n: 2, kicker: "Step two", title: "Log a collection in ten seconds.",
+    rail: "Quick log",
+    rail_caption: "10 seconds",
+    blurb: "Tap the hen, tap the count, done. Most folks log right at the coop on their phone. Add a note if anything's interesting — soft shell, double yolker, broody behavior.",
+    meta: ["One tap per hen", "Works on mobile", "Multiple collections per day"],
+    mockup: "marketing/hiw_quick_log",
+    footnote: "Logging from the desktop? The same quick-log lives at the top of your dashboard.",
+    shipped: true },
+  { n: 3, kicker: "Step three", title: "Watch the patterns emerge.",
+    rail: "See the patterns",
+    rail_caption: "Auto",
+    blurb: "Henventory quietly stitches every entry into trends — daily counts, per-hen averages, day-of-week patterns, seasonal heatmaps. A few weeks in, you'll know who's pulling her weight.",
+    meta: ["Auto-generated, no setup", "Per-hen + flock-wide", "2-year rolling history"],
+    mockup: "marketing/hiw_trends",
+    footnote: "Best in flock gets a little crown next to her name. Sorry, Mrs. Henderson.",
+    shipped: false },
+  { n: 4, kicker: "Step four", title: "Keep a journal worth re-reading.",
+    rail: "Journal",
+    rail_caption: "Optional",
+    blurb: "Some days the eggs aren't the story. Drop a quick journal entry — observation, vet note, weather, predator scare — and tag the hens it's about. Years from now, you'll be glad you did.",
+    meta: ["Tag multiple hens", "Search by hen or keyword", "Export to PDF"],
+    mockup: "marketing/hiw_journal",
+    footnote: "The journal field is the same one that's optional inside a collection — same data, two front doors.",
+    shipped: false },
+  { n: 5, kicker: "Step five", title: "Share the chore (and the credit).",
+    rail: "Household",
+    rail_caption: "Up to 6",
+    blurb: "Invite the rest of the household so everyone logs into the same flock. Pop logs the afternoon pickup, the kids log the morning, and the data lines up without anyone double-counting.",
+    meta: ["Up to 6 household members", "Per-member activity in trends", "No separate accounts to manage"],
+    mockup: "marketing/hiw_household",
+    footnote: "Roles are simple — Owner can manage the flock; Members can log and journal.",
+    shipped: true },
+] %>
 
-  <div class="flex flex-col gap-5 bg-blue-200 rounded-2xl m-auto p-10">
-    <h2 class="font-bold text-lime-700 text-3xl underline">Table of Contents</h2>
-    <div class="text-left font-bold text-lg uppercase">
-      <p class="hover:text-blue-700">
-        <a href="/how_it_works/#grand-tour">
-          🧑‍🌾 Grand Tour
-        </a>
-      </p>
-      <p class="hover:text-blue-700">
-        <a href="/how_it_works/#flock-mode">
-          🥚 Flock Mode
-        </a>
-      </p>
-      <ul class="font-normal text-md pl-10 capitalize">
-        <li class="hover:text-blue-700">
-          <a href="/how_it_works/#fm-collection-entry">
-            How to Record a Collection Entry
-          </a>
-        </li>
-      </ul>
-      <p class="hover:text-blue-700">
-        <a href="/how_it_works/#layer-mode">
-          🐔 Layer Mode
-        </a>
-      </p>
-      <ul class="font-normal text-md pl-10 capitalize">
-        <li class="hover:text-blue-700">
-          <a href="/how_it_works/#lm-add-chicken">
-            How to Add a Chicken to Your Flock
-          </a>
-        </li>
-        <li class="hover:text-blue-700">
-          <a href="/how_it_works/#lm-collection-entry">
-            How to Record a Collection Entry
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
+<div class="flex flex-col gap-8">
 
-  <div class="flex flex-col gap-5 bg-blue-100 p-10 text-left rounded-2xl w-1/2 m-auto">
-
-    <div class="flex flex-col gap-4 justify-self-center">
-
-      <a name="grand-tour">
-        <h2 class="font-bold text-3xl uppercase">🧑‍🌾 Grand Tour</h2>
-      </a>
-      <div class="flex flex-col gap-4 justify-self-center">
-        <h3 class="font-semibold text-2xl">Welcome to Henventory!</h3>
-        <p class="font-semibold mb-5">Let's take a look around.</p>
-        <hr class="border-dashed"/>
-
-        <p class="font-semibold">If you've made it this far, you've probably seen the home page.</p>
-        <%= image_tag("/ss/homepage.png",
-          width: 450,
-          class: 'rounded-2xl mb-5') %> 
-        <hr class="border-dashed"/>
-
-        <p class="font-semibold">First things first, you'll want to sign up for an account, if you haven't already. </p>
-        <p class="font-semibold">Just fill out the form under the <%= link_to "sign up", new_user_path, class: 'font-bold hover:text-blue-700' %> tab.</p>
-        <p class="font-semibold text-xs">❗IMPORTANT: If someone has invited you to join their household on Henventory, use their referral link to sign up!</p>
-        <%= image_tag("/ss/signupform.png",
-          width: 450,
-          class: 'rounded-2xl mb-5') %>
-        <hr class="border-dashed"/>
-
-        <p class="font-semibold">Alright, now that you're signed up, let's <%= link_to "log in", new_session_path, class: 'font-bold hover:text-blue-700' %>!</p>
-        <%= image_tag("/ss/login.png",
-            width: 450,
-            class: 'rounded-2xl mb-5') %>
-        <hr class="border-dashed"/>
-
-        <p class="font-semibold">Once you're logged in, you'll see a summary of your flock's day so far.</p>
-        <%= image_tag("/ss/landing.png",
-            width: 450,
-            class: 'rounded-2xl') %>
-        <p class="font-semibold">Here, we can see that we don't have any eggs logged for the day: not yet, anyway!</p>
-        
-        <hr class="mt-10"/>
-
-        <p class="font-bold text-xl">Before we look at <i>how</i> to track your eggs, let's go through our menu options.</p>
-
-        <hr class="mb-10"/>
-
-        <h4 class="font-bold text-xl">📅 Today's Entries</h4>
-        <p class="font-semibold"> This is where you'll see all of the eggs you've collected today. </p>
-        <%= image_tag("/ss/todaysentries.png",
-            width: 450,
-            class: 'rounded-2xl') %>
-        <p class="font-semibold mb-5">And of course, we don't have anything logged yet. Don't worry: we'll fix that soon.</p>
-        <hr class="border-dashed"/>
-
-        <h4 class="font-bold text-xl">📒 All Entries</h4>
-        <p class="font-semibold">Here, you'll find all of the egg entries you've made. You can view them from newest to oldest...</p>
-        <%= image_tag("/ss/cemrtolr.png",
-            width: 450,
-            class: 'rounded-2xl mb-5') %>
-
-        <p>...or you can use the calendar filter feature to find a specific day!</p>
-        <%= image_tag("/ss/cecalfil.png",
-            width: 450,
-            class: 'rounded-2xl mb-5') %>
-        <hr class="border-dashed"/>
-
-        <h4 class="font-bold text-xl">🐔 My Flock*</h4>
-        <p class="font-semibold text-xs">*Layer Mode only</p>
-        <p class="font-semibold">This is where you can keep track of all of your chickens.</p>
-        <%= image_tag("/ss/myflock.png",
-            width: 450,
-            class: 'rounded-2xl') %>
-
-        <p class="font-semibold">❗ We're currently expanding this feature, so if you have something specific you'd like to track with Henventory, <%= link_to "drop us a line!", 'mailto:henventory@gmail.com', class: 'font-bold hover:text-blue-700' %> We'd love to hear your ideas.</p>
-        <%= image_tag("/ss/gracie.png",
-            width: 450,
-            class: 'rounded-2xl') %>
-        <p class="font-semibold mb-5">(Gracie's not the best layer, but we love her anyway.)</p>
-        <hr class="border-dashed"/>
-
-        <h4 class="font-bold text-xl">️⚙️ Settings</h4>
-        <p class="font-semibold">This is where you can change your display name and password.</p>
-        <p class="font-semibold">If you want to invite someone to help you track eggs for your flock, use the referral link on this page.</p>
-        <%= image_tag("/ss/settings.png",
-            width: 450,
-            class: 'rounded-2xl mb-5') %>
-        <hr class="border-dashed"/>
-        
-        <h4 class="font-bold text-xl">👋 Log Out</h4>
-        <p>Okay, this one's pretty self-explanatory 🙂</p>
+  <%# ─── HERO ────────────────────────────────────────────────────────── %>
+  <section class="coop-card grid md:grid-cols-[1.15fr_1fr] gap-8 items-center"
+           style="padding: 40px 32px;">
+    <div>
+      <div class="coop-kicker mb-3" style="letter-spacing: 0.22em;">
+        How it works · 5 small steps
       </div>
-
-      <hr class="mt-10"/>
-      <p class="font-bold text-xl">Now that we've taken the grand tour, let's look at how to log some eggs!
-      <hr class="mb-10"/>
-      
-      <a name="flock-mode">
-        <h2 class="font-bold text-2xl mb-5 uppercase">🥚 Flock Mode</h2>
-      </a>
-      <div class="flex flex-col gap-2" id="flock-mode-content">
-        
-        <a name="fm-collection-entry">
-          <h3 class="font-semibold text-lg">How to Record a Collection Entry</h3>
-        </a>
-        <div class="flex flex-col gap-2" class="fm-collection-entry">
-          
-          <p class="mb-5">Collection entries are the way Henventory tracks how many eggs you collect, and when they're collected.</p>
-  
-          <ol class="flex flex-col list-decimal pl-3 gap-5 font-semibold">
-            <li>Click or tap on the 'got some eggs?' button.</li>
-            <%= image_tag("/ss/flockmode1.png",
-                width: 450,
-                class: 'rounded-2xl mb-3') %>
-            <hr class="border-dashed"/>
-  
-            <li>You'll see a blank form.</li>
-            <%= image_tag("/ss/flockmode2.png",
-                width: 450,
-                class: 'rounded-2xl mb-3') %>
-            <hr class="border-dashed"/>
-  
-            <li>Select your name from the dropdown menu.</li>
-            <%= image_tag("/ss/flockmode3.png",
-                width: 450,
-                class: 'rounded-2xl mb-3') %>
-            <hr class="border-dashed"/>
-  
-            <li>Enter the number of eggs you collected.</li>
-            <%= image_tag("/ss/flockmode4.png",
-                width: 450,
-                class: 'rounded-2xl mb-3') %>
-            <hr class="border-dashed"/>
-  
-            <li>Click or tap 'Submit', and you're all done!</li>
-            <%= image_tag("/ss/flockmode5.png",
-                width: 450,
-                class: 'rounded-2xl') %>
-            <p>If you need to edit your entry (or delete it), use the options menu below the entry.</p>
-          </ol>
+      <h1 style="font-family: var(--font-display);
+                 font-size: clamp(40px, 7vw, 64px);
+                 line-height: 1.02;
+                 color: var(--color-coop-ink);
+                 letter-spacing: -0.02em;
+                 margin-bottom: 18px;
+                 text-wrap: pretty;">
+        From <span style="color: var(--color-coop-primary);">hen</span> to history,<br>in under five minutes.
+      </h1>
+      <p class="mb-6"
+         style="font-size: 17px;
+                color: var(--color-coop-ink-soft);
+                line-height: 1.55;
+                max-width: 520px;">
+        Henventory is a tiny piece of software with a clear job: capture every egg, every hen, every quiet detail, and turn the running total into something you actually want to look at. Here's how it goes.
+      </p>
+      <div class="flex flex-wrap items-center gap-3">
+        <%= link_to new_user_path,
+              class: "coop-button-primary",
+              style: "padding: 14px 24px; font-size: 15px; border-radius: 999px;" do %>
+          🐣 Join the early flock →
+        <% end %>
+        <div class="coop-kicker" style="letter-spacing: 0.08em;">
+          Free forever for early birds
         </div>
-      </div> 
-
-      <hr class="border-2 my-10"/>
-      
-      <a name="layer-mode">
-        <h2 class="font-bold text-2xl uppercase">🐔 Layer Mode</h2>
-      </a>
-      <div class="flex flex-col gap-2" id="layer-mode-content">
-        
-        <a name="lm-add-chicken">
-          <h3 class="font-bold text-lg mb-5">How to Add a Chicken to Your Flock</h3>
-        </a>
-        <div class="flex flex-col gap-2" id="lm-add-chicken">
-          
-          <ol class="flex flex-col list-decimal pl-10 gap-5 font-semibold">
-            <li>From the My Flock tab, click the 'add new chicken' button.</li>
-            <%= image_tag("/ss/myflock.png",
-                width: 450,
-                class: 'rounded-2xl mb-5') %>
-            <hr class="border-dashed"/>
-            
-            <li>You'll see a new chicken form: go ahead and fill it out!</li>
-            <%= image_tag("/ss/addchicken1.png",
-                width: 450,
-                class: 'rounded-2xl') %>
-            <p class="text-sm">Remember that image URLs are optional.</p>
-            <p class="text-sm mb-5">🚧 The image-uploader is currently in development. 🚧</p>
-            <hr class="border-dashed"/>
-
-            <li>Once you've filled out the form, click 'Add Chicken'</li>
-            <%= image_tag("/ss/addchicken2.png",
-                width: 450,
-                class: 'rounded-2xl mb-5') %>
-            <hr class="border-dashed"/>
-
-            <li>You're all set! </li>
-            <%= image_tag("/ss/addchicken3.png",
-                width: 450,
-                class: 'rounded-2xl') %>
-            <p class="text-sm">❗ New chickens won't have all the available stats on their cards: you'll see these appear after you've collected a few weeks' worth of data.</p>
-            <hr class="border-dashed"/>
-
-          </ol>
-        </div>
-
-        <hr class="my-10"/>
-        
-        <a name="lm-collection-entry">
-          <h3 class="font-bold text-lg">How to Record a Collection Entry</h3>
-        </a>
-        <div class="flex flex-col gap-2" id="lm-collection-entry">
-          
-          <p class=" font-semibold mb-5">Collection entries are the way Henventory tracks how many eggs you collect, and when they're collected.</p>
-
-          <ol class="flex flex-col list-decimal pl-10 gap-5 font-semibold">
-              <li>Click or tap on the 'got some eggs?' button.</li>
-              <%= image_tag("/ss/landing.png",
-                  width: 450,
-                  class: 'rounded-2xl mb-5') %>
-              <hr class="border-dashed"/>
-
-              <li>You'll see a blank form.</li>
-              <%= image_tag("/ss/layermode1.png",
-                  width: 450,
-                  class: 'rounded-2xl mb-5') %>
-              <hr class="border-dashed"/>
-
-              <li>Select your name from the dropdown menu.</li>
-              <%= image_tag("/ss/layermode2.png",
-                  width: 450,
-                  class: 'rounded-2xl mb-5') %>
-              <hr class="border-dashed"/>
-
-              <li>Select the chicken who laid an egg.</li>
-              <%= image_tag("/ss/layermode3.png",
-                  width: 450,
-                  class: 'rounded-2xl mb-5') %>
-              <hr class="border-dashed"/>
-
-              <li>If you've got more than one egg, just click or tap the 'got another egg?' button.</li>
-              <%= image_tag("/ss/layermode4.png",
-                  width: 450,
-                  class: 'rounded-2xl mb-5') %>
-              <hr class="border-dashed"/>
-
-              <li>Then, select that chicken's name in the dropdown menu that appears.</li>
-              <%= image_tag("/ss/layermode5.png",
-                  width: 450,
-                  class: 'rounded-2xl mb-5') %>
-              <hr class="border-dashed"/>
-
-              <li>Click or tap 'Submit', and you're all done!</li>
-              <%= image_tag("/ss/layermode6.png",
-                  width: 450,
-                  class: 'rounded-2xl') %>
-              <p>If you need to edit your entry (or delete it), use the options menu below the entry.</p>
-
-            </ol>
-        </div>
-      </div> 
-
-      <h2 class="font-bold text-2xl uppercase">📈 Data Analysis</h2>
-      <div class="flex flex-col gap-2" id="data-analysis-content">
-        <i>🚧 Under Construction: Coming Soon! 🚧</i>
       </div>
     </div>
-  </div>
+
+    <%# Composed hero illustration — small browser + phone mockups with
+        a sticker "+ 4 today" tag floating between. Decorative only. %>
+    <div class="relative hidden md:block" style="height: 380px;">
+      <%# Browser chrome %>
+      <div class="absolute top-0 right-0"
+           style="width: 380px; transform: rotate(2deg);">
+        <div style="background: var(--color-coop-bg-alt);
+                    border-radius: 12px;
+                    overflow: hidden;
+                    border: 1px solid var(--color-coop-line);
+                    box-shadow: 0 18px 40px rgba(45, 31, 16, 0.12);">
+          <div class="flex items-center gap-2.5"
+               style="padding: 10px 14px;
+                      border-bottom: 1px solid var(--color-coop-line);">
+            <div class="flex gap-1.5">
+              <% ["#e8745f", "#e8c455", "#7ab560"].each do |c| %>
+                <div style="width: 11px; height: 11px; border-radius: 50%; background: <%= c %>;"></div>
+              <% end %>
+            </div>
+            <div style="flex: 1;
+                        background: var(--color-coop-surface);
+                        border-radius: 6px;
+                        padding: 4px 12px;
+                        font-family: var(--font-mono);
+                        font-size: 11px;
+                        color: var(--color-coop-ink-soft);
+                        letter-spacing: 0.04em;">
+              henventory.com/today
+            </div>
+          </div>
+          <div style="padding: 16px; background: var(--color-coop-cream);">
+            <div style="font-family: var(--font-display); font-size: 22px; margin-bottom: 8px;">
+              Mornin', Nana.
+            </div>
+            <div class="coop-kicker mb-3" style="letter-spacing: 0.1em;">
+              THURSDAY · APRIL 30
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              <% [["Today", "8"], ["Week", "44"], ["Best", "Penny"]].each do |k, v| %>
+                <div style="background: var(--color-coop-surface);
+                            padding: 10px;
+                            border-radius: 10px;
+                            border: 1px solid var(--color-coop-line);">
+                  <div class="coop-kicker mb-1" style="letter-spacing: 0.14em; font-size: 8px;">
+                    <%= k.upcase %>
+                  </div>
+                  <div style="font-family: var(--font-display);
+                              font-size: 22px;
+                              color: var(--color-coop-primary);">
+                    <%= v %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%# Phone chrome — terracotta quick-log mock %>
+      <div class="absolute bottom-0 left-0"
+           style="width: 180px; transform: rotate(-4deg);">
+        <div style="border-radius: 32px;
+                    overflow: hidden;
+                    background: var(--color-coop-surface);
+                    border: 4px solid var(--color-coop-ink);
+                    box-shadow: 0 24px 50px rgba(45, 31, 16, 0.18);">
+          <div style="padding: 14px;
+                      background: var(--color-coop-primary);
+                      color: var(--color-coop-cream);
+                      min-height: 240px;
+                      background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 12px, transparent 12px 24px);">
+            <div style="font-size: 9px; font-weight: 700; letter-spacing: 0.16em;
+                        text-transform: uppercase; opacity: 0.7; margin-bottom: 4px;">
+              Quick log
+            </div>
+            <div style="font-family: var(--font-display); font-size: 20px;
+                        margin-bottom: 14px; line-height: 1.1;">
+              Whose egg?
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <% [
+                ["Penelope",  "#e8b894", true],
+                ["Louise",    "#d99a6a", false],
+                ["Henderson", "#3a2a20", false],
+              ].each do |name, tint, selected| %>
+                <div class="flex items-center gap-2"
+                     style="padding: 6px 10px 6px 6px;
+                            border-radius: 999px;
+                            background: <%= selected ? "var(--color-coop-cream)" : "rgba(255,255,255,0.14)" %>;
+                            color: <%= selected ? "var(--color-coop-ink)" : "var(--color-coop-cream)" %>;
+                            font-size: 11px; font-weight: 700;">
+                  <div style="width: 16px; height: 16px; border-radius: 50%; background: <%= tint %>;"></div>
+                  <%= name %>
+                </div>
+              <% end %>
+            </div>
+            <div class="mt-3.5 text-center"
+                 style="padding: 10px 0;
+                        background: var(--color-coop-cream);
+                        color: var(--color-coop-primary);
+                        border-radius: 10px;
+                        font-weight: 700;
+                        font-family: var(--font-display);
+                        font-size: 14px;">
+              + 1 egg
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%# Floating sticker tag %>
+      <div class="absolute"
+           style="top: 30px;
+                  left: 200px;
+                  background: var(--color-coop-warn);
+                  color: var(--color-coop-ink);
+                  padding: 10px 18px;
+                  border-radius: 999px;
+                  font-family: var(--font-display);
+                  font-size: 18px;
+                  transform: rotate(-6deg);
+                  box-shadow: 0 8px 20px rgba(45, 31, 16, 0.18);
+                  border: 2px solid var(--color-coop-ink);">
+        + 4 today 🥚
+      </div>
+    </div>
+  </section>
+
+  <%# ─── AT-A-GLANCE STEP RAIL ───────────────────────────────────────── %>
+  <section class="coop-card" style="padding: 24px 28px;">
+    <div class="coop-kicker mb-4" style="letter-spacing: 0.22em;">
+      The whole journey, on one shelf
+    </div>
+    <div class="hiw-rail">
+      <% zig_steps.each_with_index do |s, i| %>
+        <div class="hiw-rail-item <%= 'is-first' if i == 0 %>">
+          <div class="hiw-rail-dot"><%= s[:n] %></div>
+          <div class="md:max-w-[160px]">
+            <div style="font-family: var(--font-display);
+                        font-size: 16px;
+                        line-height: 1.2;">
+              <%= s[:rail] %>
+            </div>
+            <div class="mt-1"
+                 style="font-family: var(--font-mono);
+                        font-size: 11px;
+                        color: var(--color-coop-ink-soft);
+                        letter-spacing: 0.08em;">
+              <%= s[:rail_caption] %>
+            </div>
+            <% unless s[:shipped] %>
+              <div class="mt-2">
+                <span class="hiw-coming-soon-badge">Soon</span>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <%# ─── "NOT SURE?" CALLOUT — anchor-jumps to mode picker ────────────── %>
+  <a href="#hiw-mode-picker"
+     class="flex flex-col md:flex-row items-center gap-4 md:gap-5 no-underline"
+     style="background: var(--color-coop-bg-alt);
+            border-radius: 14px;
+            border: 1px dashed var(--color-coop-line);
+            padding: 18px 24px;
+            color: inherit;">
+    <div class="flex items-center justify-center flex-shrink-0"
+         style="width: 44px; height: 44px;
+                border-radius: 12px;
+                background: var(--color-coop-surface);
+                border: 1px solid var(--color-coop-line);
+                font-size: 22px;">
+      🤔
+    </div>
+    <div class="flex-1 text-center md:text-left">
+      <div style="font-family: var(--font-display); font-size: 22px;
+                  line-height: 1.15; margin-bottom: 3px;">
+        Not sure if Flock or Layer mode is for you?
+      </div>
+      <div style="font-size: 13px; color: var(--color-coop-ink-soft); line-height: 1.4;">
+        Jump to the side-by-side comparison at the bottom of the page.
+      </div>
+    </div>
+    <div class="flex-shrink-0 flex items-center gap-2"
+         style="padding: 10px 18px;
+                border-radius: 999px;
+                background: var(--color-coop-primary);
+                color: #fff;
+                font-weight: 700;
+                font-size: 13px;">
+      Compare modes <span style="font-size: 16px; line-height: 1;">↓</span>
+    </div>
+  </a>
+
+  <%# ─── DEEP-DIVE: ZIGZAG STEPS ─────────────────────────────────────── %>
+  <section>
+    <div class="text-center mb-12">
+      <div class="coop-kicker mb-3"
+           style="color: var(--color-coop-primary); letter-spacing: 0.22em;">
+        The deep dive
+      </div>
+      <h2 style="font-family: var(--font-display);
+                 font-size: clamp(32px, 6vw, 44px);
+                 line-height: 1.05;
+                 color: var(--color-coop-ink);
+                 letter-spacing: -0.015em;
+                 max-width: 720px;
+                 margin: 0 auto;">
+        Five steps, in detail.
+      </h2>
+    </div>
+
+    <% zig_steps.each_with_index do |step, i| %>
+      <div class="hiw-zig-row <%= 'is-flip' if i.odd? %>">
+        <%# Copy side %>
+        <div class="hiw-zig-copy" style="padding: 0 4px;">
+          <div class="flex items-center gap-3.5 mb-4">
+            <div style="font-family: var(--font-display);
+                        font-size: 72px;
+                        line-height: 1;
+                        color: var(--color-coop-primary);
+                        letter-spacing: -0.04em;">
+              <%= sprintf("%02d", step[:n]) %>
+            </div>
+            <div>
+              <div class="coop-kicker mb-1" style="letter-spacing: 0.22em;">
+                <%= step[:kicker] %>
+              </div>
+              <div style="height: 2px; width: 50px; background: var(--color-coop-primary);"></div>
+            </div>
+            <% unless step[:shipped] %>
+              <span class="hiw-coming-soon-badge ml-2">Coming soon</span>
+            <% end %>
+          </div>
+          <h3 style="font-family: var(--font-display);
+                     font-size: clamp(28px, 4vw, 38px);
+                     line-height: 1.1;
+                     color: var(--color-coop-ink);
+                     letter-spacing: -0.015em;
+                     margin-bottom: 16px;
+                     text-wrap: pretty;">
+            <%= step[:title] %>
+          </h3>
+          <p class="mb-5"
+             style="font-size: 16px;
+                    color: var(--color-coop-ink-soft);
+                    line-height: 1.6;
+                    max-width: 520px;">
+            <%= step[:blurb] %>
+          </p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <% step[:meta].each do |m| %>
+              <div style="padding: 6px 12px;
+                          border-radius: 999px;
+                          background: var(--color-coop-surface);
+                          border: 1px solid var(--color-coop-line);
+                          font-size: 12px;
+                          color: var(--color-coop-ink);
+                          font-weight: 600;">
+                ✓ <%= m %>
+              </div>
+            <% end %>
+          </div>
+          <% if step[:footnote] %>
+            <div style="padding: 14px;
+                        background: var(--color-coop-bg-alt);
+                        border-radius: 10px;
+                        border: 1px solid var(--color-coop-line);
+                        border-left: 3px solid var(--color-coop-warn);
+                        font-size: 13px;
+                        color: var(--color-coop-ink-soft);
+                        line-height: 1.5;
+                        font-style: italic;
+                        max-width: 520px;">
+              <span style="font-family: var(--font-mono);
+                           font-style: normal;
+                           color: var(--color-coop-warn);
+                           font-size: 10px;
+                           letter-spacing: 0.16em;
+                           text-transform: uppercase;
+                           margin-right: 8px;">note</span>
+              <%= step[:footnote] %>
+            </div>
+          <% end %>
+        </div>
+
+        <%# Mockup side %>
+        <div class="hiw-zig-visual">
+          <div class="relative"
+               style="background: var(--color-coop-cream);
+                      padding: 22px;
+                      border-radius: 20px;
+                      border: 1px dashed var(--color-coop-line);">
+            <div class="absolute"
+                 style="top: -12px;
+                        <%= i.odd? ? 'right: 22px' : 'left: 22px' %>;
+                        background: var(--color-coop-ink);
+                        color: var(--color-coop-cream);
+                        padding: 4px 12px;
+                        border-radius: 6px;
+                        font-family: var(--font-mono);
+                        font-size: 10px;
+                        letter-spacing: 0.18em;
+                        text-transform: uppercase;">
+              <%= step[:shipped] ? "What you see" : "What's coming" %>
+            </div>
+            <%= render step[:mockup] %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </section>
+
+  <%# ─── BENEFITS GRID ───────────────────────────────────────────────── %>
+  <section>
+    <div class="text-center mb-8">
+      <div class="coop-kicker mb-3"
+           style="color: var(--color-coop-primary); letter-spacing: 0.22em;">
+        What you actually get
+      </div>
+      <h2 style="font-family: var(--font-display);
+                 font-size: clamp(32px, 6vw, 44px);
+                 line-height: 1.05;
+                 color: var(--color-coop-ink);
+                 letter-spacing: -0.015em;
+                 max-width: 720px;
+                 margin: 0 auto;">
+        Less spreadsheet, more chicken-keeping.
+      </h2>
+      <p class="mx-auto mt-3 italic"
+         style="font-size: 16px;
+                color: var(--color-coop-ink-soft);
+                line-height: 1.55;
+                max-width: 640px;">
+        Henventory replaces the back-of-the-egg-carton tally and that one spreadsheet you keep meaning to update.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-4">
+      <% [
+        { kicker: "Daily",   title: "A two-tap log",            icon: "🥚",
+          body: "Open the app, pick the hen, pick the count. Most users log in under ten seconds." },
+        { kicker: "Weekly",  title: "Patterns you can act on",  icon: "📈",
+          body: "Trends surface soft-shell streaks, drop-offs, and seasonal slumps before they become a problem." },
+        { kicker: "Forever", title: "A record worth keeping",   icon: "📖",
+          body: "Two-year heatmap, journal-by-hen, export-everything. The flock's history is yours." },
+      ].each do |b| %>
+        <div class="coop-card" style="padding: 28px;">
+          <div class="flex items-center justify-center mb-3.5"
+               style="width: 56px;
+                      height: 56px;
+                      border-radius: 14px;
+                      background: var(--color-coop-bg-alt);
+                      border: 1px solid var(--color-coop-line);
+                      font-size: 32px;">
+            <%= b[:icon] %>
+          </div>
+          <div class="coop-kicker mb-2"
+               style="color: var(--color-coop-primary); letter-spacing: 0.18em;">
+            <%= b[:kicker] %>
+          </div>
+          <div class="mb-2.5"
+               style="font-family: var(--font-display);
+                      font-size: 24px;
+                      line-height: 1.15;">
+            <%= b[:title] %>
+          </div>
+          <div style="font-size: 14px;
+                      color: var(--color-coop-ink-soft);
+                      line-height: 1.55;">
+            <%= b[:body] %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <%# ─── TESTIMONIAL (dark panel) ────────────────────────────────────── %>
+  <section class="relative overflow-hidden"
+           style="background: var(--color-coop-ink);
+                  color: var(--color-coop-cream);
+                  border-radius: 20px;
+                  padding: 40px 32px;">
+    <span aria-hidden="true"
+          class="absolute hidden md:block"
+          style="top: 24px;
+                 right: 32px;
+                 font-family: var(--font-display);
+                 font-size: 220px;
+                 line-height: 1;
+                 color: var(--color-coop-primary);
+                 opacity: 0.18;">"</span>
+    <div class="coop-kicker mb-4"
+         style="color: var(--color-coop-primary); letter-spacing: 0.22em;">
+      From the coop
+    </div>
+    <blockquote style="font-family: var(--font-display);
+                       font-size: clamp(22px, 4vw, 32px);
+                       line-height: 1.25;
+                       max-width: 900px;
+                       margin: 0 0 24px;
+                       font-style: italic;">
+      "I had eight hens and a notebook with three years of half-finished tallies. Two weeks in, I knew Penelope was carrying the team and Mrs. Henderson was due for a vet check. Worth it."
+    </blockquote>
+    <div class="flex items-center gap-3.5">
+      <div class="flex items-center justify-center"
+           style="width: 44px;
+                  height: 44px;
+                  border-radius: 50%;
+                  background: var(--color-coop-primary-soft);
+                  font-weight: 700;
+                  color: var(--color-coop-ink);">
+        NB
+      </div>
+      <div>
+        <div style="font-weight: 700; font-size: 14px;">Nana BeeWee</div>
+        <div class="coop-kicker"
+             style="opacity: 0.6; letter-spacing: 0.1em;">
+          6 HENS · DEEP SOUTH
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%# ─── EARLY-BIRD CTA ──────────────────────────────────────────────── %>
+  <section class="text-center relative overflow-hidden"
+           style="background: var(--color-coop-primary);
+                  color: #fff;
+                  border-radius: 20px;
+                  padding: 48px 32px;
+                  background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 14px, transparent 14px 28px);">
+    <div class="inline-block mb-4"
+         style="padding: 6px 16px;
+                border-radius: 999px;
+                background: var(--color-coop-warn);
+                color: var(--color-coop-ink);
+                font-family: var(--font-mono);
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.22em;
+                text-transform: uppercase;
+                border: 2px solid var(--color-coop-ink);
+                transform: rotate(-1deg);">
+      ★ Early bird special ★
+    </div>
+    <h2 style="font-family: var(--font-display);
+               font-size: clamp(36px, 7vw, 56px);
+               line-height: 1.05;
+               letter-spacing: -0.02em;
+               margin-bottom: 16px;">
+      The early bird gets the&nbsp;<i>app</i>.
+    </h2>
+    <p class="mx-auto mb-7"
+       style="font-size: 17px;
+              opacity: 0.85;
+              line-height: 1.55;
+              max-width: 680px;">
+      Henventory is in early preview — free to join, and <b>free forever</b> if you join now.
+      Every feature available today gets grandfathered into your account for keeps.
+      The worm rewards the early.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <%= link_to new_user_path,
+            style: "padding: 14px 28px;
+                    border-radius: 999px;
+                    background: #fff;
+                    color: var(--color-coop-primary);
+                    font-weight: 700;
+                    font-size: 15px;
+                    text-decoration: none;" do %>
+        🐣 Claim my early bird account →
+      <% end %>
+      <%= link_to "Read the FAQ", faq_path,
+            style: "padding: 14px 28px;
+                    border-radius: 999px;
+                    background: rgba(255,255,255,0.15);
+                    color: #fff;
+                    font-weight: 700;
+                    font-size: 15px;
+                    border: 1px solid rgba(255,255,255,0.3);
+                    text-decoration: none;" %>
+    </div>
+  </section>
+
+  <%# ─── MODE PICKER (Not sure what you need?) ───────────────────────── %>
+  <section id="hiw-mode-picker"
+           style="background: var(--color-coop-bg-alt);
+                  border-radius: 22px;
+                  padding: 32px;
+                  border: 1px solid var(--color-coop-line);
+                  scroll-margin-top: 24px;">
+    <div class="text-center mb-7">
+      <div class="inline-block mb-3.5"
+           style="padding: 5px 14px;
+                  border-radius: 999px;
+                  background: var(--color-coop-warn);
+                  color: var(--color-coop-ink);
+                  border: 1.5px solid var(--color-coop-ink);
+                  font-family: var(--font-mono);
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.22em;
+                  text-transform: uppercase;">
+        ★ Pick a mode
+      </div>
+      <h2 style="font-family: var(--font-display);
+                 font-size: clamp(32px, 6vw, 48px);
+                 line-height: 1.05;
+                 letter-spacing: -0.02em;
+                 margin-bottom: 12px;">
+        Not sure what you need?
+      </h2>
+      <p class="mx-auto"
+         style="font-size: 16px;
+                color: var(--color-coop-ink-soft);
+                line-height: 1.55;
+                max-width: 680px;">
+        Henventory has two modes.
+        <b style="color: var(--color-coop-accent);">Flock mode</b> just counts the eggs.
+        <b style="color: var(--color-coop-primary);">Layer mode</b> tracks each hen by name.
+        Compare them side by side, tap any step to peek under the hood, and pick whatever fits.
+        (You can switch later — your data stays put.)
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-6">
+      <%= render "marketing/hiw_mode_column",
+            mode: "Flock mode.",
+            emoji: "🪺",
+            kicker: "The simple one",
+            accent: "var(--color-coop-accent)",
+            tagline: "The core Henventory experience. Just count the eggs and call it a day.",
+            intro: "Flock mode is for folks who want to know how many eggs the coop produced — not who laid which one. One number per collection. No hen setup, no dropdowns. The faster path.",
+            when_list: [
+              "you have a small farm with too many chickens to track individually",
+              "you're interested in how many eggs you get each day (instead of tracking who's laying what)",
+              "your hens lay eggs that look similar (or identical) to one another",
+              "you only check for eggs once or twice a day",
+            ],
+            steps: [
+              { title: "Tap 'Got some eggs?'",
+                blurb: "The big button lives at the top of your dashboard. One tap to start a collection." },
+              { title: "Pick your name, type the count.",
+                blurb: "Choose your name from the household dropdown, enter how many eggs you found, and submit.",
+                open: true },
+              { title: "See your day add up.",
+                blurb: "Each collection appears under Today's Entries. The day's running tally lives at the top of the dashboard." },
+              { title: "Browse the history.",
+                blurb: "All Entries shows every collection ever. Filter by date range, sort newest or oldest, or scroll the calendar to a specific day." },
+            ],
+            footnote: "Need to edit or delete an entry? Hit the options menu below the entry. Every change stays in the household record.",
+            prefix: "flock" %>
+
+      <%= render "marketing/hiw_mode_column",
+            mode: "Layer mode.",
+            emoji: "🐔",
+            kicker: "With the bells & whistles",
+            accent: "var(--color-coop-primary)",
+            tagline: "The full experience. Every egg gets assigned to a hen, every hen gets her own profile.",
+            intro: "Layer mode adds the My Flock tab — a roster of each of your hens with breed, hatch date, and how-to-tell-apart notes. Every egg you log gets attributed to a specific bird, so you can compare productivity, spot a hen who's gone quiet, and crown the Employee of the Month.",
+            when_list: [
+              "you can tell your hens' eggs apart",
+              "you have a few different breeds and want to compare their productivity, peak egg-laying seasons, etc.",
+              "you check for eggs frequently throughout the day",
+            ],
+            steps: [
+              { title: "Add your hens.",
+                blurb: "From My Flock, hit 'Add new chicken.' Fill in name, breed, hatch date, and a 'how to tell apart' note. Mark her Pullet or Layer.",
+                open: true },
+              { title: "Tap 'Got some eggs?'",
+                blurb: "Same button as Flock mode, different form on the other side." },
+              { title: "Pick the hen who laid it.",
+                blurb: "Each egg gets assigned to a specific hen. Got more than one? Hit 'Got another egg?' and assign the next one." },
+              { title: "Watch the leaderboard form.",
+                blurb: "Employee of the Month, per-hen trends, soft-shell streaks, broody patterns — the longer you log, the more you see." },
+            ],
+            footnote: "Brand-new hen on the cards? Most stats fill in after a few weeks of data. Pullets graduate to layers automatically when you log their first egg.",
+            prefix: "layer" %>
+    </div>
+
+    <%# Switch-anytime reassurance %>
+    <div class="flex flex-col md:flex-row items-center gap-4"
+         style="background: rgba(212, 165, 72, 0.13);
+                border: 1px solid rgba(212, 165, 72, 0.4);
+                border-radius: 14px;
+                padding: 18px 24px;">
+      <div class="flex items-center justify-center flex-shrink-0"
+           style="width: 44px; height: 44px;
+                  border-radius: 12px;
+                  background: var(--color-coop-warn);
+                  font-size: 22px;">
+        ⇄
+      </div>
+      <div class="flex-1 text-center md:text-left">
+        <div style="font-family: var(--font-display); font-size: 20px;
+                    margin-bottom: 4px; line-height: 1.15;">
+          You can switch modes anytime.
+        </div>
+        <div style="font-size: 13px; color: var(--color-coop-ink-soft); line-height: 1.5;">
+          Start in Flock, decide later you want per-hen detail? Flip it in Settings. Your old entries stay put — they just don't get back-attributed to hens (we don't know who laid them).
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

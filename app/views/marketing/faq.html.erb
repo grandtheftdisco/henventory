@@ -1,195 +1,299 @@
 <% content_for :title, "FAQ" %>
 
-<h1 class="font-bold text-4xl text-lime-700 pb-5">
-  Frequently Asked Questions
-</h1>
+<%# FAQ data is rendered inline below — kept ERB-native so copy edits don't
+    require touching a partial. Anchor IDs match the right-side TOC links. %>
 
-<div class="text-left w-100 md:w-150 justify-self-center">
-<div class="text-left w-100 md:w-150 justify-self-center">
-  <div class="p-5">
-    <h2 class="font-bold text-2xl pb-2"> ❓ Who is Henventory for?</h2>
-    <div class="pl-10">
-      <p class="pb-2">
-        <b>Henventory</b> helps chicken farmers keep track of egg production.
-      </p>
-      <p class="pb-2">
-        Whether you have a small backyard flock or several dozen hens, 
-        Henventory will answer questions like:
-      </p>
-      <ul class="font-semibold italic text-sm">
-        <li class="py-1">
-          🥚 How many eggs do I get per day, on average?
-        </li>
-        <li class="py-1">
-          🥚 Do my Rhode Island Reds lay more than my Barred Rocks?
-        </li>
-        <li class="py-1">
-          🥚 Which of my chickens is Employee of the Month?
-        </li>
-      </ul>
+<div class="flex flex-col gap-6">
+  <%# ─── HERO ────────────────────────────────────────────────────────── %>
+  <section class="coop-card text-center" style="padding: 40px 32px;">
+    <div class="coop-kicker mb-4" style="color: var(--color-coop-primary); letter-spacing: 0.22em;">
+      Frequently asked
     </div>
-  </div>
-  <hr class="border-0.5">
-  <div class="p-5">
-    <a name="anchor-one">
-      <h2 class="font-bold text-2xl pb-2">
-        ❓ What are 'flock mode' and 'layer mode'?
-      </h2>
-    
-    <div class="pl-10">
-      <p class="py-2">
-        🪺<b>Flock mode</b> allows you to track <i>only</i> how many eggs you
-        collect, and when you collect them. It's the core Henventory experience.
-      </p>
-      <p class="pt-2 pb-5">
-        🐔<b>Layer mode</b>, on the other hand, allows you to collect data on 
-        individual hens: like how many eggs they lay throughout the week, 
-        month, and year. Think of this as Henventory with some bells & whistles.
-      </p>
-      <div class="bg-blue-100 border border-0.5 rounded-2xl px-4 mb-5 py-2">
-        <p class="font-semibold text-lg">
-          ➡️ You might want to use <b>flock mode</b> if:
+    <h1 style="font-family: var(--font-display);
+               font-size: clamp(40px, 8vw, 64px);
+               line-height: 1.02;
+               color: var(--color-coop-ink);
+               letter-spacing: -0.02em;
+               margin-bottom: 14px;">
+      Got questions?
+    </h1>
+    <p class="mx-auto"
+       style="font-size: 17px;
+              color: var(--color-coop-ink-soft);
+              line-height: 1.55;
+              max-width: 640px;">
+      We've answered the ones we hear most. Tap any question to see the full answer.
+      Can't find what you're looking for?
+      <%= mail_to "henventory@gmail.com", "Drop us a line.",
+            style: "color: var(--color-coop-primary); font-weight: 700; text-decoration: none;" %>
+    </p>
+  </section>
+
+  <%# ─── MAIN: accordion list + sticky right-side TOC ────────────────── %>
+  <div class="grid md:grid-cols-[1fr_260px] gap-8 items-start">
+
+    <%# ─ Accordion column ─────────────────────────────────────────── %>
+    <div data-controller="accordion">
+
+      <%# Q1 — Who is Henventory for? %>
+      <%= render "marketing/faq_item",
+          id: "q-who-is-it-for",
+          category: "Basics",
+          question: "Who is Henventory for?",
+          short: "Anyone with chickens and a curiosity about their eggs." do %>
+        <p class="mb-3" style="line-height: 1.6;">
+          <b>Henventory</b> helps chicken keepers — from backyard broods to small-scale farms — track egg production.
         </p>
-        <ul class="pb-2">
-          <li>
-            🥚 you have a small farm with too many chickens to track individually
-          </li>
-          <li>
-            🥚 you're interested in <i>how many eggs</i> you get each day 
-            (instead of tracking who's laying what)
-          </li>
-          <li>
-            🥚 your hens lay eggs that look similar (or identical) to one another
-          </li>
-          <li>
-            🥚 you only check for eggs once or twice a day
-          </li>
-        </ul>
-      </div>
-      <div class="bg-blue-100 border border-0.5 rounded-2xl px-4 mb-5 py-2">
-        <p class="font-semibold text-lg">
-          ➡️ You might want to use <b>layer mode</b> if:
+        <p class="mb-3" style="line-height: 1.6;">
+          Whether you have three hens or three dozen, Henventory answers questions like:
         </p>
-        <ul class="pb-2">
-          <li>
-            🥚 you can tell your hens' eggs apart
-          </li>
-          <li>
-            🥚 you have a few different breeds and want to compare their
-            productivity, peak egg-laying seasons, etc.
-          </li>
-          <li>
-            🥚 you check for eggs frequently throughout the day
-          </li>
+        <ul class="list-none p-0 m-0 italic"
+            style="color: var(--color-coop-ink-soft);">
+          <% [
+            "How many eggs do I get per day, on average?",
+            "Do my Rhode Island Reds lay more than my Barred Rocks?",
+            "Which of my chickens is Employee of the Month?",
+          ].each do |line| %>
+            <li class="flex gap-2 py-1"><span>🥚</span><span><%= line %></span></li>
+          <% end %>
         </ul>
-      </div>
-    </div>
-  </div>
-  <hr class="border-0.5">
-  <div class="p-5">
-    <h2 class="font-bold text-2xl pb-2">
-      ❓ How does the app work?
-    </h2>
+      <% end %>
 
-    <div class="pl-10">
-      <p>
-        Great question! Check out our 
-        <%= link_to "How it Works", how_it_works_path, 
-          class: 'hover:text-blue-800 font-bold' %> 
-        page for a demo.
-      </p>
-    </div>
-  </div>
-  <hr class="border-0.5">
-  <div class="p-5">
-    <h2 class="font-bold text-2xl pb-2">
-      ❓ Are there plans to add more features to Henventory?
-    </h2>
-
-    <div class="pl-10">
-      <p class="py-4">
-        Absolutely! What we're about to launch is an 
-        <i>alpha version</i> of Henventory.
-      </p>
-      <p class="font-semibold">
-        ❓ What's an alpha version?
-      </p>
-      <p class="pb-2">
-        Well, if you've heard of a <i>beta version</i> before, just imagine 
-        something a little less polished.
-      </p>
-      <p>The formal definition of an alpha version is: </p>
-      <div class="px-8 py-3 italic text-sm"> 
-        <blockquote 
-          cite="https://dictionary.cambridge.org/us/dictionary/english/alpha-version">
-          <p>a version of a piece of software that is made available for
-          testing, typically by employees of the company that is developing it, 
-          before its general release.</p>
-        </blockquote>
-      </div>
-
-      <p class="pb-2">
-        So, long story short -- you're an insider. 🤠
-      </p>
-      <p class="pb-2">
-        Welcome to the beginning of the Henventory journey! We're glad to 
-        have you here.
-      </p>
-      <p class="pb-2">
-        If you have any ideas for new features, 
-        <a href="mailto:henventory@gmail.com", 
-          class="hover:text-blue-800 font-bold">
-          drop us a line!
-        </a>
-      </p>
-    </div>
-  </div>
-  <hr class="border-0.5">
-  <div class="p-5">
-    <h2 class="font-bold text-2xl pb-2">❓ When can I sign up?</h2>
-      <div class="pl-10">
-        <p class="pb-2">Right now! Join 
-          <%= link_to "here", new_user_path, 
-          class: 'font-bold hover:text-blue-800' %>
-          . 🤠
+      <%# Q2 — Flock vs Layer (open by default as demo) %>
+      <%= render "marketing/faq_item",
+          id: "q-flock-vs-layer",
+          category: "Basics",
+          question: "What are 'flock mode' and 'layer mode'?",
+          short: "Two ways to count: by the basket, or by the bird.",
+          open: true do %>
+        <p class="mb-2" style="line-height: 1.6;">
+          🪺 <b>Flock mode</b> tracks <i>only</i> how many eggs you collect and when — the core Henventory experience.
         </p>
+        <p class="mb-4" style="line-height: 1.6;">
+          🐔 <b>Layer mode</b> tracks each hen individually: how many eggs each one lays through the week, month, and year. Think of it as Henventory with some bells &amp; whistles.
+        </p>
+
+        <%# Flock mode callout — olive/accent tint %>
+        <div class="mb-3" style="background: rgba(122, 140, 74, 0.13);
+                                  border: 1px solid rgba(122, 140, 74, 0.27);
+                                  border-radius: 12px;
+                                  padding: 12px 16px;">
+          <div class="mb-2"
+               style="font-size: 13px;
+                      font-weight: 700;
+                      color: var(--color-coop-accent);">
+            ➡️ You might want flock mode if:
+          </div>
+          <ul class="list-none p-0 m-0" style="font-size: 13px; color: var(--color-coop-ink);">
+            <% [
+              "you have a small farm with too many chickens to track individually",
+              "you're interested in how many eggs you get each day (instead of who's laying what)",
+              "your hens lay eggs that look similar (or identical) to one another",
+              "you only check for eggs once or twice a day",
+            ].each do |line| %>
+              <li class="flex gap-2 py-0.5" style="line-height: 1.5;"><span>🥚</span><span><%= line %></span></li>
+            <% end %>
+          </ul>
+        </div>
+
+        <%# Layer mode callout — terracotta/primary tint %>
+        <div style="background: rgba(196, 98, 45, 0.13);
+                    border: 1px solid rgba(196, 98, 45, 0.27);
+                    border-radius: 12px;
+                    padding: 12px 16px;">
+          <div class="mb-2"
+               style="font-size: 13px;
+                      font-weight: 700;
+                      color: var(--color-coop-primary);">
+            ➡️ You might want layer mode if:
+          </div>
+          <ul class="list-none p-0 m-0" style="font-size: 13px; color: var(--color-coop-ink);">
+            <% [
+              "you can tell your hens' eggs apart",
+              "you have a few different breeds and want to compare their productivity, peak egg-laying seasons, etc.",
+              "you check for eggs frequently throughout the day",
+            ].each do |line| %>
+              <li class="flex gap-2 py-0.5" style="line-height: 1.5;"><span>🥚</span><span><%= line %></span></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%# Q3 — How does the app work? %>
+      <%= render "marketing/faq_item",
+          id: "q-how-it-works",
+          category: "Basics",
+          question: "How does the app work?",
+          short: "Watch the demo — every screen, in order." do %>
+        <p style="margin: 0; line-height: 1.6;">
+          Great question! Head to our
+          <%= link_to "How it Works", how_it_works_path,
+              style: "color: var(--color-coop-primary); font-weight: 700; text-decoration: none;" %>
+          page for a screen-by-screen walkthrough. We'll show you how to sign up, set up your flock, and log your first collection in about four minutes.
+        </p>
+      <% end %>
+
+      <%# Q4 — Roadmap (alpha version) %>
+      <%= render "marketing/faq_item",
+          id: "q-alpha-roadmap",
+          category: "Roadmap",
+          question: "Are there plans to add more features?",
+          short: "Absolutely. You're using an alpha version — welcome inside." do %>
+        <p class="mb-3" style="line-height: 1.6;">
+          Absolutely. What we're about to launch is an <i>alpha version</i> of Henventory.
+        </p>
+        <div class="mb-3"
+             style="background: var(--color-coop-bg-alt);
+                    border-radius: 10px;
+                    padding: 14px;
+                    border: 1px solid var(--color-coop-line);">
+          <div class="coop-kicker mb-2" style="font-weight: 700; letter-spacing: 0.18em;">
+            What's an alpha version?
+          </div>
+          <p class="mb-3" style="font-size: 13px; line-height: 1.5;">
+            If you've heard of a <i>beta version</i> before, just imagine something a little less polished.
+          </p>
+          <blockquote style="margin: 0;
+                             padding: 10px 14px;
+                             border-left: 3px solid var(--color-coop-primary);
+                             background: var(--color-coop-surface);
+                             font-size: 12px;
+                             font-style: italic;
+                             color: var(--color-coop-ink-soft);
+                             line-height: 1.5;
+                             border-radius: 0 8px 8px 0;">
+            "a version of a piece of software that is made available for testing, typically by employees of the company that is developing it, before its general release."
+            <div class="coop-kicker"
+                 style="font-style: normal;
+                        margin-top: 6px;
+                        letter-spacing: 0.08em;">
+              — CAMBRIDGE DICTIONARY
+            </div>
+          </blockquote>
+        </div>
+        <p class="mb-2" style="line-height: 1.6;">
+          So, long story short — <b>you're an insider</b>. 🤠
+        </p>
+        <p class="mb-2" style="line-height: 1.6;">
+          Welcome to the beginning of the Henventory journey. We're glad to have you here.
+        </p>
+        <p style="margin: 0; line-height: 1.6;">
+          Got an idea for a new feature?
+          <%= mail_to "henventory@gmail.com", "Drop us a line.",
+                style: "color: var(--color-coop-primary); font-weight: 700; text-decoration: none;" %>
+        </p>
+      <% end %>
+
+      <%# Q5 — When can I sign up? %>
+      <%= render "marketing/faq_item",
+          id: "q-sign-up",
+          category: "Account",
+          question: "When can I sign up?",
+          short: "Right now." do %>
+        <p style="margin: 0; line-height: 1.6;">
+          Right now! Join
+          <%= link_to "here", new_user_path,
+                style: "color: var(--color-coop-primary); font-weight: 700; text-decoration: none;" %>. 🤠
+        </p>
+      <% end %>
+
+      <%# Q6 — Bug reports %>
+      <%= render "marketing/faq_item",
+          id: "q-bug-report",
+          category: "Support",
+          question: "I found a bug. What should I do?",
+          short: "Tell us — every report makes the app better." do %>
+        <p class="mb-3" style="line-height: 1.6;">
+          Since Henventory is still in its alpha days, there are bound to be some bugs we haven't caught yet. 🐛
+        </p>
+        <p class="mb-3" style="line-height: 1.6;">
+          Until we get our bug report form up and running, just
+          <%= mail_to "henventory@gmail.com", "drop us a line",
+                style: "color: var(--color-coop-primary); font-weight: 700; text-decoration: none;" %>
+          and let us know what you found.
+        </p>
+        <div class="mb-3"
+             style="background: var(--color-coop-bg-alt);
+                    border-radius: 10px;
+                    padding: 14px;
+                    border: 1px solid var(--color-coop-line);">
+          <div class="coop-kicker mb-2" style="font-weight: 700; letter-spacing: 0.18em;">
+            In your email, please include:
+          </div>
+          <ul class="list-none p-0 m-0" style="font-size: 13px; color: var(--color-coop-ink);">
+            <% [
+              "when you found the bug (date & time)",
+              "what you were doing (or trying to do) in the app when the bug appeared",
+              "any screenshots or recordings, if possible",
+            ].each do |line| %>
+              <li class="flex gap-2 py-0.5" style="line-height: 1.5;">
+                <span style="color: var(--color-coop-primary);">•</span><span><%= line %></span>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <p class="italic" style="margin: 0; line-height: 1.6; color: var(--color-coop-ink-soft);">
+          Your bug reports help make sure Henventory runs well now — and scales well later. Thank you!
+        </p>
+      <% end %>
+    </div>
+
+    <%# ─ Right-side TOC ───────────────────────────────────────────── %>
+    <aside class="hidden md:block sticky"
+           style="top: 24px;
+                  background: var(--color-coop-surface);
+                  border-radius: 16px;
+                  border: 1px solid var(--color-coop-line);
+                  padding: 18px;">
+      <div class="coop-kicker mb-4" style="letter-spacing: 0.22em;">On this page</div>
+      <div class="flex flex-col gap-1">
+        <% [
+          ["q-who-is-it-for",   "Who is Henventory for?"],
+          ["q-flock-vs-layer",  "What are 'flock mode' and 'layer mode'?"],
+          ["q-how-it-works",    "How does the app work?"],
+          ["q-alpha-roadmap",   "Are there plans to add more features?"],
+          ["q-sign-up",         "When can I sign up?"],
+          ["q-bug-report",      "I found a bug. What should I do?"],
+        ].each_with_index do |(anchor, title), i| %>
+          <a href="#<%= anchor %>"
+             class="block"
+             style="font-size: 12px;
+                    color: <%= i == 1 ? 'var(--color-coop-primary)' : 'var(--color-coop-ink-soft)' %>;
+                    font-weight: <%= i == 1 ? 700 : 500 %>;
+                    padding: 6px 8px;
+                    border-radius: 6px;
+                    background: <%= i == 1 ? 'var(--color-coop-primary-soft)' : 'transparent' %>;
+                    line-height: 1.4;
+                    text-decoration: none;">
+            · <%= title %>
+          </a>
+        <% end %>
       </div>
-    </div>
-  </div>
-  <hr class="border-0.5">
-  <div class="p-5">
-    <h2 class="font-bold text-2xl pb-2">
-      ❓ I found a bug. What should I do?
-    </h2>
-    <div class="pl-10">
-      <p class="pb-2">
-        Since Henventory is still in its alpha days, there are bound to be 
-        some bugs we haven't caught yet. 🐛
-      </p>
-      <p class="pb-2">
-        Until we get our bug report form up and running, you can just 
-        <%= link_to "drop us a line", 
-          'mailto:henventory@gmail.com',
-          class: 'font-bold hover:text-blue-800' 
-        %> and let us know what you found.
-      </p>
-      <p class="font-semibold">In your email, please include:</p>
-        <ul class="list-disc pb-2 pl-2 text-sm">
-          <li class="list-inside">
-            when you found the bug (date & time)
-          </li>
-          <li class="list-inside">
-            what you were doing (or trying to do) in the app when the bug appeared
-          </li>
-          <li class="list-inside">
-            any screenshots or recordings, if possible
-          </li>
-        </ul>
-      <p class="pb-2">
-        Your bug reports help make sure that Henventory runs well now 
-        -- and scales well later.
-      </p>
-      <p>Thank you!</p>
-    </div>
+
+      <%# "Still stuck?" mailto card %>
+      <div class="mt-4"
+           style="padding: 14px;
+                  background: rgba(212, 165, 72, 0.13);
+                  border-radius: 12px;
+                  border: 1px solid rgba(212, 165, 72, 0.33);">
+        <div class="coop-kicker mb-1.5"
+             style="color: var(--color-coop-warn);
+                    font-weight: 700;
+                    letter-spacing: 0.18em;">
+          Still stuck?
+        </div>
+        <div class="mb-2"
+             style="font-size: 12px;
+                    color: var(--color-coop-ink);
+                    line-height: 1.5;">
+          We read every email — promise.
+        </div>
+        <%= mail_to "henventory@gmail.com", "henventory@gmail.com →",
+              style: "font-size: 12px;
+                      color: var(--color-coop-primary);
+                      font-weight: 700;
+                      text-decoration: none;" %>
+      </div>
+    </aside>
   </div>
 </div>

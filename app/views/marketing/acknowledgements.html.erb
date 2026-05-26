@@ -1,43 +1,248 @@
 <% content_for :title, "Acknowledgements" %>
 
-<h1 class="font-bold text-4xl text-blue-500 pb-10">Acknowledgements</h1>
-<p class="font-bold text-2xl text-amber-700 pb-5">Thank you to:</p>
-<ul class="pb-10 text-lg">
-  <li class="font-bold pb-1">Bookis</li>
-  <li class="font-semibold pb-1">Jack</li>
-  <li class="font-bold pb-1">Michael & Tina</li>
-  <li class="font-semibold pb-1">Emily</li>
-  <li class="font-bold pb-1">Wade</li>
-  <li class="font-semibold hover:text-lime-700 pb-1">
-    <a href="https://github.com/ddnexus/pagy">
-      Domizio
-    </a>
-  </li>
-  <li class="font-bold hover:text-lime-700 pb-1">
-    <a href="https://malachirails.com/">
-      Malachi
-    </a>
-  </li>
-</ul>
+<%# Names mirror the legacy list, in legacy order. Emphasis = bold tint in the
+    name-card grid; tints rotate so the wall feels hand-arranged. %>
+<% thanks = [
+  { name: "Bookis",         emphasis: true,  href: nil },
+  { name: "Jack",            emphasis: false, href: nil },
+  { name: "Michael & Tina", emphasis: true,  href: nil },
+  { name: "Emily",           emphasis: false, href: nil },
+  { name: "Wade",            emphasis: true,  href: nil },
+  { name: "Domizio",         emphasis: false, href: "https://github.com/ddnexus/pagy" },
+  { name: "Malachi",         emphasis: true,  href: "https://malachirails.com/" },
+] %>
+<% tints = ["var(--color-coop-primary-soft)", "var(--color-coop-bg-alt)", "#e6d2a8", "#f0c79a", "#d8c8df", "var(--color-coop-bg-alt)", "var(--color-coop-primary-soft)"] %>
 
-<div class="w-100 justify-self-center">
-  <hr>
-  <p class="pt-10 pb-5 font-bold">
-    Without y'all, this app wouldn't even exist.
-  </p>
+<div class="flex flex-col gap-6">
+  <%# ─── HERO ────────────────────────────────────────────────────────── %>
+  <section class="coop-card relative overflow-hidden text-center"
+           style="padding: 56px 32px;">
+    <%# Decorative eggs in the four corners — absolute so they don't push layout. %>
+    <span aria-hidden="true" class="absolute hidden md:block" style="top: 20px; left: 36px; font-size: 36px; opacity: 0.18; transform: rotate(-12deg);">🥚</span>
+    <span aria-hidden="true" class="absolute hidden md:block" style="top: 30px; right: 56px; font-size: 28px; opacity: 0.18; transform: rotate(18deg);">🥚</span>
+    <span aria-hidden="true" class="absolute hidden md:block" style="bottom: 26px; left: 110px; font-size: 24px; opacity: 0.18; transform: rotate(6deg);">🥚</span>
+    <span aria-hidden="true" class="absolute hidden md:block" style="bottom: 36px; right: 130px; font-size: 32px; opacity: 0.18; transform: rotate(-22deg);">🥚</span>
 
-  <p class="pb-5">
-    Thank you all for the technical advice, code review, encouragement, 
-    gems, explanations, app name ideas, and extra coffee.
-  </p>
+    <div class="coop-kicker mb-4" style="color: var(--color-coop-primary); letter-spacing: 0.28em;">
+      With gratitude
+    </div>
+    <h1 style="font-family: var(--font-display);
+               font-size: clamp(24px, 7.5vw, 84px);
+               line-height: 1.05;
+               color: var(--color-coop-ink);
+               letter-spacing: -0.025em;
+               margin-bottom: 16px;
+               overflow-wrap: anywhere;">
+      Acknowledgements
+    </h1>
+    <p class="mx-auto italic"
+       style="font-size: 18px;
+              color: var(--color-coop-ink-soft);
+              line-height: 1.55;
+              max-width: 600px;">
+      Henventory exists because a handful of people fed it sparks. This is for them.
+    </p>
+  </section>
 
-  <p class="pb-5">
-    This app started on napkins and scratch paper.
-  </p>
-  
-  <p class="pb-5">
-    Wherever the future leads, I'm grateful to be here.
-  </p>
+  <%# ─── NAME WALL ───────────────────────────────────────────────────── %>
+  <section class="coop-card" style="padding: 40px 32px 48px;">
+    <div class="flex flex-wrap items-baseline gap-5 pb-5 mb-8"
+         style="border-bottom: 1px dashed var(--color-coop-line);">
+      <div style="font-family: var(--font-display);
+                  font-size: 36px;
+                  line-height: 1;
+                  color: var(--color-coop-primary);
+                  letter-spacing: -0.015em;">
+        Thank you to:
+      </div>
+      <div class="coop-kicker" style="letter-spacing: 0.22em;">
+        · The original <%= thanks.size %> ·
+      </div>
+    </div>
 
-  <p class="pb-5 font-bold">Thank you.</p>
+    <%# 2-col on mobile, 7-col on desktop = a true wall of thanks. %>
+    <div class="grid grid-cols-2 md:grid-cols-7 gap-3 md:gap-3.5">
+      <% thanks.each_with_index do |entry, i|
+           initials = entry[:name].split('&').map { |part| part.strip[0] }.join.upcase
+           rotate = ((i.even? ? -1 : 1) * (0.6 + (i % 3) * 0.4)).round(2)
+           tint   = tints[i % tints.size]
+           card_content = capture do %>
+        <div class="relative overflow-hidden flex flex-col items-center"
+             style="background: var(--color-coop-surface);
+                    border-radius: 18px;
+                    padding: 24px 16px;
+                    border: 1px solid var(--color-coop-line);
+                    gap: 14px;
+                    transform: rotate(<%= rotate %>deg);
+                    box-shadow: 0 6px 20px rgba(45, 31, 16, 0.06);">
+          <%# Watermark egg in corner %>
+          <span aria-hidden="true"
+                class="absolute"
+                style="top: -10px;
+                       right: -10px;
+                       font-size: 56px;
+                       opacity: 0.08;
+                       transform: rotate(15deg);
+                       color: var(--color-coop-primary);">🥚</span>
+
+          <div class="flex items-center justify-center"
+               style="width: 64px;
+                      height: 64px;
+                      border-radius: 50%;
+                      background: <%= tint %>;
+                      border: 1px solid var(--color-coop-line);
+                      font-family: var(--font-display);
+                      font-size: 24px;
+                      color: var(--color-coop-ink);
+                      font-weight: 700;">
+            <%= initials %>
+          </div>
+          <div class="text-center"
+               style="font-family: var(--font-display);
+                      font-size: 22px;
+                      color: var(--color-coop-ink);
+                      line-height: 1.1;
+                      letter-spacing: -0.01em;
+                      font-weight: <%= entry[:emphasis] ? 500 : 400 %>;">
+            <%= entry[:name] %>
+          </div>
+        </div>
+      <% end %>
+
+        <% if entry[:href] %>
+          <%= link_to card_content, entry[:href], style: "text-decoration: none; color: inherit;", target: "_blank", rel: "noopener" %>
+        <% else %>
+          <%= card_content %>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <%# ─── NOTE FROM THE MAKER (dark feature panel) ────────────────────── %>
+  <section class="relative overflow-hidden"
+           style="background: var(--color-coop-ink);
+                  color: var(--color-coop-cream);
+                  border-radius: 20px;
+                  padding: 48px 32px;">
+    <%# Decorative giant quote glyph %>
+    <span aria-hidden="true"
+          class="absolute hidden md:block"
+          style="top: 12px;
+                 right: 40px;
+                 font-family: var(--font-display);
+                 font-size: 280px;
+                 line-height: 1;
+                 color: var(--color-coop-primary);
+                 opacity: 0.18;">"</span>
+
+    <div class="grid md:grid-cols-[1fr_1.4fr] gap-10 items-start relative">
+      <%# Left rail — kicker, headline, origin pill %>
+      <div>
+        <div class="coop-kicker mb-4"
+             style="color: var(--color-coop-primary);
+                    letter-spacing: 0.28em;">
+          A note from the maker
+        </div>
+        <p style="font-family: var(--font-display);
+                  font-size: 32px;
+                  line-height: 1.05;
+                  color: var(--color-coop-cream);
+                  letter-spacing: -0.015em;
+                  margin-bottom: 20px;">
+          Without y'all, this app wouldn't even exist.
+        </p>
+        <div style="background: rgba(255, 255, 255, 0.08);
+                    border-radius: 12px;
+                    padding: 16px;
+                    border: 1px solid rgba(255, 255, 255, 0.12);
+                    font-size: 12px;
+                    color: var(--color-coop-cream);
+                    line-height: 1.5;
+                    font-style: italic;
+                    opacity: 0.85;">
+          <div class="coop-kicker mb-2"
+               style="color: var(--color-coop-primary);
+                      font-style: normal;
+                      font-weight: 700;">
+            Origin story
+          </div>
+          This app started on napkins and scratch paper.
+        </div>
+      </div>
+
+      <%# Right rail — the gratitude paragraph %>
+      <div style="font-size: 18px;
+                  color: var(--color-coop-cream);
+                  line-height: 1.75;
+                  opacity: 0.92;">
+        <p class="mb-6">
+          Thank you all for the
+          <b style="color: var(--color-coop-primary);">technical advice</b>,
+          <b style="color: var(--color-coop-primary);">code review</b>,
+          <b style="color: var(--color-coop-primary);">encouragement</b>,
+          <b style="color: var(--color-coop-primary);">gems</b>,
+          <b style="color: var(--color-coop-primary);">explanations</b>,
+          <b style="color: var(--color-coop-primary);">app name ideas</b>, and
+          <b style="color: var(--color-coop-primary);">extra coffee</b>.
+        </p>
+        <p class="mb-6">Wherever the future leads, I'm grateful to be here.</p>
+        <div class="flex items-center gap-4 pt-6 mt-8"
+             style="border-top: 1px dashed rgba(255, 255, 255, 0.2);">
+          <div style="font-family: var(--font-display);
+                      font-size: 44px;
+                      color: var(--color-coop-primary);
+                      line-height: 1;
+                      letter-spacing: -0.02em;">
+            Thank you.
+          </div>
+          <div class="flex-1"></div>
+          <div class="coop-kicker"
+               style="color: rgba(255, 255, 255, 0.5);
+                      letter-spacing: 0.18em;">
+            — THE HENVENTORY TEAM
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%# ─── "WANT YOUR NAME NEXT?" BRIDGE ───────────────────────────────── %>
+  <section class="flex flex-col md:flex-row md:items-center gap-6"
+           style="background: rgba(212, 165, 72, 0.13);
+                  border: 1px solid rgba(212, 165, 72, 0.4);
+                  border-radius: 18px;
+                  padding: 24px 28px;">
+    <div class="flex items-center justify-center flex-shrink-0 mx-auto md:mx-0"
+         style="width: 56px;
+                height: 56px;
+                border-radius: 14px;
+                background: var(--color-coop-warn);
+                font-size: 28px;
+                border: 2px solid var(--color-coop-ink);">
+      ✍️
+    </div>
+    <div class="flex-1 text-center md:text-left">
+      <div style="font-family: var(--font-display);
+                  font-size: 24px;
+                  margin-bottom: 4px;
+                  line-height: 1.15;">
+        Want your name on this page next?
+      </div>
+      <div style="font-size: 13px;
+                  color: var(--color-coop-ink-soft);
+                  line-height: 1.5;">
+        Found a bug, sent an idea, drew a comb on a napkin? Tell us — we keep the list growing.
+      </div>
+    </div>
+    <%= mail_to "henventory@gmail.com",
+        "henventory@gmail.com →",
+        class: "flex-shrink-0 mx-auto md:mx-0",
+        style: "padding: 12px 22px;
+                border-radius: 999px;
+                background: var(--color-coop-ink);
+                color: var(--color-coop-cream);
+                font-weight: 700;
+                font-size: 13px;
+                text-decoration: none;" %>
+  </section>
 </div>

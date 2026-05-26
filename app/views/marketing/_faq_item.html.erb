@@ -1,0 +1,72 @@
+<%# Single FAQ accordion row used by faq.html.erb.
+    Locals:
+      id       — anchor id (also used by the right-side TOC links)
+      category — short tag (e.g. "Basics") shown as a pill on the right
+      question — the question itself
+      short    — italic teaser shown when collapsed
+      open     — bool, default false — whether to render expanded on first paint
+    Block: the expanded answer body.
+
+    Built on <details>/<summary> so collapse/expand needs no JS — the
+    accordion controller only handles deep-link hash anchors. %>
+<details id="<%= id %>"
+         data-accordion-target="item"
+         <%= "open" if local_assigns[:open] %>
+         class="group coop-faq-item"
+         style="background: var(--color-coop-surface);
+                border-radius: 14px;
+                border: 1px solid var(--color-coop-line);
+                margin-bottom: 12px;
+                overflow: hidden;
+                scroll-margin-top: 24px;">
+  <summary class="flex items-center gap-4 cursor-pointer list-none"
+           style="padding: 20px 24px;">
+    <%# ❓ icon %>
+    <span aria-hidden="true"
+          class="flex-shrink-0"
+          style="font-size: 24px;
+                 color: var(--color-coop-primary);
+                 line-height: 1;
+                 font-family: var(--font-display);">❓</span>
+
+    <%# Question + teaser %>
+    <div class="flex-1 min-w-0">
+      <div style="font-family: var(--font-display);
+                  font-size: 22px;
+                  color: var(--color-coop-ink);
+                  line-height: 1.2;">
+        <%= question %>
+      </div>
+      <div class="coop-faq-teaser mt-1 italic"
+           style="font-size: 13px; color: var(--color-coop-ink-soft);">
+        <%= short %>
+      </div>
+    </div>
+
+    <%# Category pill %>
+    <span class="hidden md:inline-flex flex-shrink-0 coop-kicker"
+          style="padding: 4px 10px;
+                 background: var(--color-coop-bg-alt);
+                 border-radius: 999px;
+                 border: 1px solid var(--color-coop-line);
+                 letter-spacing: 0.18em;">
+      <%= category %>
+    </span>
+
+    <%# +/− indicator. The CSS flips it via [open] selector below. %>
+    <span aria-hidden="true"
+          class="coop-faq-indicator flex-shrink-0 flex items-center justify-center"
+          style="width: 32px;
+                 height: 32px;
+                 border-radius: 50%;
+                 background: var(--color-coop-bg-alt);
+                 color: var(--color-coop-ink);"></span>
+  </summary>
+
+  <%# Answer body — left rail mirrors the icon position above %>
+  <div style="padding: 0 24px 24px 64px;
+              font-size: 14px;
+              color: var(--color-coop-ink);">
+    <%= yield %>
+  </div>
+</details>
