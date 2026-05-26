@@ -37,40 +37,54 @@
       ]
     end
 %>
+<%# Note: don't use a `margin:` shorthand here — it would clobber the
+    `mx-auto` from the class with explicit left/right values and the
+    header would sit flush-left at viewport widths > 1280px. Set the
+    four sides individually so `mx-auto` survives. %>
 <header class="coop-card mx-auto"
-        style="max-width: 1280px; margin: 16px 12px 0; padding: 14px 16px;">
-  <%# Row 1: wordmark + right cluster. Nav joins this row at md+. %>
-  <div class="flex items-center justify-between gap-3">
-    <%= link_to (Current.user ? landing_path : root_path), class: "shrink-0", "aria-label": "Henventory home" do %>
-      <%= render "shared/wordmark", size: :md %>
-    <% end %>
+        style="max-width: 1280px;
+               margin-top: 16px;
+               margin-left: auto;
+               margin-right: auto;
+               margin-bottom: 0;
+               padding: 14px 16px;">
+  <%# Row 1: wordmark, nav, right cluster. The three children each claim
+      equal flex-basis (md:flex-1 + md:basis-0) so the nav lands on the
+      true viewport center regardless of how wide the side clusters are.
+      The side clusters' inner flexbox handles their own start/end
+      alignment so they hug the outer edges of their equal-width slots. %>
+  <div class="flex items-center gap-3">
+    <%# Left slot — wordmark, flush left. %>
+    <div class="flex md:flex-1 md:basis-0 justify-start">
+      <%= link_to (Current.user ? landing_path : root_path), class: "shrink-0", "aria-label": "Henventory home" do %>
+        <%= render "shared/wordmark", size: :md %>
+      <% end %>
+    </div>
 
-    <%# Inline nav slot — visible only at md+. Mobile uses the row below. %>
-    <nav aria-label="Primary" class="hidden md:block min-w-0">
+    <%# Middle slot — nav, centered. Visible only at md+; mobile uses row 2. %>
+    <nav aria-label="Primary" class="hidden md:flex md:flex-1 md:basis-0 justify-center min-w-0">
       <ul class="flex items-center gap-1 overflow-x-auto" style="scrollbar-width: none;">
         <%= render "shared/top_bar_nav_items", items: nav_items %>
       </ul>
     </nav>
 
-    <%# Right cluster: avatar+logout when authed, auth buttons otherwise. %>
-    <% if Current.user %>
-      <div class="flex items-center gap-2 shrink-0">
+    <%# Right slot — auth/account cluster, flush right. %>
+    <div class="flex md:flex-1 md:basis-0 justify-end items-center gap-2">
+      <% if Current.user %>
         <%= render "shared/user_avatar", user: Current.user, size: 36 %>
         <%= button_to "Log out", session_path,
               method: :delete,
               class: "coop-button-secondary",
               style: "padding: 8px 14px; font-size: 12px;" %>
-      </div>
-    <% else %>
-      <div class="flex items-center gap-2 shrink-0">
+      <% else %>
         <%= link_to "Log in", new_session_path,
               class: "coop-button-secondary",
               style: "padding: 8px 14px; font-size: 12px; text-decoration: none;" %>
         <%= link_to "Sign up", new_user_path,
               class: "coop-button-primary",
               style: "padding: 8px 14px; font-size: 12px; text-decoration: none;" %>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 
   <%# Row 2: nav, mobile only. Hidden at md+ since it appears inline above. %>
