@@ -1,0 +1,48 @@
+<%# Mockup snippet — Quick log card (step 2). Terracotta panel mimics the
+    in-app quick-log style. %>
+<div style="background: var(--color-coop-primary);
+            color: var(--color-coop-cream);
+            border-radius: 14px;
+            padding: 18px;
+            background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 12px, transparent 12px 24px);">
+  <div class="coop-kicker mb-1"
+       style="color: rgba(255,255,255,0.7); letter-spacing: 0.16em;">
+    Quick log · Layer mode
+  </div>
+  <div class="mb-3"
+       style="font-family: var(--font-display); font-size: 22px; line-height: 1.15;">
+    Whose egg?
+  </div>
+  <div class="flex flex-wrap gap-1 mb-2">
+    <% [
+      ["Penelope",  "#e8b894", true],
+      ["Louise",    "#d99a6a", false],
+      ["Henderson", "#3a2a20", false],
+    ].each do |name, tint, selected| %>
+      <div class="flex items-center gap-1.5"
+           style="padding: 4px 10px 4px 4px;
+                  border-radius: 999px;
+                  background: <%= selected ? "var(--color-coop-cream)" : "rgba(255,255,255,0.12)" %>;
+                  color: <%= selected ? "var(--color-coop-ink)" : "var(--color-coop-cream)" %>;
+                  border: 1px solid <%= selected ? "var(--color-coop-cream)" : "rgba(255,255,255,0.2)" %>;
+                  font-size: 11px; font-weight: 700;">
+        <div style="width: 14px; height: 14px; border-radius: 50%; background: <%= tint %>;"></div>
+        <%= name %>
+      </div>
+    <% end %>
+  </div>
+  <div class="grid grid-cols-3 gap-1.5">
+    <% ["1 egg", "2 eggs", "+ note"].each do |label| %>
+      <div class="flex items-center justify-center"
+           style="height: 38px;
+                  border-radius: 8px;
+                  background: rgba(255,255,255,0.18);
+                  font-size: 12px;
+                  font-weight: 700;
+                  font-family: var(--font-display);
+                  border: 1px solid rgba(255,255,255,0.22);">
+        <%= label %>
+      </div>
+    <% end %>
+  </div>
+</div>

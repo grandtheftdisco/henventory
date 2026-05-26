@@ -174,6 +174,174 @@
 	}
 	.coop-faq-item[open] .coop-faq-teaser { display: none; }
 
+	/* ----------------------------------------------------------
+	   How-it-Works step rail + zigzag detail rows.
+
+	   The rail is a 5-up flex on desktop with a single hairline
+	   connecting all the dots. On mobile it collapses to a vertical
+	   list with the dots flush-left and the line down the side.
+
+	   The zigzag rows alternate which side the mockup sits on at
+	   md+; on mobile they always stack copy-then-mockup.
+	   ---------------------------------------------------------- */
+	.hiw-rail {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		position: relative;
+	}
+	.hiw-rail-item {
+		display: flex;
+		gap: 14px;
+		align-items: flex-start;
+		position: relative;
+	}
+	@media (min-width: 768px) {
+		.hiw-rail {
+			flex-direction: row;
+			gap: 0;
+		}
+		.hiw-rail::before {
+			content: "";
+			position: absolute;
+			top: 22px;
+			left: 10%;
+			right: 10%;
+			height: 2px;
+			background: var(--color-coop-line);
+			z-index: 0;
+		}
+		.hiw-rail-item {
+			flex: 1;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+			gap: 10px;
+			padding: 0 8px;
+			z-index: 1;
+		}
+	}
+	.hiw-rail-dot {
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		background: var(--color-coop-surface);
+		border: 2px solid var(--color-coop-line);
+		color: var(--color-coop-ink);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: var(--font-display);
+		font-size: 18px;
+		font-weight: 700;
+		flex-shrink: 0;
+	}
+	.hiw-rail-item.is-first .hiw-rail-dot {
+		background: var(--color-coop-primary);
+		border-color: var(--color-coop-primary);
+		color: #fff;
+	}
+
+	.hiw-zig-row {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 28px;
+		align-items: center;
+		margin-bottom: 56px;
+	}
+	.hiw-zig-row:last-child { margin-bottom: 0; }
+	@media (min-width: 768px) {
+		.hiw-zig-row {
+			grid-template-columns: 1fr 1fr;
+			gap: 48px;
+		}
+		.hiw-zig-row.is-flip .hiw-zig-copy   { order: 2; }
+		.hiw-zig-row.is-flip .hiw-zig-visual { order: 1; }
+	}
+
+	/* ----------------------------------------------------------
+	   How-it-Works mode picker — expandable accordion inside each
+	   mode column. Reuses the <details>/<summary> pattern; styling
+	   keyed off the column's CSS var --hiw-mode-accent so the same
+	   markup tints olive (flock) or terracotta (layer).
+	   ---------------------------------------------------------- */
+	.hiw-mode-step {
+		background: var(--color-coop-surface);
+		border-radius: 10px;
+		border: 1px solid var(--color-coop-line);
+		margin-bottom: 8px;
+		overflow: hidden;
+		transition: border-color 0.18s ease;
+	}
+	.hiw-mode-step[open] {
+		border-color: var(--hiw-mode-accent, var(--color-coop-primary));
+		border-left: 4px solid var(--hiw-mode-accent, var(--color-coop-primary));
+	}
+	.hiw-mode-step > summary {
+		list-style: none;
+		padding: 12px 14px;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		cursor: pointer;
+	}
+	.hiw-mode-step > summary::-webkit-details-marker { display: none; }
+	.hiw-mode-step-num {
+		width: 28px;
+		height: 28px;
+		border-radius: 50%;
+		border: 1.5px solid var(--hiw-mode-accent, var(--color-coop-primary));
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: var(--font-display);
+		font-size: 13px;
+		font-weight: 700;
+		flex-shrink: 0;
+		background: transparent;
+		color: var(--color-coop-ink);
+	}
+	.hiw-mode-step[open] .hiw-mode-step-num {
+		background: var(--hiw-mode-accent, var(--color-coop-primary));
+		color: #fff;
+	}
+	.hiw-mode-step-chevron {
+		width: 24px;
+		height: 24px;
+		border-radius: 50%;
+		background: var(--color-coop-bg-alt);
+		border: 1px solid var(--color-coop-line);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 13px;
+		color: var(--color-coop-ink-soft);
+		flex-shrink: 0;
+		transition: transform 0.18s;
+	}
+	.hiw-mode-step[open] .hiw-mode-step-chevron {
+		transform: rotate(180deg);
+	}
+
+	/* "Coming soon" tint applied to step rail items + zigzag mockup
+	   slots that haven't shipped yet, so they read as future-feature
+	   previews rather than current functionality. */
+	.hiw-coming-soon-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 4px 10px;
+		border-radius: 999px;
+		background: var(--color-coop-warn);
+		color: var(--color-coop-ink);
+		font-family: var(--font-mono);
+		font-size: 10px;
+		font-weight: 700;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		border: 1.5px solid var(--color-coop-ink);
+	}
+
 	/* Page-level chrome that survives from the old design. */
 	.page-title {
 		font-weight: 900;

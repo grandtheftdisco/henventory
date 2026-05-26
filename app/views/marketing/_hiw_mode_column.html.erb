@@ -1,0 +1,137 @@
+<%# How-it-Works mode comparison column (Flock or Layer).
+    Locals:
+      mode       — display name (e.g. "Flock mode.")
+      emoji      — single-glyph badge for the header
+      kicker     — small caps ribbon at top (e.g. "The simple one")
+      accent     — CSS color for accents (passed through to --hiw-mode-accent)
+      tagline    — italic one-liner under the mode name
+      intro      — paragraph above the steps
+      when_list  — array of "you might want this if…" strings
+      steps      — array of { title:, blurb:, open? } hashes
+      footnote   — italic disclaimer below steps
+      prefix     — unique id prefix (e.g. "flock") for accordion item ids %>
+<div class="relative"
+     style="--hiw-mode-accent: <%= accent %>;
+            background: var(--color-coop-surface);
+            border-radius: 18px;
+            padding: 24px;
+            border: 2px solid <%= accent %>;">
+
+  <%# Ribbon kicker — overlaps the top border %>
+  <div class="absolute"
+       style="top: -13px;
+              left: 20px;
+              background: <%= accent %>;
+              color: #fff;
+              padding: 5px 12px;
+              border-radius: 8px;
+              font-family: var(--font-mono);
+              font-size: 10px;
+              letter-spacing: 0.22em;
+              text-transform: uppercase;
+              font-weight: 700;">
+    <%= kicker %>
+  </div>
+
+  <%# Header: emoji tile + mode name + tagline %>
+  <div class="flex items-start gap-3.5 mb-4 mt-1">
+    <div class="flex items-center justify-center flex-shrink-0"
+         style="width: 56px;
+                height: 56px;
+                border-radius: 14px;
+                background: <%= accent %>22;
+                border: 1px solid <%= accent %>55;
+                font-size: 28px;">
+      <%= emoji %>
+    </div>
+    <div>
+      <div style="font-family: var(--font-display);
+                  font-size: 30px;
+                  line-height: 1.05;
+                  margin-bottom: 4px;">
+        <%= mode %>
+      </div>
+      <div class="italic"
+           style="font-size: 13px;
+                  color: var(--color-coop-ink-soft);
+                  line-height: 1.4;">
+        <%= tagline %>
+      </div>
+    </div>
+  </div>
+
+  <%# "You might want this if…" %>
+  <div class="mb-4"
+       style="background: var(--color-coop-bg-alt);
+              border-radius: 12px;
+              padding: 14px;
+              border: 1px solid var(--color-coop-line);">
+    <div class="coop-kicker mb-2"
+         style="color: <%= accent %>;
+                font-weight: 700;
+                letter-spacing: 0.18em;">
+      ➡️ You might want this if…
+    </div>
+    <% when_list.each do |line| %>
+      <div class="flex gap-2"
+           style="font-size: 13px;
+                  color: var(--color-coop-ink);
+                  line-height: 1.5;
+                  padding: 2px 0;">
+        <span>🥚</span><span><%= line %></span>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Intro paragraph %>
+  <p class="mb-4"
+     style="font-size: 13px;
+            color: var(--color-coop-ink);
+            line-height: 1.6;">
+    <%= intro %>
+  </p>
+
+  <%# Expandable steps %>
+  <div class="flex justify-between items-baseline mb-3">
+    <div class="coop-kicker" style="letter-spacing: 0.22em;">How it goes</div>
+    <div class="italic" style="font-size: 10px; color: var(--color-coop-ink-soft);">
+      tap to expand
+    </div>
+  </div>
+
+  <% steps.each_with_index do |step, idx| %>
+    <details class="hiw-mode-step"
+             <%= "open" if step[:open] %>
+             id="<%= prefix %>-step-<%= idx %>">
+      <summary>
+        <span class="hiw-mode-step-num"><%= idx + 1 %></span>
+        <span class="flex-1"
+              style="font-family: var(--font-display);
+                     font-size: 17px;
+                     line-height: 1.2;">
+          <%= step[:title] %>
+        </span>
+        <span class="hiw-mode-step-chevron">▾</span>
+      </summary>
+      <div style="padding: 0 14px 14px 54px;">
+        <div style="font-size: 13px; color: var(--color-coop-ink-soft); line-height: 1.6;">
+          <%= step[:blurb] %>
+        </div>
+      </div>
+    </details>
+  <% end %>
+
+  <%# Per-mode footnote %>
+  <% if footnote %>
+    <div class="mt-3.5 italic"
+         style="padding: 12px;
+                background: <%= accent %>11;
+                border-radius: 10px;
+                border: 1px dashed <%= accent %>55;
+                font-size: 12px;
+                color: var(--color-coop-ink-soft);
+                line-height: 1.5;">
+      <%= footnote %>
+    </div>
+  <% end %>
+</div>

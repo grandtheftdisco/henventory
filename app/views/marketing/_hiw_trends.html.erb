@@ -1,0 +1,38 @@
+<%# Mockup snippet — "Daily eggs" trend SVG (step 3). Values are hard-coded
+    because this is a marketing mockup, not a real chart. %>
+<% data = [3, 5, 4, 6, 8, 5, 8, 6, 7, 9, 8, 10, 7, 8]
+   max_val = data.max
+   step_x = 280.0 / (data.length - 1)
+   points = data.each_with_index.map { |v, i| "#{(i * step_x).round(2)},#{(100 - (v.to_f / max_val) * 90).round(2)}" } %>
+<div class="coop-card" style="padding: 18px;">
+  <div class="flex justify-between items-baseline mb-2.5">
+    <div>
+      <div style="font-family: var(--font-display); font-size: 18px;">Daily eggs</div>
+      <div class="italic"
+           style="font-size: 10px; color: var(--color-coop-ink-soft);">
+        April · ↑ 12%
+      </div>
+    </div>
+  </div>
+  <svg viewBox="0 0 280 100"
+       preserveAspectRatio="none"
+       style="width: 100%; height: 100px;">
+    <defs>
+      <linearGradient id="hiw-trend-grad" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%"   stop-color="var(--color-coop-primary)" stop-opacity="0.35" />
+        <stop offset="100%" stop-color="var(--color-coop-primary)" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+    <% [0, 50, 100].each do |y| %>
+      <line x1="0" x2="280" y1="<%= y %>" y2="<%= y %>"
+            stroke="var(--color-coop-line)" stroke-width="1" stroke-dasharray="2,3" />
+    <% end %>
+    <polyline points="<%= points.join(' ') %>"
+              fill="none"
+              stroke="var(--color-coop-primary)"
+              stroke-width="2.5"
+              stroke-linejoin="round" />
+    <polygon points="0,100 <%= points.join(' ') %> 280,100"
+             fill="url(#hiw-trend-grad)" />
+  </svg>
+</div>

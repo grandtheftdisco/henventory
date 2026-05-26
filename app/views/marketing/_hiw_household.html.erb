@@ -1,0 +1,41 @@
+<%# Mockup snippet — Household members card (step 5). %>
+<div class="coop-card" style="padding: 18px;">
+  <div class="flex justify-between items-baseline mb-2.5">
+    <div style="font-family: var(--font-display); font-size: 18px;">Household</div>
+    <div style="padding: 3px 8px;
+                border-radius: 999px;
+                background: rgba(122, 140, 74, 0.13);
+                font-family: var(--font-mono);
+                font-size: 9px;
+                color: var(--color-coop-accent);
+                letter-spacing: 0.1em;">
+      3 MEMBERS
+    </div>
+  </div>
+  <% [
+    { name: "Nana BeeWee", role: "Owner",  initials: "NB", tint: "var(--color-coop-primary-soft)", today: 8 },
+    { name: "Pop",          role: "Member", initials: "P",  tint: "var(--color-coop-bg-alt)",        today: 3 },
+  ].each_with_index do |m, i| %>
+    <div class="flex items-center gap-2.5"
+         style="padding: 8px 0;
+                <%= 'border-bottom: 1px solid var(--color-coop-line);' if i == 0 %>">
+      <div class="flex items-center justify-center"
+           style="width: 28px; height: 28px;
+                  border-radius: 50%;
+                  background: <%= m[:tint] %>;
+                  font-size: 10px;
+                  font-weight: 700;
+                  color: var(--color-coop-ink);">
+        <%= m[:initials] %>
+      </div>
+      <div class="flex-1">
+        <div style="font-size: 12px; font-weight: 700;"><%= m[:name] %></div>
+        <div class="coop-kicker" style="letter-spacing: 0.08em;"><%= m[:role] %></div>
+      </div>
+      <div style="font-family: var(--font-display); font-size: 16px;
+                  color: var(--color-coop-primary); line-height: 1;">
+        <%= m[:today] %>
+      </div>
+    </div>
+  <% end %>
+</div>
