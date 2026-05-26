@@ -148,6 +148,32 @@
 	.coop-status[data-status="retired"] { background-color: var(--color-coop-retired-bg); color: var(--color-coop-retired-fg); }
 	.coop-status[data-status="expired"] { background-color: var(--color-coop-expired-bg); color: var(--color-coop-expired-fg); }
 
+	/* ----------------------------------------------------------
+	   FAQ accordion row. Built on <details>/<summary> so collapse
+	   needs no JS; these rules only handle the open/closed visuals.
+	   ---------------------------------------------------------- */
+	.coop-faq-item > summary { list-style: none; }
+	.coop-faq-item > summary::-webkit-details-marker { display: none; }
+	.coop-faq-item[open] {
+		border-left: 4px solid var(--color-coop-primary);
+	}
+	.coop-faq-item[open] .coop-faq-indicator {
+		background: var(--color-coop-primary);
+		color: #fff;
+	}
+	.coop-faq-item[open] .coop-faq-indicator::before {
+		content: "−";
+	}
+	.coop-faq-item:not([open]) .coop-faq-indicator::before {
+		content: "+";
+	}
+	.coop-faq-item .coop-faq-indicator::before {
+		font-size: 16px;
+		font-weight: 700;
+		line-height: 1;
+	}
+	.coop-faq-item[open] .coop-faq-teaser { display: none; }
+
 	/* Page-level chrome that survives from the old design. */
 	.page-title {
 		font-weight: 900;
